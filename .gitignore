@@ -1,0 +1,25 @@
+# Credenciales y configuración local
+.env
+.env.*
+!.env.example
+server/config/config.php
+
+# Dependencias instaladas
+node_modules/
+vendor/
+
+# Imágenes subidas desde el panel
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Logs y temporales
+*.log
+*.tmp
+*.cache
+
+# Editores y sistema operativo
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
