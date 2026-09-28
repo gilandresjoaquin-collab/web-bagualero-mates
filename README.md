@@ -27,7 +27,7 @@ La web funciona tanto **en el celular como en la computadora** (diseño responsi
 | Integrante | GitHub |
 |---|---|
 | Joaquín Gil | [@gilandresjoaquin-collab](https://github.com/gilandresjoaquin-collab) |
-| Lautaro Gejo | [@lautigamerxd16-fuente](https://github.com/lautigamerxd16-fuente) |
+| Lautaro Gejo | [@lautigamerxd16-source](https://github.com/lautigamerxd16-source) |
 | Luka Arauz | [@Lukaarauz](https://github.com/Lukaarauz) |
 
 **Materia:** Proyecto e Implementación y Diseño de Web Dinámica — 7.° año, Técnico en Programación
@@ -44,10 +44,11 @@ La web funciona tanto **en el celular como en la computadora** (diseño responsi
 | 4 | [Modelo Entidad-Relación](docs/04-modelo-entidad-relacion.md) | DER normalizado a 3FN |
 | 5 | [Contrato de API](docs/05-contrato-api.md) | Endpoints del backend |
 | 6 | [Wireframes](docs/wireframes/README.md) | Diseño de las pantallas principales (celular y PC) |
+| 7 | [Backlog y tablero Kanban](docs/06-backlog-kanban.md) | Tareas priorizadas y asignadas por fase |
 
 **Repositorio:** https://github.com/gilandresjoaquin-collab/web-bagualero-mates
 
-**Tablero Kanban:** https://github.com/users/gilandresjoaquin-collab/projects/2
+**Tablero Kanban:** https://github.com/users/lautigamerxd16-source/projects/4
 
 ## Stack tecnológico
 
