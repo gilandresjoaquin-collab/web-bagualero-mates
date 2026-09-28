@@ -1,6 +1,6 @@
 # Backlog y tablero Kanban
 
-**Tablero:** https://github.com/users/gilandresjoaquin-collab/projects/2
+**Tablero:** https://github.com/users/lautigamerxd16-source/projects/4
 
 Este documento tiene todas las tareas del proyecto, organizadas en 4 fases. Cada una tiene responsable, prioridad, estimación y la historia de usuario que resuelve (HU-XX).
 
@@ -22,7 +22,7 @@ Este documento tiene todas las tareas del proyecto, organizadas en 4 fases. Cada
 | Integrante | Usuario de GitHub | Foco principal |
 |---|---|---|
 | Joaquín Gil | @gilandresjoaquin-collab | Autenticación, usuarios, seguridad, panel de control |
-| Lautaro Gejo | @lautigamerxd16-fuente | Maquetado responsive, catálogo, carrito, categorías |
+| Lautaro Gejo | @lautigamerxd16-source | Maquetado responsive, catálogo, carrito, categorías |
 | Luka Arauz | @Lukaarauz | Productos, pedidos, checkout, contenido del negocio |
 
 ---
