@@ -48,7 +48,7 @@ La web funciona tanto **en el celular como en la computadora** (diseño responsi
 
 **Repositorio:** https://github.com/gilandresjoaquin-collab/web-bagualero-mates
 
-**Tablero Kanban:** https://github.com/users/lautigamerxd16-source/projects/4
+**Tablero Kanban:** https://github.com/users/gilandresjoaquin-collab/projects/2
 
 ## Stack tecnológico
 
