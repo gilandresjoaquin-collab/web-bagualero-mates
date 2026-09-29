@@ -1,6 +1,6 @@
 # Backlog y tablero Kanban
 
-**Tablero:** https://github.com/users/lautigamerxd16-source/projects/4
+**Tablero:** https://github.com/users/gilandresjoaquin-collab/projects/2
 
 Este documento tiene todas las tareas del proyecto, organizadas en 4 fases. Cada una tiene responsable, prioridad, estimación y la historia de usuario que resuelve (HU-XX).
 
