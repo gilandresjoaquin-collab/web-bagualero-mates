@@ -11,6 +11,7 @@ let carrito = null;
 let entregas = [];
 let pagos = [];
 let usuario = null;
+let direccionGuardada = null;
 
 iniciar();
 
@@ -22,8 +23,10 @@ async function iniciar() {
         return;
     }
 
-    const [respuestaCarrito, respuestaEntregas, respuestaPagos] =
-        await Promise.all([api('carrito'), api('metodos-entrega'), api('metodos-pago')]);
+    const [respuestaCarrito, respuestaEntregas, respuestaPagos, respuestaDirecciones] =
+        await Promise.all([api('carrito'), api('metodos-entrega'), api('metodos-pago'), api('usuarios/direcciones')]);
+    // Dirección principal guardada en Mi cuenta (puede no tener)
+    direccionGuardada = respuestaDirecciones.ok ? respuestaDirecciones.data[0] || null : null;
 
     const conError = [respuestaCarrito, respuestaEntregas, respuestaPagos].find(respuesta => !respuesta.ok);
     if (conError) {
@@ -130,6 +133,13 @@ function dibujarFormulario() {
 
     const formulario = document.getElementById('form-checkout');
     formulario.elements.telefono_contacto.value = usuario.telefono || '';
+
+    // La dirección se completa sola con la de Mi cuenta, y se puede cambiar (HU-13)
+    if (direccionGuardada) {
+        formulario.elements.calle.value = `${direccionGuardada.calle} ${direccionGuardada.numero}`;
+        formulario.elements.barrio.value = direccionGuardada.barrio || '';
+        formulario.elements.referencias.value = (direccionGuardada.referencias || '').slice(0, 70);
+    }
     formulario.addEventListener('change', actualizar);
     formulario.addEventListener('submit', confirmar);
     actualizar();
@@ -249,7 +259,10 @@ function dibujarConfirmacion(pedido, telefono) {
                 </ol>
             </div>
 
-            <a class="boton" href="catalogo.html">Seguir comprando</a>
+            <div class="botones-fila confirmacion__botones">
+                <a class="boton" href="catalogo.html">Seguir comprando</a>
+                <a class="boton boton--borde" href="cuenta.html#pedido-${pedido.id_pedido}">Ver mi pedido</a>
+            </div>
         </section>`;
 
     window.scrollTo({ top: 0, behavior: 'smooth' });

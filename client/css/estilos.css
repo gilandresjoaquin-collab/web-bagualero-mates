@@ -11,6 +11,7 @@
                                                          14. Finalizar compra
                                                          15. Estados, tablas e interruptores
                                                          16. Panel de administración
+                                                         17. Mi cuenta
    ===================================================================== */
 
 /* ---------- 1. Variables de la marca ---------- */
@@ -2700,4 +2701,103 @@ textarea {
     .admin-columnas--categorias {
         grid-template-columns: minmax(260px, 1fr) minmax(0, 2fr);
     }
+}
+
+/* ---------- 17. Mi cuenta ---------- */
+.cuenta {
+    padding-bottom: 48px;
+}
+
+.cuenta h1 {
+    margin-bottom: 0.1em;
+}
+
+.cuenta__fila {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+}
+
+/* En el celular, las secciones son botones en fila; desde 900 px, una columna a la izquierda */
+.cuenta__menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cuenta__menu a,
+.cuenta__menu button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    background: var(--blanco);
+    color: var(--marron);
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cuenta__menu a[aria-current="page"] {
+    background: var(--marron);
+    border-color: var(--marron);
+    color: #fff;
+}
+
+.cuenta__panel h2 {
+    font-size: 1.5rem;
+}
+
+.cuenta__panel h3 {
+    margin-top: 24px;
+}
+
+.cuenta__panel form + h2 {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--borde);
+}
+
+.cuenta__datos-pedido {
+    margin-top: 16px;
+}
+
+.campo input:disabled {
+    background: var(--crema-claro);
+    color: var(--gris);
+}
+
+.campo__ayuda {
+    margin: 0;
+    color: var(--gris);
+    font-size: 0.8125rem;
+}
+
+@media (min-width: 900px) {
+    .cuenta__fila {
+        grid-template-columns: 240px minmax(0, 1fr);
+        align-items: start;
+    }
+
+    .cuenta__menu {
+        flex-direction: column;
+        padding: 10px;
+        background: var(--blanco);
+        border: 1px solid var(--borde);
+        border-radius: 12px;
+    }
+
+    .cuenta__menu a,
+    .cuenta__menu button {
+        width: 100%;
+        border: 0;
+        border-radius: var(--radio);
+        background: none;
+    }
+}
+
+.confirmacion__botones {
+    justify-content: center;
 }

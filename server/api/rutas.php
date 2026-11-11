@@ -22,6 +22,7 @@ require_once __DIR__ . '/endpoints/auth.php';
 require_once __DIR__ . '/endpoints/catalogo.php';
 require_once __DIR__ . '/endpoints/carrito.php';
 require_once __DIR__ . '/endpoints/pedidos.php';
+require_once __DIR__ . '/endpoints/usuarios.php';
 require_once __DIR__ . '/endpoints/admin_panel.php';
 require_once __DIR__ . '/endpoints/admin_productos.php';
 require_once __DIR__ . '/endpoints/admin_categorias.php';
@@ -59,6 +60,14 @@ return [
     // Mis pedidos (HU-15)
     ['GET',  '/pedidos',      'pedidos_mios',        'cliente'],
     ['GET',  '/pedidos/{id}', 'pedidos_mio_detalle', 'cliente'],
+
+    // Mi cuenta: perfil, contraseña y direcciones (HU-10)
+    ['PUT',    '/usuarios/perfil',           'usuarios_perfil',    'cliente'],
+    ['PUT',    '/usuarios/password',         'usuarios_password',  'cliente'],
+    ['GET',    '/usuarios/direcciones',      'direcciones_listar', 'cliente'],
+    ['POST',   '/usuarios/direcciones',      'direcciones_crear',  'cliente'],
+    ['PUT',    '/usuarios/direcciones/{id}', 'direcciones_editar', 'cliente'],
+    ['DELETE', '/usuarios/direcciones/{id}', 'direcciones_borrar', 'cliente'],
 
     // Panel de administración (HU-16 a HU-22): todo /admin es solo para administradores
     ['GET',    '/admin/dashboard',                              'admin_dashboard',                  'admin'],

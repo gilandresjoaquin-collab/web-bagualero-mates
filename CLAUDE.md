@@ -27,7 +27,7 @@ client/   → frontend:
   css/        → estilos.css (variables de la marca, botones, formularios, encabezado, pie, páginas)
   js/         → api.js (api, usuarioActual), comun.js (encabezado con la sesión, pie, íconos, menús, escapar),
                 formularios.js (validar y mostrar errores), productos.js (tarjetaProducto, agregarAlCarrito),
-                y un .js por página (login.js, registro.js, catalogo.js, producto.js, carrito.js, checkout.js)
+                y un .js por página (login.js, registro.js, catalogo.js, producto.js, carrito.js, checkout.js, cuenta.js)
                 Panel: admin.js (entrarAlPanel, menú lateral, tablaPedidos) y admin-*.js para cada página admin-*.html
   img/        → logo.png
 server/   → backend:

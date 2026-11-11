@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mi cuenta · Bagualero Mates</title>
+    <link rel="icon" href="../img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap">
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body data-pagina="cuenta">
+    <header id="encabezado"></header>
+
+    <main id="contenido" class="contenedor cuenta">
+        <nav class="migas" aria-label="Estás en">
+            <a href="inicio.html">Inicio</a> / <span>Mi cuenta</span>
+        </nav>
+        <h1 id="saludo">Mi cuenta</h1>
+        <p class="compra__subtitulo">Desde acá seguís tus pedidos y editás tus datos.</p>
+
+        <div class="cuenta__fila">
+            <nav class="cuenta__menu" aria-label="Secciones de mi cuenta">
+                <a href="#pedidos" data-seccion="pedidos">Mis pedidos</a>
+                <a href="#datos" data-seccion="datos">Mis datos</a>
+                <a href="#direccion" data-seccion="direccion">Dirección de entrega</a>
+                <button type="button" data-salir>Cerrar sesión</button>
+            </nav>
+
+            <!-- Lo completa cuenta.js según la sección elegida -->
+            <section id="seccion" class="tarjeta-formulario cuenta__panel">
+                <p class="cargando">Cargando…</p>
+            </section>
+        </div>
+    </main>
+
+    <footer id="pie"></footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/formularios.js"></script>
+    <script src="../js/cuenta.js"></script>
+</body>
+</html>

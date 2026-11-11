@@ -55,9 +55,13 @@ function mostrarErrores(formulario, errores) {
     return campos.length > 0;
 }
 
-/** Muestra un mensaje general arriba del formulario (por ejemplo, el error que devolvió el servidor). */
-function mostrarAlerta(formulario, mensaje) {
+/**
+ * Muestra un mensaje general arriba del formulario: el error que devolvió el servidor
+ * o, con tipo 'exito', una confirmación ("Datos actualizados correctamente").
+ */
+function mostrarAlerta(formulario, mensaje, tipo = 'error') {
     const alerta = formulario.querySelector('.alerta');
+    alerta.className = `alerta alerta--${tipo}`;
     alerta.textContent = mensaje;
     alerta.hidden = false;
 }

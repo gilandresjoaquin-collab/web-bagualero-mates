@@ -67,6 +67,10 @@ Este es el listado inicial de rutas que va a proveer el backend. Puede ajustarse
 | `PUT` | `/api/usuarios/direcciones/{id}` | Editar una dirección | 👤 | HU-10 |
 | `DELETE` | `/api/usuarios/direcciones/{id}` | Eliminar una dirección | 👤 | HU-10 |
 
+- `PUT /usuarios/perfil`: `{ "nombre", "apellido", "telefono" }`. El correo no se puede cambiar.
+- `PUT /usuarios/password`: `{ "actual": "…", "nueva": "…" }`. Si la actual no es correcta, responde `400`.
+- Direcciones: `{ "calle", "numero" }` obligatorios; `barrio`, `ciudad` (por defecto, Mar del Plata) y `referencias`. La primera queda como principal, y es la que se completa sola en el checkout.
+
 ## 2. Catálogo
 
 | Método | URL | Acción | Acceso | HU |
