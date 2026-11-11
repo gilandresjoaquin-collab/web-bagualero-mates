@@ -3,7 +3,7 @@
    Mobile-first: los estilos generales son para celular y los
    @media (min-width: ...) agregan los cambios para pantallas más grandes.
 
-   1. Variables de la marca   5. Formularios y mensajes
+   1. Variables de la marca   5. Formularios y mensajes   9. Iniciar sesión y crear cuenta
    2. Base                    6. Encabezado y menú
    3. Utilidades              7. Pie
    4. Botones                 8. Inicio
@@ -269,8 +269,13 @@ textarea {
 }
 
 .campo__error {
+    margin: 0;
     font-size: 0.875rem;
     color: var(--error);
+}
+
+.requerido {
+    color: var(--cuero);
 }
 
 .alerta {
@@ -445,6 +450,121 @@ textarea {
     color: var(--cuero);
 }
 
+/* Opciones de la cuenta dentro del menú del celular */
+.menu__cuenta {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu__salir {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 48px;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid var(--borde);
+    background: none;
+    color: var(--marron);
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* Menú desplegable de la cuenta (escritorio, con sesión iniciada) */
+.cuenta-menu {
+    position: relative;
+}
+
+.cuenta-menu summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    color: var(--marron);
+    font-weight: 700;
+    list-style: none;
+    cursor: pointer;
+}
+
+.cuenta-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Flechita que gira al abrir */
+.cuenta-menu summary::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    margin: -3px 0 0 2px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+}
+
+.cuenta-menu[open] summary::after {
+    margin-top: 3px;
+    transform: rotate(-135deg);
+}
+
+.cuenta-menu summary:hover {
+    color: var(--cuero);
+}
+
+.cuenta-menu__nombre {
+    max-width: 12ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cuenta-menu__panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    min-width: 240px;
+    padding: 8px;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+}
+
+.cuenta-menu__saludo {
+    margin: 0 0 6px;
+    padding: 4px 10px 10px;
+    border-bottom: 1px solid var(--borde);
+    color: var(--gris);
+    font-size: 0.875rem;
+}
+
+.cuenta-menu__panel a,
+.cuenta-menu__panel button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 40px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--marron);
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cuenta-menu__panel a:hover,
+.cuenta-menu__panel button:hover {
+    background: var(--crema-claro);
+    color: var(--cuero);
+}
+
 /* Escritorio: [logo] [menú] ...... [buscador] [Mi cuenta] [carrito] */
 @media (min-width: 1024px) {
     .barra__fila {
@@ -499,6 +619,12 @@ textarea {
     }
 
     .cuenta {
+        grid-area: cuenta;
+        display: flex;
+        align-items: center;
+    }
+
+    .cuenta__enlace {
         display: inline-flex;
         align-items: center;
         gap: 6px;
@@ -507,7 +633,7 @@ textarea {
         text-decoration: none;
     }
 
-    .cuenta:hover {
+    .cuenta__enlace:hover {
         color: var(--cuero);
     }
 }
@@ -698,5 +824,69 @@ textarea {
 @media (min-width: 1024px) {
     .beneficios__lista {
         grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ---------- 9. Iniciar sesión y crear cuenta ---------- */
+.acceso {
+    padding-block: 24px 40px;
+}
+
+.acceso__grilla {
+    display: grid;
+    gap: 24px;
+    max-width: 980px;
+}
+
+.tarjeta-formulario {
+    padding: 24px 20px;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+}
+
+.tarjeta-formulario h1,
+.tarjeta-formulario h2 {
+    margin-bottom: 0.25em;
+    font-size: 1.75rem;
+}
+
+.tarjeta-formulario__intro {
+    margin-bottom: 20px;
+    color: var(--gris);
+}
+
+.tarjeta-formulario__pie {
+    margin: 16px 0 0;
+    font-size: 0.9375rem;
+    text-align: center;
+}
+
+/* Dos campos por fila desde tablet (nombre y apellido, etc.) */
+.campos-dos {
+    display: grid;
+    column-gap: 16px;
+}
+
+@media (min-width: 600px) {
+    .campos-dos {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 768px) {
+    .acceso {
+        padding-block: 40px 56px;
+    }
+
+    .tarjeta-formulario {
+        padding: 32px 28px;
+    }
+}
+
+@media (min-width: 900px) {
+    .acceso__grilla {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
     }
 }

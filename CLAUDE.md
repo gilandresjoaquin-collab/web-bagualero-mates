@@ -25,7 +25,8 @@ client/   → frontend:
   index.html  → solo redirige a pages/inicio.html
   pages/      → todas las páginas HTML, al mismo nivel (así las rutas relativas sirven igual en todas)
   css/        → estilos.css (variables de la marca, botones, formularios, encabezado, pie, páginas)
-  js/         → comun.js (dibuja el encabezado y el pie, los íconos y el menú hamburguesa)
+  js/         → api.js (api, usuarioActual), comun.js (encabezado con la sesión, pie, íconos, menús, escapar),
+                formularios.js (validar y mostrar errores), y un .js por página (login.js…)
   img/        → logo.png
 server/   → backend:
   api/        → .htaccess + index.php (entrada única y manejo de errores), rutas.php (tabla de rutas), endpoints/ (una función por endpoint)
@@ -51,11 +52,19 @@ En la sesión solo se guarda `$_SESSION['id_usuario']`; el rol y el estado se le
 Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 
 **Cómo armar una página:**
-1. Copiar la estructura de `client/pages/inicio.html`: el `<head>` (Lora + `estilos.css`), `<body data-pagina="...">`, `<header id="encabezado">`, `<main id="contenido">`, `<footer id="pie">` y `comun.js` al final.
-2. `data-pagina` resalta la opción del menú: `inicio`, `catalogo`, `combos`, `nosotros` o `contacto`.
-3. Usar las clases que ya existen: `contenedor`, `seccion`, `sobretitulo`, `boton` (`boton--borde`, `boton--oscuro`, `boton--claro`, `boton--bloque`), `campo`, `campo__error`, `alerta--error`, `alerta--exito`.
-4. Íconos: `<span data-icono="carrito"></span>` en el HTML o `icono('carrito')` en JS (ver `ICONOS` en `comun.js`).
-5. CSS mobile-first: primero el estilo de celular y después `@media (min-width: 768px)` o `(min-width: 1024px)`.
+1. Copiar la estructura de `client/pages/inicio.html`: el `<head>` (Lora + `estilos.css`), `<body data-pagina="...">`, `<header id="encabezado">`, `<main id="contenido">` y `<footer id="pie">`.
+2. Al final del `<body>`, en este orden: `api.js`, `comun.js`, `formularios.js` (si tiene formularios) y el `.js` de la página.
+3. `data-pagina` resalta la opción del menú: `inicio`, `catalogo`, `combos`, `nosotros` o `contacto`.
+4. Usar las clases que ya existen: `contenedor`, `seccion`, `sobretitulo`, `boton` (`boton--borde`, `boton--oscuro`, `boton--claro`, `boton--bloque`), `campo`, `campos-dos`, `alerta--error`, `alerta--exito`.
+5. Íconos: `<span data-icono="carrito"></span>` en el HTML o `icono('carrito')` en JS (ver `ICONOS` en `comun.js`).
+6. CSS mobile-first: primero el estilo de celular y después `@media (min-width: 768px)` o `(min-width: 1024px)`.
+
+**En el JavaScript de las páginas:**
+- `await api('productos')` o `await api('auth/login', 'POST', datos)` → `{ ok, data | error, estado }`. Nunca lanza errores.
+- `await usuarioActual()` → el usuario con sesión (`nombre`, `rol`…) o `null`.
+- `escapar(texto)` SIEMPRE que se meta en `innerHTML` un dato de la base o del usuario (o usar `textContent`).
+- Formularios con `novalidate`: `leerFormulario`, `limpiarErrores`, `mostrarErrores(form, { campo: 'mensaje' })`, `mostrarAlerta`, `enviando` y las reglas `errorEmail`, `errorTelefono`, `errorPassword`, `errorTexto`.
+- Para pedir login: enlazar a `enlaceLogin()` (o `login.html?volver=pagina.html`); después de entrar vuelve a esa página.
 
 ## Documentación de referencia (en /docs)
 - `02-historias-de-usuario.md`: las 24 historias (HU-01 a HU-24) con sus criterios de aceptación. Es lo que hay que cumplir.

@@ -7,7 +7,8 @@
  *   <header id="encabezado"></header>        → acá se dibuja el encabezado
  *   <main id="contenido"> ... </main>
  *   <footer id="pie"></footer>               → acá se dibuja el pie
- *   <script src="../js/comun.js"></script>   → al final del body
+ *   <script src="../js/api.js"></script>     → al final del body, en este orden
+ *   <script src="../js/comun.js"></script>
  */
 
 const INSTAGRAM = 'https://www.instagram.com/bagualero.mates/';
@@ -31,6 +32,8 @@ const ICONOS = {
     buscar: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
     usuario: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>',
     carrito: '<path d="M3 4h2l2.4 11h11.2L21 8H6.2"/><circle cx="9.5" cy="19.5" r="1.5"/><circle cx="17.5" cy="19.5" r="1.5"/>',
+    panel: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+    salir: '<path d="M9 4H5v16h4M14 8l4 4-4 4M18 12H9"/>',
     instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>',
     mensaje: '<path d="M4 4h16v12H8l-4 4z"/>',
     ubicacion: '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
@@ -43,6 +46,29 @@ const ICONOS = {
 function icono(nombre, tamanio = 22) {
     return `<svg width="${tamanio}" height="${tamanio}" viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICONOS[nombre]}</svg>`;
+}
+
+/**
+ * Escapa un texto para ponerlo dentro de HTML sin riesgo.
+ * Usarlo SIEMPRE con datos que vienen de la base o del usuario (nombres, descripciones…).
+ */
+function escapar(texto) {
+    const reemplazos = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    return String(texto).replace(/[&<>"']/g, caracter => reemplazos[caracter]);
+}
+
+/** Página actual con sus parámetros, por ejemplo "catalogo.html?categoria=1". */
+function paginaActual() {
+    return (location.pathname.split('/').pop() || 'inicio.html') + location.search;
+}
+
+/** Enlace al login que, después de entrar, vuelve a la página actual (HU-08). */
+function enlaceLogin() {
+    const pagina = paginaActual();
+    if (pagina.startsWith('login.html')) {
+        return pagina; // ya estamos en el login: se conserva su ?volver=
+    }
+    return 'login.html?volver=' + encodeURIComponent(pagina);
 }
 
 function dibujarEncabezado() {
@@ -67,7 +93,9 @@ function dibujarEncabezado() {
 
                 <nav class="menu" id="menu" aria-label="Menú principal">
                     ${enlaces}
-                    <a class="menu__cuenta" href="login.html">${icono('usuario', 20)} Mi cuenta</a>
+                    <div class="menu__cuenta">
+                        <a href="${enlaceLogin()}">${icono('usuario', 20)} Mi cuenta</a>
+                    </div>
                 </nav>
 
                 <form class="buscador" action="catalogo.html" role="search">
@@ -76,7 +104,9 @@ function dibujarEncabezado() {
                     <input type="search" id="buscar" name="buscar" placeholder="Buscar mates, bombillas, termos…">
                 </form>
 
-                <a class="cuenta" href="login.html">${icono('usuario', 20)} Mi cuenta</a>
+                <div class="cuenta">
+                    <a class="cuenta__enlace" href="${enlaceLogin()}">${icono('usuario', 20)} Mi cuenta</a>
+                </div>
 
                 <a class="carrito" href="carrito.html" aria-label="Carrito">
                     ${icono('carrito', 26)}
@@ -87,6 +117,44 @@ function dibujarEncabezado() {
 
     // Si se viene de una búsqueda, el texto buscado queda escrito en el buscador
     document.getElementById('buscar').value = new URLSearchParams(location.search).get('buscar') || '';
+}
+
+/**
+ * Si hay sesión iniciada, cambia "Mi cuenta" por el nombre del usuario, con sus opciones:
+ * Mi cuenta, Panel de administración (solo admin) y Cerrar sesión.
+ */
+async function mostrarSesion() {
+    const usuario = await usuarioActual();
+    if (!usuario) {
+        return; // visitante: queda el enlace "Mi cuenta" que lleva al login
+    }
+
+    const nombre = escapar(usuario.nombre);
+    const esAdmin = usuario.rol === 'administrador';
+
+    // Escritorio: menú desplegable con el nombre
+    document.querySelector('.cuenta').innerHTML = `
+        <details class="cuenta-menu">
+            <summary>${icono('usuario', 20)} <span class="cuenta-menu__nombre">${nombre}</span></summary>
+            <div class="cuenta-menu__panel">
+                <p class="cuenta-menu__saludo">Hola, ${nombre}</p>
+                <a href="cuenta.html">${icono('usuario', 18)} Mi cuenta</a>
+                ${esAdmin ? `<a href="admin.html">${icono('panel', 18)} Panel de administración</a>` : ''}
+                <button type="button" data-salir>${icono('salir', 18)} Cerrar sesión</button>
+            </div>
+        </details>`;
+
+    // Celular: las mismas opciones dentro del menú hamburguesa
+    document.querySelector('.menu__cuenta').innerHTML = `
+        <a href="cuenta.html">${icono('usuario', 20)} Mi cuenta (${nombre})</a>
+        ${esAdmin ? `<a href="admin.html">${icono('panel', 20)} Panel de administración</a>` : ''}
+        <button class="menu__salir" type="button" data-salir>${icono('salir', 20)} Cerrar sesión</button>`;
+}
+
+/** Cierra la sesión en el servidor y vuelve al inicio (HU-09). */
+async function cerrarSesion() {
+    await api('auth/logout', 'POST');
+    location.href = 'inicio.html';
 }
 
 function dibujarPie() {
@@ -119,7 +187,7 @@ function dibujarPie() {
                     <li><a href="nosotros.html#como-comprar">Cómo comprar</a></li>
                     <li><a href="nosotros.html#envios">Envíos y retiros</a></li>
                     <li><a href="nosotros.html#pagos">Medios de pago</a></li>
-                    <li><a href="login.html">Mi cuenta</a></li>
+                    <li><a href="login.html?volver=cuenta.html">Mi cuenta</a></li>
                 </ul>
             </div>
 
@@ -142,8 +210,8 @@ function dibujarIconos() {
     });
 }
 
-/** Menú hamburguesa: lo abre y lo cierra en el celular. */
-function activarMenu() {
+/** Menú hamburguesa (celular) y menú de la cuenta (escritorio): abrir, cerrar y "Cerrar sesión". */
+function activarMenus() {
     const boton = document.querySelector('.menu-boton');
     const menu = document.getElementById('menu');
 
@@ -154,27 +222,54 @@ function activarMenu() {
         boton.innerHTML = icono(abrir ? 'cerrar' : 'menu', 26);
     }
 
+    function cerrarMenuCuenta(excepto = null) {
+        document.querySelectorAll('.cuenta-menu[open]').forEach(desplegable => {
+            if (!desplegable.contains(excepto)) {
+                desplegable.open = false;
+            }
+        });
+    }
+
     boton.addEventListener('click', evento => {
         // Para que este clic no llegue al "tocar fuera del menú" de abajo y lo vuelva a cerrar
         evento.stopPropagation();
         cambiar(!menu.classList.contains('menu--abierto'));
     });
 
-    // Se cierra con Escape o tocando fuera del menú
+    document.addEventListener('click', evento => {
+        if (evento.target.closest('[data-salir]')) {
+            cerrarSesion();
+            return;
+        }
+        // Tocar fuera de un menú lo cierra
+        if (!menu.contains(evento.target)) {
+            cambiar(false);
+        }
+        cerrarMenuCuenta(evento.target);
+    });
+
     document.addEventListener('keydown', evento => {
-        if (evento.key === 'Escape' && menu.classList.contains('menu--abierto')) {
+        if (evento.key !== 'Escape') {
+            return;
+        }
+        if (menu.classList.contains('menu--abierto')) {
             cambiar(false);
             boton.focus();
         }
-    });
-    document.addEventListener('click', evento => {
-        if (!menu.contains(evento.target) && !boton.contains(evento.target)) {
-            cambiar(false);
-        }
+        cerrarMenuCuenta();
     });
 }
+
+// Si el navegador muestra la página desde su memoria (botón "atrás"), se recarga
+// para no mostrar una sesión que ya se cerró (HU-09)
+window.addEventListener('pageshow', evento => {
+    if (evento.persisted) {
+        location.reload();
+    }
+});
 
 dibujarEncabezado();
 dibujarPie();
 dibujarIconos();
-activarMenu();
+activarMenus();
+mostrarSesion();
