@@ -22,6 +22,10 @@ require_once __DIR__ . '/endpoints/auth.php';
 require_once __DIR__ . '/endpoints/catalogo.php';
 require_once __DIR__ . '/endpoints/carrito.php';
 require_once __DIR__ . '/endpoints/pedidos.php';
+require_once __DIR__ . '/endpoints/admin_panel.php';
+require_once __DIR__ . '/endpoints/admin_productos.php';
+require_once __DIR__ . '/endpoints/admin_categorias.php';
+require_once __DIR__ . '/endpoints/admin_pedidos.php';
 
 return [
     // Diagnóstico
@@ -51,4 +55,29 @@ return [
     ['GET',  '/metodos-entrega', 'metodos_entrega_listar', 'publico'],
     ['GET',  '/metodos-pago',    'metodos_pago_listar',    'publico'],
     ['POST', '/pedidos',         'pedidos_crear',          'cliente'],
+
+    // Mis pedidos (HU-15)
+    ['GET',  '/pedidos',      'pedidos_mios',        'cliente'],
+    ['GET',  '/pedidos/{id}', 'pedidos_mio_detalle', 'cliente'],
+
+    // Panel de administración (HU-16 a HU-22): todo /admin es solo para administradores
+    ['GET',    '/admin/dashboard',                              'admin_dashboard',                  'admin'],
+    ['GET',    '/admin/productos',                              'admin_productos_listar',           'admin'],
+    ['POST',   '/admin/productos',                              'admin_productos_crear',            'admin'],
+    ['GET',    '/admin/productos/{id}',                         'admin_productos_detalle',          'admin'],
+    ['PUT',    '/admin/productos/{id}',                         'admin_productos_editar',           'admin'],
+    ['PATCH',  '/admin/productos/{id}/estado',                  'admin_productos_estado',           'admin'],
+    ['POST',   '/admin/productos/{id}/imagenes',                'admin_productos_subir_imagenes',   'admin'],
+    ['PATCH',  '/admin/productos/{id}/imagenes/{id_imagen}',    'admin_productos_imagen_principal', 'admin'],
+    ['DELETE', '/admin/productos/{id}/imagenes/{id_imagen}',    'admin_productos_borrar_imagen',    'admin'],
+    ['GET',    '/admin/categorias',                             'admin_categorias_listar',          'admin'],
+    ['POST',   '/admin/categorias',                             'admin_categorias_crear',           'admin'],
+    ['PUT',    '/admin/categorias/{id}',                        'admin_categorias_editar',          'admin'],
+    ['PATCH',  '/admin/categorias/{id}/estado',                 'admin_categorias_estado',          'admin'],
+    ['GET',    '/admin/estados-pedido',                         'admin_estados_listar',             'admin'],
+    ['GET',    '/admin/pedidos',                                'admin_pedidos_listar',             'admin'],
+    ['GET',    '/admin/pedidos/{id}',                           'admin_pedidos_detalle',            'admin'],
+    ['PATCH',  '/admin/pedidos/{id}/estado',                    'admin_pedidos_estado',             'admin'],
+    ['GET',    '/admin/usuarios',                               'admin_usuarios_listar',            'admin'],
+    ['PATCH',  '/admin/usuarios/{id}/estado',                   'admin_usuarios_estado',            'admin'],
 ];

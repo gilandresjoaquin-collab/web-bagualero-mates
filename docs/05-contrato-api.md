@@ -170,14 +170,17 @@ Todas las rutas empiezan con `/api/admin`. Si el usuario no es administrador, re
 | `GET` | `/api/admin/dashboard` | Resumen: pedidos pendientes, ventas del mes, poco stock y últimos pedidos | 🔒 | HU-22 |
 | `GET` | `/api/admin/productos` | Listar todos los productos, incluidos los inactivos | 🔒 | HU-18 |
 | `POST` | `/api/admin/productos` | Crear un producto | 🔒 | HU-17 |
+| `GET` | `/api/admin/productos/{id}` | Ver un producto para editarlo, aunque esté dado de baja (agregado durante el desarrollo) | 🔒 | HU-18 |
 | `PUT` | `/api/admin/productos/{id}` | Editar un producto | 🔒 | HU-18 |
 | `PATCH` | `/api/admin/productos/{id}/estado` | Dar de baja o reactivar un producto (baja lógica) | 🔒 | HU-18 |
 | `POST` | `/api/admin/productos/{id}/imagenes` | Subir imágenes (JPG, PNG o WEBP, hasta 2 MB) | 🔒 | HU-17 |
+| `PATCH` | `/api/admin/productos/{id}/imagenes/{id_imagen}` | Marcar una imagen como principal (agregado durante el desarrollo) | 🔒 | HU-17 |
 | `DELETE` | `/api/admin/productos/{id}/imagenes/{id_imagen}` | Eliminar una imagen | 🔒 | HU-18 |
 | `GET` | `/api/admin/categorias` | Listar todas las categorías | 🔒 | HU-19 |
 | `POST` | `/api/admin/categorias` | Crear una categoría | 🔒 | HU-19 |
 | `PUT` | `/api/admin/categorias/{id}` | Editar una categoría | 🔒 | HU-19 |
 | `PATCH` | `/api/admin/categorias/{id}/estado` | Activar o desactivar una categoría (no se puede si tiene productos activos) | 🔒 | HU-19 |
+| `GET` | `/api/admin/estados-pedido` | Listar los estados posibles, en orden (agregado durante el desarrollo) | 🔒 | HU-20 |
 | `GET` | `/api/admin/pedidos` | Listar pedidos, con filtros por estado y fecha | 🔒 | HU-20 |
 | `GET` | `/api/admin/pedidos/{id}` | Ver el detalle de un pedido | 🔒 | HU-20 |
 | `PATCH` | `/api/admin/pedidos/{id}/estado` | Cambiar el estado de un pedido: registra el historial y, si se cancela, repone el stock | 🔒 | HU-20, HU-14 |
@@ -185,7 +188,19 @@ Todas las rutas empiezan con `/api/admin`. Si el usuario no es administrador, re
 | `PATCH` | `/api/admin/usuarios/{id}/estado` | Suspender o reactivar una cuenta | 🔒 | HU-21 |
 | `GET` | `/api/admin/mensajes` | Ver los mensajes de contacto | 🔒 | HU-23 |
 
-**Total:** 44 endpoints.
+**Total:** 44 endpoints del contrato original, más 3 agregados durante el desarrollo.
+
+**Qué recibe cada ruta del panel**
+
+| Ruta | Cuerpo (JSON) |
+|---|---|
+| `POST` / `PUT` `/admin/productos` | `nombre`, `id_categoria`, `precio`, `stock` (obligatorios); `descripcion`, `medidas`, `sku` (si va vacío se genera), `materiales` (lista de ids), `destacado`, `activo` |
+| `PATCH /admin/productos/{id}/estado` | `{ "activo": false }` (baja lógica) o `{ "activo": true }` |
+| `POST /admin/productos/{id}/imagenes` | `multipart/form-data` con uno o más archivos en el campo `imagenes[]`. Se controla el contenido del archivo, no su nombre. Si alguno no sirve, no se guarda ninguno |
+| `POST` / `PUT` `/admin/categorias` | `nombre` (obligatorio, único) y `descripcion` |
+| `PATCH /admin/categorias/{id}/estado` | `{ "activa": false }`. Responde `409` si la categoría tiene productos activos |
+| `PATCH /admin/pedidos/{id}/estado` | `{ "id_estado": 2, "comentario": "Pago recibido" }`. Un pedido cancelado no se puede cambiar (`409`) |
+| `PATCH /admin/usuarios/{id}/estado` | `{ "estado": "suspendido" }` o `{ "estado": "activo" }`. El admin no puede suspenderse a sí mismo |
 
 ---
 

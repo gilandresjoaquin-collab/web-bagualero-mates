@@ -9,6 +9,8 @@
    4. Botones                 8. Inicio                  12. Aviso flotante
                                                          13. Carrito
                                                          14. Finalizar compra
+                                                         15. Estados, tablas e interruptores
+                                                         16. Panel de administración
    ===================================================================== */
 
 /* ---------- 1. Variables de la marca ---------- */
@@ -1912,4 +1914,790 @@ textarea {
 .confirmacion .alerta ol {
     margin: 8px 0 0;
     padding-left: 20px;
+}
+
+/* ---------- 15. Estados, tablas e interruptores (panel y Mi cuenta) ---------- */
+
+/* Estado de un pedido o de una cuenta */
+.estado {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+}
+
+.estado--pendiente { background: #F6E3B5; color: #6E500E; }
+.estado--confirmado { background: #DCE8F5; color: #1F4E79; }
+.estado--enviado { background: #E6E0F3; color: #4B3A78; }
+.estado--entregado,
+.estado--activo { background: #DDEFD9; color: #2E6B30; }
+.estado--cancelado,
+.estado--suspendido { background: #F4DAD6; color: #9A2B20; }
+
+/* Cantidad de unidades (stock) */
+.unidades {
+    display: inline-block;
+    min-width: 32px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--crema-claro);
+    color: var(--marron);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.unidades--poco { background: #F6E3B5; color: #6E500E; }
+.unidades--cero { background: #F4DAD6; color: #9A2B20; }
+
+/* Foto chica con el nombre al lado */
+.producto-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+}
+
+.producto-mini__foto {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+/*
+ * Tablas. En el celular cada fila es una tarjeta y cada dato muestra su título
+ * (el atributo data-titulo de cada celda). Desde 1024 px se ven como tabla.
+ */
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.tabla,
+.tabla tbody,
+.tabla tr,
+.tabla td {
+    display: block;
+}
+
+.tabla thead {
+    display: none;
+}
+
+.tabla tr {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.tabla tr:first-child {
+    padding-top: 0;
+}
+
+.tabla td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 32px;
+    padding: 4px 0;
+    text-align: right;
+}
+
+.tabla td::before {
+    content: attr(data-titulo);
+    color: var(--gris);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-align: left;
+}
+
+.tabla td[data-titulo=""] {
+    justify-content: flex-end;
+}
+
+.tabla td[data-titulo=""]::before {
+    content: none;
+}
+
+.tabla__fila--apagada td {
+    color: var(--gris);
+}
+
+@media (min-width: 1024px) {
+    .tabla {
+        display: table;
+    }
+
+    .tabla thead {
+        display: table-header-group;
+    }
+
+    .tabla tbody {
+        display: table-row-group;
+    }
+
+    .tabla tr {
+        display: table-row;
+        padding: 0;
+    }
+
+    .tabla th,
+    .tabla td {
+        display: table-cell;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--borde);
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .tabla td::before {
+        content: none;
+    }
+
+    .tabla th {
+        border-bottom-width: 2px;
+        color: var(--gris);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+}
+
+/* Interruptor (sí / no), hecho con una casilla */
+.interruptor {
+    position: relative;
+    flex: none;
+    width: 44px;
+    height: 26px;
+    margin: 0;
+    border-radius: 999px;
+    background: #CFC4B3;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    appearance: none;
+}
+
+.interruptor::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s;
+}
+
+.interruptor:checked {
+    background: #4F7A3A;
+}
+
+.interruptor:checked::before {
+    transform: translateX(18px);
+}
+
+.interruptor:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.fila-interruptor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 52px;
+    border-bottom: 1px solid var(--borde);
+    cursor: pointer;
+}
+
+.fila-interruptor + .boton {
+    margin-top: 16px;
+}
+
+/* Lista de productos de un pedido */
+.lista-pedido {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.item-pedido {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 4px 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.item-pedido .producto-mini {
+    grid-column: 1 / -1;
+}
+
+.item-pedido__cantidad {
+    color: var(--gris);
+    font-size: 0.875rem;
+}
+
+.total-pedido {
+    display: flex;
+    justify-content: space-between;
+    margin: 14px 0 0;
+    color: var(--marron);
+    font-family: var(--fuente-titulos);
+    font-size: 1.25rem;
+}
+
+/* Historial de estados de un pedido */
+.historial {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.historial li {
+    padding-left: 14px;
+    border-left: 3px solid var(--borde);
+}
+
+.historial__fecha {
+    margin-left: 8px;
+    color: var(--gris);
+    font-size: 0.875rem;
+}
+
+.historial__comentario {
+    margin: 4px 0 0;
+    font-size: 0.9375rem;
+}
+
+/* Datos en filas: "Correo / juan@correo.com" */
+.datos-lista {
+    margin: 0;
+}
+
+.datos-lista div {
+    display: grid;
+    gap: 2px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.datos-lista dt {
+    color: var(--gris);
+    font-size: 0.8125rem;
+    font-weight: 700;
+}
+
+.datos-lista dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 600px) {
+    .item-pedido {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+    }
+
+    .item-pedido .producto-mini {
+        grid-column: auto;
+    }
+}
+
+/* ---------- 16. Panel de administración ---------- */
+
+/* Menú: en el celular, barra arriba con botón; desde 1024 px, columna a la izquierda */
+.admin-menu {
+    background: var(--marron);
+    color: #E9DFCF;
+}
+
+.admin-menu__barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 16px;
+}
+
+.admin-menu__boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-left: -10px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.admin-menu__logo img {
+    width: auto;
+    height: 48px;
+    filter: brightness(0) invert(1);
+    opacity: 0.92;
+}
+
+.admin-menu__usuario {
+    max-width: 40vw;
+    overflow: hidden;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--dorado);
+    color: var(--marron);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-menu__lista {
+    display: none;
+    margin: 0;
+    padding: 8px 16px 16px;
+    list-style: none;
+}
+
+.admin-menu--abierto .admin-menu__lista {
+    display: block;
+}
+
+.admin-menu__lista a,
+.admin-menu__lista button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: var(--radio);
+    background: none;
+    color: #E9DFCF;
+    font-size: 1rem;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.admin-menu__lista a:hover,
+.admin-menu__lista button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.admin-menu__lista a[aria-current="page"] {
+    background: var(--cuero);
+    color: #fff;
+    font-weight: 700;
+}
+
+.admin-menu__separador {
+    height: 1px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.admin-contenido {
+    flex: 1;
+    min-width: 0;
+    padding: 20px 16px 48px;
+}
+
+.admin-encabezado {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px 16px;
+    margin-bottom: 20px;
+}
+
+.admin-encabezado h1 {
+    margin: 0;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+}
+
+.admin-encabezado .migas {
+    margin: 0 0 4px;
+}
+
+.admin-encabezado__subtitulo {
+    margin: 4px 0 0;
+    color: var(--gris);
+}
+
+.acceso-denegado {
+    max-width: 520px;
+    margin: 64px auto;
+    text-align: center;
+}
+
+/* Números del panel de control */
+.numeros {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.numero {
+    padding: 16px;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+}
+
+.numero__titulo {
+    margin: 0 0 6px;
+    color: var(--gris);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.numero__valor {
+    margin: 0;
+    color: var(--marron);
+    font-family: var(--fuente-titulos);
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.numero__valor--alerta {
+    color: var(--error);
+}
+
+/* Columnas y cajas */
+.admin-columnas {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 20px;
+}
+
+.admin-columnas__principal,
+.admin-columnas__lateral {
+    display: grid;
+    gap: 20px;
+    min-width: 0;
+}
+
+.panel-caja {
+    min-width: 0;
+    padding: 20px 16px;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+}
+
+.admin-contenido > .panel-caja {
+    margin-bottom: 20px;
+}
+
+/* Si una tabla no entra, se desplaza dentro de su caja (nunca la página entera) */
+.panel-caja:has(.tabla) {
+    overflow-x: auto;
+}
+
+.panel-caja h2 {
+    margin-bottom: 14px;
+    font-size: 1.375rem;
+}
+
+.panel-caja__ayuda {
+    margin: 0 0 12px;
+    color: var(--gris);
+    font-size: 0.875rem;
+}
+
+.admin-vacio {
+    margin: 0;
+    padding: 24px 0;
+    color: var(--gris);
+    text-align: center;
+}
+
+.enlace-flecha {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.lista-stock {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lista-stock a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 56px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--borde);
+    color: var(--carbon);
+    text-decoration: none;
+}
+
+.lista-stock a:hover strong {
+    color: var(--cuero);
+}
+
+/* Filtros de las listas */
+.filtros-admin {
+    display: grid;
+    gap: 12px;
+}
+
+.filtros-admin .buscador {
+    grid-area: auto; /* el del encabezado de la tienda usa un área de su grilla */
+    justify-self: stretch;
+    max-width: none;
+}
+
+.filtros-admin select,
+.filtros-admin input[type="date"] {
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    background: var(--blanco);
+    color: var(--marron);
+}
+
+.filtros-admin .campo {
+    margin: 0;
+}
+
+/* Botones chicos */
+.boton-icono {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    background: var(--blanco);
+    color: var(--marron);
+    cursor: pointer;
+}
+
+.boton-icono:hover {
+    border-color: var(--cuero);
+    color: var(--cuero);
+}
+
+.boton--chico {
+    min-height: 36px;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+}
+
+.botones-fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.enlace-boton {
+    min-height: 36px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--cuero);
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.enlace-boton--peligro {
+    color: var(--error);
+}
+
+/* Formulario de producto: fotos y materiales */
+.subir-fotos {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    padding: 20px 16px;
+    border: 2px dashed var(--borde);
+    border-radius: var(--radio);
+    color: var(--marron);
+    text-align: center;
+    cursor: pointer;
+}
+
+.subir-fotos:hover,
+.subir-fotos:focus-within {
+    border-color: var(--cuero);
+    background: var(--crema-claro);
+}
+
+/* El campo de archivo ocupa todo el recuadro: así también se pueden arrastrar las fotos */
+.subir-fotos input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.subir-fotos small {
+    color: var(--gris);
+}
+
+.fotos-admin {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.fotos-admin > p,
+.fotos-admin > ul {
+    grid-column: 1 / -1;
+}
+
+.fotos-admin__nuevas {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 0.875rem;
+}
+
+.foto-admin {
+    margin: 0;
+}
+
+.foto-admin__imagen {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+}
+
+.foto-admin figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.materiales-admin {
+    margin: 4px 0 0;
+    padding: 0;
+    border: 0;
+}
+
+.materiales-admin legend {
+    margin-bottom: 8px;
+    padding: 0;
+    color: var(--marron);
+    font-weight: 600;
+}
+
+.materiales-admin__opciones {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 16px;
+}
+
+@media (min-width: 600px) {
+    .materiales-admin__opciones {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    .panel-caja {
+        padding: 24px;
+    }
+
+    .filtros-admin {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        align-items: center;
+    }
+
+    .filtros-admin--pedidos {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+        align-items: end;
+    }
+}
+
+@media (min-width: 1024px) {
+    body.admin {
+        flex-direction: row;
+    }
+
+    .admin-menu {
+        position: sticky;
+        top: 0;
+        flex: none;
+        width: 240px;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .admin-menu__barra {
+        justify-content: center;
+        padding: 24px 16px 16px;
+    }
+
+    .admin-menu__boton,
+    .admin-menu__usuario {
+        display: none;
+    }
+
+    .admin-menu__logo img {
+        height: 74px;
+    }
+
+    .admin-menu__lista {
+        display: block;
+        padding-top: 0;
+    }
+
+    .admin-contenido {
+        padding: 32px 32px 56px;
+    }
+
+    .numeros {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .admin-columnas {
+        grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    }
+
+    .admin-columnas--formulario {
+        grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+    }
+
+    .admin-columnas--categorias {
+        grid-template-columns: minmax(260px, 1fr) minmax(0, 2fr);
+    }
 }

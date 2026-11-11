@@ -28,6 +28,7 @@ client/   → frontend:
   js/         → api.js (api, usuarioActual), comun.js (encabezado con la sesión, pie, íconos, menús, escapar),
                 formularios.js (validar y mostrar errores), productos.js (tarjetaProducto, agregarAlCarrito),
                 y un .js por página (login.js, registro.js, catalogo.js, producto.js, carrito.js, checkout.js)
+                Panel: admin.js (entrarAlPanel, menú lateral, tablaPedidos) y admin-*.js para cada página admin-*.html
   img/        → logo.png
 server/   → backend:
   api/        → .htaccess + index.php (entrada única y manejo de errores), rutas.php (tabla de rutas), endpoints/ (una función por endpoint)
@@ -72,6 +73,13 @@ Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 - Carrito del encabezado: `actualizarContadorCarrito(cantidad)`. Menú: `marcarMenu('combos')`.
 - Los grupos de opciones (`type="radio"`) se marcan uno por uno: `.value = ''` no funciona en los navegadores.
 - Páginas privadas (carrito, checkout): si `await usuarioActual()` es `null`, `location.replace(enlaceLogin())`.
+
+**Panel de administración** (`admin*.html`):
+- No usan el encabezado ni el pie de la tienda: tienen `<body class="admin" data-seccion="…">`, `<nav id="admin-menu">` y `<main id="contenido" class="admin-contenido">`.
+- El .js de cada página empieza con `if (!await entrarAlPanel()) return;` (sin sesión → login; cliente → "Acceso denegado").
+- Las tablas llevan `data-titulo` en cada celda: en el celular cada fila se ve como tarjeta. Para sí/no usar `<input class="interruptor" type="checkbox" role="switch">`.
+- Antes de dar de baja un producto, cancelar un pedido o suspender una cuenta se pide confirmación con `confirm()`.
+- Las fotos se guardan en `server/uploads/` con un nombre generado; el `.htaccess` de esa carpeta impide ejecutar código.
 
 **Datos del negocio que faltan** (constantes en el JS, completarlas cuando las tengamos):
 - `WHATSAPP` en `client/js/comun.js` (número con código de país).

@@ -4,6 +4,7 @@
  * Uso:
  *   const respuesta = await api('productos');                                  // GET
  *   const respuesta = await api('auth/login', 'POST', { email, password });    // con datos
+ *   const respuesta = await api('admin/productos/5/imagenes', 'POST', formData); // con archivos
  *   if (respuesta.ok) { ...respuesta.data... } else { ...respuesta.error... }
  *
  * Nunca lanza un error: si el servidor no responde, devuelve { ok: false, error: '...' }.
@@ -15,7 +16,9 @@ const API = '../../server/api/';
 
 async function api(ruta, metodo = 'GET', datos = null) {
     const opciones = { method: metodo, headers: {} };
-    if (datos !== null) {
+    if (datos instanceof FormData) {
+        opciones.body = datos; // archivos (fotos): el navegador arma el envío multipart/form-data
+    } else if (datos !== null) {
         opciones.headers['Content-Type'] = 'application/json';
         opciones.body = JSON.stringify(datos);
     }

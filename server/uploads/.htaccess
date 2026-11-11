@@ -1,0 +1,7 @@
+# Carpeta de fotos de productos: solo se sirven imágenes.
+# Aunque alguien lograra subir un archivo de código, acá no se ejecuta.
+Options -Indexes
+
+<FilesMatch "\.(php|phtml|phar|php[0-9]|cgi|pl|py|sh)$">
+    Require all denied
+</FilesMatch>

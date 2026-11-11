@@ -41,6 +41,14 @@ const ICONOS = {
     tarjeta: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/>',
     estrella: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
     check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    inicio: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+    caja: '<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>',
+    etiqueta: '<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/>',
+    lista: '<path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/>',
+    usuarios: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.5 2.4 3.5 5.5"/>',
+    editar: '<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+    tienda: '<path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/>',
+    mas: '<path d="M12 5v14M5 12h14"/>',
 };
 
 /** Devuelve el HTML de un ícono, por ejemplo icono('carrito', 24). */
@@ -56,6 +64,20 @@ function icono(nombre, tamanio = 22) {
 function escapar(texto) {
     const reemplazos = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
     return String(texto).replace(/[&<>"']/g, caracter => reemplazos[caracter]);
+}
+
+/** Fecha de la base en formato argentino: fecha('2026-11-11 14:57:51') → "11/11/2026" (con conHora: "11/11/2026 14:57"). */
+function fecha(texto, conHora = false) {
+    const [dia, hora = ''] = String(texto).split(' ');
+    const [anio, mes, numero] = dia.split('-');
+    return `${numero}/${mes}/${anio}` + (conHora && hora ? ' ' + hora.slice(0, 5) : '');
+}
+
+/** Etiqueta de color para el estado de un pedido: etiquetaEstado('Pendiente'). */
+function etiquetaEstado(estado) {
+    // "Enviado / Listo para retirar" → estado--enviado
+    const clase = estado.split(' ')[0].toLowerCase().replace(/[^a-z]/g, '');
+    return `<span class="estado estado--${clase}">${escapar(estado)}</span>`;
 }
 
 /** Página actual con sus parámetros, por ejemplo "catalogo.html?categoria=1". */
@@ -323,10 +345,6 @@ function activarMenus() {
     });
 
     document.addEventListener('click', evento => {
-        if (evento.target.closest('[data-salir]')) {
-            cerrarSesion();
-            return;
-        }
         // Tocar fuera de un menú lo cierra
         if (!menu.contains(evento.target)) {
             cambiar(false);
@@ -354,8 +372,20 @@ window.addEventListener('pageshow', evento => {
     }
 });
 
-dibujarEncabezado();
-dibujarPie();
+// El encabezado y el pie son de las páginas de la tienda (el panel tiene su propio menú, en admin.js)
+if (document.getElementById('encabezado')) {
+    dibujarEncabezado();
+    activarMenus();
+    mostrarSesion();
+}
+if (document.getElementById('pie')) {
+    dibujarPie();
+}
 dibujarIconos();
-activarMenus();
-mostrarSesion();
+
+// "Cerrar sesión" funciona en cualquier página, de la tienda o del panel
+document.addEventListener('click', evento => {
+    if (evento.target.closest('[data-salir]')) {
+        cerrarSesion();
+    }
+});

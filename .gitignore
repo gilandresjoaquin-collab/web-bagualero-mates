@@ -15,6 +15,7 @@ vendor/
 # --- Imágenes subidas por el administrador desde el panel ---
 server/uploads/*
 !server/uploads/.gitkeep
+!server/uploads/.htaccess
 
 # --- Logs y temporales ---
 *.log
