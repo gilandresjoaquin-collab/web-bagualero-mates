@@ -21,6 +21,7 @@ require_once __DIR__ . '/endpoints/prueba.php';
 require_once __DIR__ . '/endpoints/auth.php';
 require_once __DIR__ . '/endpoints/catalogo.php';
 require_once __DIR__ . '/endpoints/carrito.php';
+require_once __DIR__ . '/endpoints/pedidos.php';
 
 return [
     // Diagnóstico
@@ -45,4 +46,9 @@ return [
     ['PUT',    '/carrito/{id_producto}', 'carrito_modificar', 'cliente'],
     ['DELETE', '/carrito/{id_producto}', 'carrito_quitar',    'cliente'],
     ['DELETE', '/carrito',               'carrito_vaciar',    'cliente'],
+
+    // Finalizar la compra (HU-13 y HU-14)
+    ['GET',  '/metodos-entrega', 'metodos_entrega_listar', 'publico'],
+    ['GET',  '/metodos-pago',    'metodos_pago_listar',    'publico'],
+    ['POST', '/pedidos',         'pedidos_crear',          'cliente'],
 ];

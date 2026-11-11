@@ -278,10 +278,15 @@ Respuesta `201 Created`:
     "id_pedido": 1048,
     "estado": "Pendiente",
     "total": 96000,
+    "metodo_entrega": "Envío a domicilio",
+    "metodo_pago": "Transferencia",
+    "direccion_entrega": "Av. Colón 2450, La Perla, Mar del Plata",
     "instrucciones_pago": "Los datos de la cuenta se muestran al confirmar el pedido"
   }
 }
 ```
+
+`direccion_entrega` solo es obligatoria si el método de entrega la requiere (envío a domicilio). Si no se manda `telefono_contacto`, se usa el teléfono de la cuenta. Todo se hace en una transacción, con los productos bloqueados (`SELECT … FOR UPDATE`): si dos clientes compran la última unidad a la vez, el segundo recibe `409`.
 
 Respuesta `409 Conflict` (stock insuficiente):
 

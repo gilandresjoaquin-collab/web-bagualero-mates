@@ -7,7 +7,8 @@
    2. Base                    6. Encabezado y menú       10. Catálogo y tarjetas de producto
    3. Utilidades              7. Pie                     11. Detalle de producto
    4. Botones                 8. Inicio                  12. Aviso flotante
-                                                         13. Carrito y finalizar compra
+                                                         13. Carrito
+                                                         14. Finalizar compra
    ===================================================================== */
 
 /* ---------- 1. Variables de la marca ---------- */
@@ -1521,7 +1522,7 @@ textarea {
     transform: translateY(-50%);
 }
 
-/* ---------- 13. Carrito y finalizar compra ---------- */
+/* ---------- 13. Carrito (y resumen de la compra) ---------- */
 .compra {
     padding-bottom: 48px;
 }
@@ -1717,4 +1718,198 @@ textarea {
         grid-template-columns: minmax(0, 1fr) 360px;
         align-items: start;
     }
+}
+
+/* ---------- 14. Finalizar compra ---------- */
+.pasos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin: 8px 0 24px;
+    padding: 0;
+    color: var(--gris);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    list-style: none;
+}
+
+.pasos__paso {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Línea entre un paso y el siguiente */
+.pasos__paso + .pasos__paso::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    margin-right: 4px;
+    background: var(--borde);
+}
+
+.pasos__paso span {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--borde);
+    color: var(--marron);
+    font-size: 0.875rem;
+}
+
+.pasos__paso--activo {
+    color: var(--marron);
+}
+
+.pasos__paso--activo span {
+    background: var(--cuero);
+    color: #fff;
+}
+
+.checkout__seccion + .checkout__seccion {
+    margin-top: 20px;
+}
+
+.checkout__seccion h2 {
+    margin-bottom: 16px;
+    font-size: 1.375rem;
+}
+
+/* Opciones grandes de entrega y de pago */
+.opciones {
+    display: grid;
+    gap: 10px;
+    margin: 0 0 20px;
+    padding: 0;
+    border: 0;
+}
+
+.opcion {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    background: var(--blanco);
+    cursor: pointer;
+}
+
+.opcion:has(input:checked) {
+    padding: 13px 15px; /* el borde es 1 px más grueso: así no se mueve nada */
+    border: 2px solid var(--cuero);
+    background: var(--crema-claro);
+}
+
+.opcion input {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin: 2px 0 0;
+    accent-color: var(--cuero);
+}
+
+.opcion strong {
+    display: block;
+    color: var(--marron);
+}
+
+.opcion small {
+    display: block;
+    color: var(--gris);
+    font-size: 0.875rem;
+}
+
+.campo[hidden] {
+    display: none;
+}
+
+.campo textarea {
+    min-height: 96px;
+    resize: vertical;
+}
+
+/* Productos en el resumen "Tu pedido" */
+.resumen__productos {
+    display: grid;
+    gap: 12px;
+    margin: 0 0 12px;
+    padding: 0 0 14px;
+    border-bottom: 1px solid var(--borde);
+    list-style: none;
+}
+
+.resumen__producto {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.875rem;
+}
+
+.resumen__producto small {
+    display: block;
+    color: var(--gris);
+}
+
+.resumen__foto {
+    display: block;
+    width: 48px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+/* Confirmación del pedido */
+.confirmacion {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.confirmacion__icono {
+    display: inline-grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    background: #EAF4EA;
+    color: var(--exito);
+}
+
+.confirmacion__datos {
+    margin: 20px 0;
+    border-top: 1px solid var(--borde);
+    text-align: left;
+}
+
+.confirmacion__datos div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.confirmacion__datos dt {
+    color: var(--marron);
+    font-weight: 700;
+}
+
+.confirmacion__datos dd {
+    margin: 0;
+    text-align: right;
+}
+
+.confirmacion .alerta {
+    text-align: left;
+}
+
+.confirmacion .alerta ol {
+    margin: 8px 0 0;
+    padding-left: 20px;
 }

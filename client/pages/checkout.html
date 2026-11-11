@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Finalizar compra · Bagualero Mates</title>
+    <link rel="icon" href="../img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap">
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body data-pagina="checkout">
+    <header id="encabezado"></header>
+
+    <main id="contenido" class="contenedor compra">
+        <nav class="migas" aria-label="Estás en">
+            <a href="inicio.html">Inicio</a> / <a href="carrito.html">Carrito</a> / <span>Finalizar compra</span>
+        </nav>
+        <h1 id="titulo">Finalizar compra</h1>
+
+        <ol class="pasos" aria-label="Pasos de la compra">
+            <li class="pasos__paso pasos__paso--activo"><span>1</span> Entrega</li>
+            <li class="pasos__paso pasos__paso--activo"><span>2</span> Pago</li>
+            <li class="pasos__paso" id="paso-confirmacion"><span>3</span> Confirmación</li>
+        </ol>
+
+        <!-- Lo completa checkout.js (HU-13 y HU-14) -->
+        <div id="checkout">
+            <p class="cargando">Cargando…</p>
+        </div>
+    </main>
+
+    <footer id="pie"></footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/formularios.js"></script>
+    <script src="../js/checkout.js"></script>
+</body>
+</html>

@@ -64,7 +64,8 @@ function mostrarAlerta(formulario, mensaje) {
 
 /** Desactiva el botón mientras se envía el formulario, para evitar el doble clic. */
 function enviando(formulario, activo, texto = 'Enviando…') {
-    const boton = formulario.querySelector('[type="submit"]');
+    // formulario.elements también incluye los botones de afuera conectados con form="id-del-formulario"
+    const boton = [...formulario.elements].find(elemento => elemento.type === 'submit');
     if (activo) {
         boton.dataset.texto = boton.textContent;
         boton.textContent = texto;

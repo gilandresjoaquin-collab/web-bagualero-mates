@@ -40,6 +40,7 @@ const ICONOS = {
     envio: '<path d="M2 6h12v10H2zM14 10h4l3 3v3h-7z"/><circle cx="6.5" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>',
     tarjeta: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/>',
     estrella: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+    check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
 };
 
 /** Devuelve el HTML de un ícono, por ejemplo icono('carrito', 24). */

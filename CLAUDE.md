@@ -27,7 +27,7 @@ client/   → frontend:
   css/        → estilos.css (variables de la marca, botones, formularios, encabezado, pie, páginas)
   js/         → api.js (api, usuarioActual), comun.js (encabezado con la sesión, pie, íconos, menús, escapar),
                 formularios.js (validar y mostrar errores), productos.js (tarjetaProducto, agregarAlCarrito),
-                y un .js por página (login.js, registro.js, catalogo.js, producto.js, carrito.js…)
+                y un .js por página (login.js, registro.js, catalogo.js, producto.js, carrito.js, checkout.js)
   img/        → logo.png
 server/   → backend:
   api/        → .htaccess + index.php (entrada única y manejo de errores), rutas.php (tabla de rutas), endpoints/ (una función por endpoint)
@@ -71,6 +71,11 @@ Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 - Mensajes cortos: `avisar('Agregado al carrito', { tipo: 'exito' | 'error' | 'info', enlaces: [{ texto, url }] })`.
 - Carrito del encabezado: `actualizarContadorCarrito(cantidad)`. Menú: `marcarMenu('combos')`.
 - Los grupos de opciones (`type="radio"`) se marcan uno por uno: `.value = ''` no funciona en los navegadores.
+- Páginas privadas (carrito, checkout): si `await usuarioActual()` es `null`, `location.replace(enlaceLogin())`.
+
+**Datos del negocio que faltan** (constantes en el JS, completarlas cuando las tengamos):
+- `WHATSAPP` en `client/js/comun.js` (número con código de país).
+- `DATOS_TRANSFERENCIA` en `client/js/checkout.js` (alias o CBU que se muestra al confirmar un pedido con transferencia).
 
 ## Documentación de referencia (en /docs)
 - `02-historias-de-usuario.md`: las 24 historias (HU-01 a HU-24) con sus criterios de aceptación. Es lo que hay que cumplir.
