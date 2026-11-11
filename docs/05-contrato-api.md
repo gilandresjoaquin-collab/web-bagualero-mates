@@ -96,6 +96,26 @@ Ejemplo:
 GET /api/productos?categoria=1&material=4&precio_max=60000&con_stock=1&orden=precio_asc&pagina=1
 ```
 
+Respuesta `200 OK` (los parámetros inválidos se ignoran; si la página no existe, se devuelve la última):
+
+```json
+{
+  "ok": true,
+  "data": {
+    "productos": [
+      { "id_producto": 1, "nombre": "Mate Imperial Virola Combinada", "categoria": "Mates",
+        "precio": 50000, "stock": 4, "destacado": true, "imagen": null }
+    ],
+    "pagina": 1,
+    "por_pagina": 12,
+    "total": 1,
+    "total_paginas": 1
+  }
+}
+```
+
+`imagen` (y `ruta` en el detalle) es el nombre del archivo dentro de `server/uploads/`, o `null` si el producto no tiene fotos.
+
 ## 3. Carrito
 
 | Método | URL | Acción | Acceso | HU |

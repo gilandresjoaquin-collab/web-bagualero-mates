@@ -90,7 +90,7 @@ function dibujarEncabezado() {
     const pagina = document.body.dataset.pagina;
     const enlaces = MENU.map(opcion => {
         const actual = opcion.pagina === pagina ? ' aria-current="page"' : '';
-        return `<a href="${opcion.url}"${actual}>${opcion.texto}</a>`;
+        return `<a href="${opcion.url}" data-pagina="${opcion.pagina}"${actual}>${opcion.texto}</a>`;
     }).join('');
 
     document.getElementById('encabezado').innerHTML = `
@@ -164,6 +164,76 @@ async function mostrarSesion() {
         <a href="cuenta.html">${icono('usuario', 20)} Mi cuenta (${nombre})</a>
         ${esAdmin ? `<a href="admin.html">${icono('panel', 20)} Panel de administración</a>` : ''}
         <button class="menu__salir" type="button" data-salir>${icono('salir', 20)} Cerrar sesión</button>`;
+
+    // Cantidad de productos en el carrito (HU-11)
+    const carrito = await api('carrito');
+    if (carrito.ok) {
+        actualizarContadorCarrito(carrito.data.cantidad_total);
+    }
+}
+
+/** Muestra en el ícono del carrito la cantidad total de productos (si es 0, no se ve). */
+function actualizarContadorCarrito(cantidad) {
+    const contador = document.querySelector('.carrito__contador');
+    contador.textContent = cantidad;
+    contador.hidden = cantidad === 0;
+    document.querySelector('.carrito').setAttribute('aria-label', `Carrito (${cantidad} productos)`);
+}
+
+/** Resalta una opción del menú, por ejemplo marcarMenu('combos'). */
+function marcarMenu(pagina) {
+    document.querySelectorAll('#menu > a[data-pagina]').forEach(enlace => {
+        if (enlace.dataset.pagina === pagina) {
+            enlace.setAttribute('aria-current', 'page');
+        } else {
+            enlace.removeAttribute('aria-current');
+        }
+    });
+}
+
+/* ---------- Productos y precios ---------- */
+
+/** Precio con formato argentino: precio(50000) → "$50.000". */
+function precio(valor) {
+    return '$' + Number(valor).toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+}
+
+/**
+ * HTML de la foto de un producto. "ruta" es el nombre del archivo en server/uploads/.
+ * Si el producto no tiene foto, muestra un recuadro con el logo.
+ */
+function fotoProducto(ruta, descripcion = '') {
+    if (!ruta) {
+        return '<span class="foto-vacia"><img src="../img/logo.png" alt=""></span>';
+    }
+    return `<img class="foto" src="../../server/uploads/${encodeURI(ruta)}" alt="${escapar(descripcion)}" loading="lazy">`;
+}
+
+/**
+ * Mensaje flotante abajo de la pantalla, que se va solo.
+ *   avisar('Agregado al carrito', { enlaces: [{ texto: 'Ver carrito', url: 'carrito.html' }] })
+ *   avisar('No hay stock suficiente', { tipo: 'error' })
+ */
+function avisar(mensaje, { tipo = 'exito', enlaces = [] } = {}) {
+    let caja = document.getElementById('aviso-flotante');
+    if (!caja) {
+        caja = document.createElement('div');
+        caja.id = 'aviso-flotante';
+        caja.setAttribute('role', 'status');
+        document.body.appendChild(caja);
+    }
+
+    const botones = enlaces.map(enlace => `<a href="${enlace.url}">${escapar(enlace.texto)}</a>`).join('');
+    caja.className = `aviso-flotante aviso-flotante--${tipo}`;
+    caja.innerHTML = `
+        <p>${escapar(mensaje)}</p>
+        ${botones}
+        <button type="button" class="aviso-flotante__cerrar" aria-label="Cerrar aviso">${icono('cerrar', 18)}</button>`;
+    caja.hidden = false;
+    caja.querySelector('.aviso-flotante__cerrar').addEventListener('click', () => { caja.hidden = true; });
+
+    clearTimeout(caja.temporizador);
+    caja.temporizador = setTimeout(() => { caja.hidden = true; }, 6000);
 }
 
 /** Cierra la sesión en el servidor y vuelve al inicio (HU-09). */

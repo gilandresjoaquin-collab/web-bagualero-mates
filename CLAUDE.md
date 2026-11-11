@@ -26,7 +26,8 @@ client/   → frontend:
   pages/      → todas las páginas HTML, al mismo nivel (así las rutas relativas sirven igual en todas)
   css/        → estilos.css (variables de la marca, botones, formularios, encabezado, pie, páginas)
   js/         → api.js (api, usuarioActual), comun.js (encabezado con la sesión, pie, íconos, menús, escapar),
-                formularios.js (validar y mostrar errores), y un .js por página (login.js, registro.js…)
+                formularios.js (validar y mostrar errores), productos.js (tarjetaProducto, agregarAlCarrito),
+                y un .js por página (login.js, registro.js, catalogo.js, producto.js…)
   img/        → logo.png
 server/   → backend:
   api/        → .htaccess + index.php (entrada única y manejo de errores), rutas.php (tabla de rutas), endpoints/ (una función por endpoint)
@@ -34,7 +35,7 @@ server/   → backend:
                 sesion.php (usuario_actual, verificar_acceso), validaciones.php (texto_obligatorio, validar_email…), enrutador.php
   config/     → config.example.php → copiar a config.php
   database/   → bagualero_mates.sql
-  uploads/    → fotos de productos
+  uploads/    → fotos de productos (en producto_imagenes.ruta se guarda solo el nombre del archivo)
 docs/     → documentación del proyecto (leer antes de programar)
 ```
 
@@ -66,6 +67,10 @@ Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 - Formularios con `novalidate`: `leerFormulario`, `limpiarErrores`, `mostrarErrores(form, { campo: 'mensaje' })`, `mostrarAlerta`, `enviando` y las reglas `errorEmail`, `errorTelefono`, `errorPassword`, `errorTexto`.
 - Para pedir login: enlazar a `enlaceLogin()` (o `login.html?volver=pagina.html`); después de entrar vuelve a esa página.
   `login.html` y `registro.html` son páginas separadas y el enlace entre ellas conserva el `?volver=` (`paginaParaVolver()` en `comun.js`).
+- Productos: `precio(50000)` → "$50.000", `fotoProducto(ruta, nombre)` (foto o recuadro con el logo), `tarjetaProducto(p)` y `agregarAlCarrito(id, cantidad)`.
+- Mensajes cortos: `avisar('Agregado al carrito', { tipo: 'exito' | 'error' | 'info', enlaces: [{ texto, url }] })`.
+- Carrito del encabezado: `actualizarContadorCarrito(cantidad)`. Menú: `marcarMenu('combos')`.
+- Los grupos de opciones (`type="radio"`) se marcan uno por uno: `.value = ''` no funciona en los navegadores.
 
 ## Documentación de referencia (en /docs)
 - `02-historias-de-usuario.md`: las 24 historias (HU-01 a HU-24) con sus criterios de aceptación. Es lo que hay que cumplir.

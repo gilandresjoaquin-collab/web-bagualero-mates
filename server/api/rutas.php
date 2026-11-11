@@ -19,6 +19,7 @@
 
 require_once __DIR__ . '/endpoints/prueba.php';
 require_once __DIR__ . '/endpoints/auth.php';
+require_once __DIR__ . '/endpoints/catalogo.php';
 
 return [
     // Diagnóstico
@@ -31,8 +32,9 @@ return [
     ['POST', '/auth/logout',   'auth_logout',     'cliente'],
     ['GET',  '/auth/me',       'auth_me',         'cliente'],
 
-    // Así se van a ver las próximas rutas:
-    // ['GET',   '/productos',                    'productos_listar',       'publico'],
-    // ['GET',   '/productos/{id}',               'productos_detalle',      'publico'],
-    // ['PATCH', '/admin/productos/{id}/estado',  'admin_productos_estado', 'admin'],
+    // Catálogo (HU-01 a HU-05)
+    ['GET',  '/productos',      'productos_listar',  'publico'],
+    ['GET',  '/productos/{id}', 'productos_detalle', 'publico'],
+    ['GET',  '/categorias',     'categorias_listar', 'publico'],
+    ['GET',  '/materiales',     'materiales_listar', 'publico'],
 ];

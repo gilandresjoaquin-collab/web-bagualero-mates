@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo · Bagualero Mates</title>
+    <link rel="icon" href="../img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap">
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body data-pagina="catalogo">
+    <header id="encabezado"></header>
+
+    <main id="contenido" class="contenedor catalogo">
+        <nav class="migas" aria-label="Estás en">
+            <a href="inicio.html">Inicio</a> / <a href="catalogo.html">Catálogo</a><span id="miga-actual"></span>
+        </nav>
+
+        <h1 id="titulo">Catálogo</h1>
+        <p id="descripcion" class="catalogo__descripcion">Todos nuestros productos.</p>
+
+        <!-- Celular: los filtros se abren con este botón -->
+        <button id="boton-filtros" class="boton boton--borde catalogo__boton-filtros" type="button"
+                aria-expanded="false" aria-controls="filtros">
+            Filtrar
+        </button>
+
+        <div class="catalogo__cuerpo">
+            <!-- Filtros (HU-02 y HU-04) -->
+            <aside id="filtros" class="filtros" aria-label="Filtros">
+                <form id="form-filtros">
+                    <h2 class="filtros__titulo">Filtrar</h2>
+
+                    <fieldset class="filtros__grupo">
+                        <legend>Categoría</legend>
+                        <div id="filtro-categorias"></div>
+                    </fieldset>
+
+                    <fieldset class="filtros__grupo">
+                        <legend>Material</legend>
+                        <div id="filtro-materiales"></div>
+                    </fieldset>
+
+                    <fieldset class="filtros__grupo">
+                        <legend>Precio</legend>
+                        <div class="filtros__precio">
+                            <div class="campo">
+                                <label for="precio-min">Desde $</label>
+                                <input id="precio-min" name="precio_min" type="number" min="0" step="1000" inputmode="numeric">
+                            </div>
+                            <div class="campo">
+                                <label for="precio-max">Hasta $</label>
+                                <input id="precio-max" name="precio_max" type="number" min="0" step="1000" inputmode="numeric">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="filtros__grupo">
+                        <legend>Disponibilidad</legend>
+                        <label class="opcion-chica">
+                            <input type="checkbox" name="con_stock" value="1"> Solo con stock
+                        </label>
+                    </fieldset>
+
+                    <button id="limpiar" class="boton boton--borde boton--bloque" type="button">Limpiar filtros</button>
+                </form>
+            </aside>
+
+            <section class="catalogo__resultados" aria-label="Productos">
+                <div class="catalogo__barra">
+                    <div id="chips" class="chips"></div>
+                    <div class="catalogo__orden">
+                        <p id="cantidad" class="catalogo__cantidad" aria-live="polite"></p>
+                        <label class="oculto-visual" for="orden">Ordenar</label>
+                        <select id="orden" name="orden">
+                            <option value="nuevos">Ordenar: Más nuevos</option>
+                            <option value="precio_asc">Ordenar: Menor precio</option>
+                            <option value="precio_desc">Ordenar: Mayor precio</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="grilla" class="grilla-productos"></div>
+                <nav id="paginacion" class="paginacion" aria-label="Páginas del catálogo"></nav>
+            </section>
+        </div>
+    </main>
+
+    <footer id="pie"></footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/productos.js"></script>
+    <script src="../js/catalogo.js"></script>
+</body>
+</html>
