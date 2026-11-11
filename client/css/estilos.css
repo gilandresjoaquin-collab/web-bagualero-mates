@@ -1,0 +1,702 @@
+/* =====================================================================
+   Bagualero Mates — Estilos
+   Mobile-first: los estilos generales son para celular y los
+   @media (min-width: ...) agregan los cambios para pantallas más grandes.
+
+   1. Variables de la marca   5. Formularios y mensajes
+   2. Base                    6. Encabezado y menú
+   3. Utilidades              7. Pie
+   4. Botones                 8. Inicio
+   ===================================================================== */
+
+/* ---------- 1. Variables de la marca ---------- */
+:root {
+    --crema: #F0E7D6;        /* fondo */
+    --crema-claro: #F7F1E6;  /* encabezado y franjas */
+    --blanco: #FFFDF9;       /* tarjetas y campos */
+    --marron: #3B2A1B;       /* títulos, encabezado, pie */
+    --cuero: #A0703F;        /* botones y acciones */
+    --cuero-oscuro: #855A30; /* botones al pasar el mouse */
+    --dorado: #B89A5B;       /* etiquetas y detalles */
+    --carbon: #1E1E1E;       /* texto */
+    --gris: #6F665D;         /* texto secundario */
+    --borde: #DDD0BA;
+    --error: #B3261E;
+    --exito: #2E6B30;
+
+    --fuente-titulos: 'Lora', Georgia, 'Times New Roman', serif;
+    --fuente-texto: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+    --radio: 8px;
+    --sombra: 0 6px 20px rgba(59, 42, 27, 0.12);
+}
+
+/* ---------- 2. Base ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;            /* el pie queda abajo aunque la página tenga poco contenido */
+    flex-direction: column;
+    background: var(--crema);
+    color: var(--carbon);
+    font-family: var(--fuente-texto);
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow-wrap: break-word; /* las palabras largas no generan scroll horizontal */
+}
+
+main {
+    flex: 1;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0 0 0.5em;
+    font-family: var(--fuente-titulos);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--marron);
+}
+
+h1 { font-size: clamp(1.75rem, 5vw, 2.75rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+h3 { font-size: 1.25rem; }
+
+p {
+    margin: 0 0 1em;
+}
+
+a {
+    color: var(--cuero);
+}
+
+a:hover {
+    color: var(--cuero-oscuro);
+}
+
+:focus-visible {
+    outline: 3px solid var(--dorado);
+    outline-offset: 2px;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+}
+
+/* ---------- 3. Utilidades ---------- */
+.contenedor {
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding-inline: 16px;
+}
+
+.seccion {
+    padding-block: 40px;
+}
+
+.sobretitulo {
+    margin-bottom: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cuero);
+}
+
+/* Oculto en pantalla pero visible para lectores de pantalla */
+.oculto-visual {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Enlace "Saltar al contenido": aparece solo al navegar con el teclado */
+.saltar {
+    position: absolute;
+    top: -60px;
+    left: 8px;
+    z-index: 100;
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: var(--marron);
+    color: #fff;
+}
+
+.saltar:focus {
+    top: 8px;
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .contenedor { padding-inline: 24px; }
+    .seccion { padding-block: 56px; }
+}
+
+/* ---------- 4. Botones ---------- */
+.boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px; /* tamaño cómodo para el dedo */
+    padding: 10px 20px;
+    border: 2px solid var(--cuero);
+    border-radius: 6px;
+    background: var(--cuero);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.boton:hover {
+    background: var(--cuero-oscuro);
+    border-color: var(--cuero-oscuro);
+    color: #fff;
+}
+
+/* Con borde y sin relleno (por ejemplo, "Sin stock") */
+.boton--borde {
+    background: transparent;
+    border-color: var(--marron);
+    color: var(--marron);
+}
+
+.boton--borde:hover {
+    background: var(--marron);
+    border-color: var(--marron);
+    color: #fff;
+}
+
+/* Marrón oscuro (por ejemplo, "Ir a Instagram") */
+.boton--oscuro {
+    background: var(--marron);
+    border-color: var(--marron);
+}
+
+.boton--oscuro:hover {
+    background: #24180E;
+    border-color: #24180E;
+}
+
+/* Borde blanco, para fondos oscuros */
+.boton--claro {
+    background: transparent;
+    border-color: #fff;
+    color: #fff;
+}
+
+.boton--claro:hover {
+    background: #fff;
+    border-color: #fff;
+    color: var(--marron);
+}
+
+.boton--bloque {
+    width: 100%;
+}
+
+.boton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ---------- 5. Formularios y mensajes ---------- */
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.campo label {
+    font-weight: 600;
+    color: var(--marron);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    background: var(--blanco);
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: none;
+    border-color: var(--cuero);
+    box-shadow: 0 0 0 3px rgba(160, 112, 63, 0.25);
+}
+
+.campo--error input,
+.campo--error select,
+.campo--error textarea {
+    border-color: var(--error);
+}
+
+.campo__error {
+    font-size: 0.875rem;
+    color: var(--error);
+}
+
+.alerta {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border: 1px solid;
+    border-radius: 6px;
+}
+
+.alerta--error {
+    background: #FBEAEA;
+    border-color: #E8B4B0;
+    color: var(--error);
+}
+
+.alerta--exito {
+    background: #EAF4EA;
+    border-color: #B5D6B6;
+    color: var(--exito);
+}
+
+/* ---------- 6. Encabezado y menú ---------- */
+.aviso {
+    margin: 0;
+    padding: 6px 16px;
+    background: var(--marron);
+    color: var(--crema-claro);
+    font-size: 0.8125rem;
+    text-align: center;
+}
+
+.barra {
+    position: relative; /* el menú desplegable se ubica debajo de la barra */
+    background: var(--crema-claro);
+    border-bottom: 1px solid var(--borde);
+}
+
+/* Celular: [≡] [logo] ........ [carrito]
+            [ buscador ..................... ] */
+.barra__fila {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+        "boton logo carrito"
+        "buscador buscador buscador";
+    align-items: center;
+    gap: 10px 12px;
+    padding-block: 10px;
+}
+
+.menu-boton {
+    grid-area: boton;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-left: -10px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--marron);
+    cursor: pointer;
+}
+
+.logo {
+    grid-area: logo;
+    justify-self: start;
+}
+
+.logo img {
+    width: auto;
+    height: 52px;
+}
+
+.buscador {
+    grid-area: buscador;
+    position: relative;
+}
+
+.buscador svg {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    color: var(--gris);
+    pointer-events: none;
+}
+
+.buscador input {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 16px 10px 44px;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    background: var(--blanco);
+}
+
+.buscador input:focus {
+    outline: none;
+    border-color: var(--cuero);
+    box-shadow: 0 0 0 3px rgba(160, 112, 63, 0.25);
+}
+
+.cuenta {
+    display: none; /* en el celular "Mi cuenta" está dentro del menú */
+}
+
+.carrito {
+    grid-area: carrito;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -8px;
+    color: var(--marron);
+}
+
+.carrito__contador {
+    position: absolute;
+    top: 0;
+    right: -2px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: var(--cuero);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+}
+
+.carrito__contador[hidden] {
+    display: none;
+}
+
+/* Menú: en el celular está oculto y se despliega con el botón hamburguesa */
+.menu {
+    display: none;
+}
+
+.menu--abierto {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    padding: 4px 16px 16px;
+    background: var(--crema-claro);
+    border-bottom: 1px solid var(--borde);
+    box-shadow: var(--sombra);
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    border-bottom: 1px solid var(--borde);
+    color: var(--marron);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.menu a[aria-current="page"] {
+    color: var(--cuero);
+}
+
+/* Escritorio: [logo] [menú] ...... [buscador] [Mi cuenta] [carrito] */
+@media (min-width: 1024px) {
+    .barra__fila {
+        grid-template-columns: auto auto 1fr auto auto;
+        grid-template-areas: "logo menu buscador cuenta carrito";
+        gap: 24px;
+        padding-block: 12px;
+    }
+
+    .menu-boton,
+    .menu__cuenta {
+        display: none !important;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    .menu,
+    .menu--abierto {
+        grid-area: menu;
+        position: static;
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+        padding: 0;
+        background: none;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .menu a {
+        min-height: auto;
+        padding-block: 6px;
+        border-bottom: 2px solid transparent;
+        font-weight: 700;
+    }
+
+    .menu a:hover {
+        color: var(--cuero);
+    }
+
+    .menu a[aria-current="page"] {
+        color: var(--marron);
+        border-bottom-color: var(--cuero);
+    }
+
+    .buscador {
+        justify-self: end;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .cuenta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--marron);
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .cuenta:hover {
+        color: var(--cuero);
+    }
+}
+
+/* ---------- 7. Pie ---------- */
+.pie {
+    background: var(--marron);
+    color: #E9DFCF;
+}
+
+.pie__columnas {
+    display: grid;
+    gap: 32px;
+    padding-block: 40px;
+}
+
+.pie__logo {
+    width: 72px;
+    margin-bottom: 16px;
+    filter: brightness(0) invert(1); /* el logo marrón se ve claro sobre el fondo oscuro */
+    opacity: 0.92;
+}
+
+.pie h2 {
+    margin-bottom: 10px;
+    font-size: 1.125rem;
+    color: var(--dorado);
+}
+
+.pie ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pie a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    color: #E9DFCF;
+    text-decoration: none;
+}
+
+.pie a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.pie__dato {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    margin: 0;
+}
+
+.pie__copia {
+    margin: 0;
+    padding: 14px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    color: #CBBFAE;
+    font-size: 0.8125rem;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .pie__columnas {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .pie__marca {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (min-width: 1024px) {
+    .pie__columnas {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        padding-block: 48px;
+    }
+
+    .pie__marca {
+        grid-column: auto;
+    }
+
+    .pie a,
+    .pie__dato {
+        min-height: 32px;
+    }
+}
+
+/* ---------- 8. Inicio ---------- */
+.portada {
+    background: var(--marron);
+    color: #EADFCC;
+}
+
+.portada__fila {
+    display: grid;
+    gap: 28px;
+    align-items: center;
+    padding-block: 40px;
+}
+
+.portada h1 {
+    color: var(--crema-claro);
+}
+
+.portada .sobretitulo {
+    color: var(--dorado);
+}
+
+.portada__texto {
+    max-width: 46ch;
+    font-size: 1.0625rem;
+}
+
+.portada__botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+/* Lugar para la foto principal (por ahora, el logo sobre un fondo rayado) */
+.portada__imagen {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radio);
+    background: repeating-linear-gradient(135deg, #4A3624 0 18px, #43311F 18px 36px);
+}
+
+.portada__imagen img {
+    width: 34%;
+    filter: brightness(0) invert(1);
+    opacity: 0.2;
+}
+
+.beneficios {
+    background: var(--crema-claro);
+    border-block: 1px solid var(--borde);
+}
+
+.beneficios__lista {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 16px;
+    margin: 0 auto;
+    padding-block: 24px;
+    list-style: none;
+}
+
+.beneficio {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.875rem;
+}
+
+.beneficio__icono {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--borde);
+    border-radius: 50%;
+    background: var(--crema);
+    color: var(--cuero);
+}
+
+.beneficio strong {
+    display: block;
+    color: var(--marron);
+    font-size: 0.9375rem;
+}
+
+@media (min-width: 768px) {
+    .portada__fila {
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        padding-block: 64px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .beneficios__lista {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

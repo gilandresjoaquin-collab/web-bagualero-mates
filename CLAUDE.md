@@ -21,7 +21,12 @@ Proyecto escolar de 7.° año (E.E.S.T. N.° 2, materia "Proyecto e Implementaci
 
 ## Estructura
 ```
-client/   → frontend: pages/ (HTML), css/, js/, img/ (logo.png)
+client/   → frontend:
+  index.html  → solo redirige a pages/inicio.html
+  pages/      → todas las páginas HTML, al mismo nivel (así las rutas relativas sirven igual en todas)
+  css/        → estilos.css (variables de la marca, botones, formularios, encabezado, pie, páginas)
+  js/         → comun.js (dibuja el encabezado y el pie, los íconos y el menú hamburguesa)
+  img/        → logo.png
 server/   → backend:
   api/        → .htaccess + index.php (entrada única y manejo de errores), rutas.php (tabla de rutas), endpoints/ (una función por endpoint)
   includes/   → respuestas.php (responder_ok, responder_error, leer_json), conexion.php (config, conexion),
@@ -44,6 +49,13 @@ docs/     → documentación del proyecto (leer antes de programar)
 En la sesión solo se guarda `$_SESSION['id_usuario']`; el rol y el estado se leen de la base en cada petición.
 
 Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
+
+**Cómo armar una página:**
+1. Copiar la estructura de `client/pages/inicio.html`: el `<head>` (Lora + `estilos.css`), `<body data-pagina="...">`, `<header id="encabezado">`, `<main id="contenido">`, `<footer id="pie">` y `comun.js` al final.
+2. `data-pagina` resalta la opción del menú: `inicio`, `catalogo`, `combos`, `nosotros` o `contacto`.
+3. Usar las clases que ya existen: `contenedor`, `seccion`, `sobretitulo`, `boton` (`boton--borde`, `boton--oscuro`, `boton--claro`, `boton--bloque`), `campo`, `campo__error`, `alerta--error`, `alerta--exito`.
+4. Íconos: `<span data-icono="carrito"></span>` en el HTML o `icono('carrito')` en JS (ver `ICONOS` en `comun.js`).
+5. CSS mobile-first: primero el estilo de celular y después `@media (min-width: 768px)` o `(min-width: 1024px)`.
 
 ## Documentación de referencia (en /docs)
 - `02-historias-de-usuario.md`: las 24 historias (HU-01 a HU-24) con sus criterios de aceptación. Es lo que hay que cumplir.
