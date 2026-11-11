@@ -46,6 +46,9 @@ docs/     → documentación del proyecto (leer antes de programar)
 - **Autenticación:**
   - Sesiones de PHP (`$_SESSION`).
   - Las rutas de administración devuelven 403 si el usuario no es `administrador`.
+- **Rutas en los `fetch`:**
+  - Siempre relativas. Nunca `http://localhost/...` ni el nombre de la carpeta del proyecto, porque cada uno puede tenerla con otro nombre.
+  - Desde las páginas de `client/pages/`, la API está en `../../server/api/` (por ejemplo, `fetch('../../server/api/productos')`).
 - **Credenciales:**
   - Solo en `server/config/config.php`, que está en el `.gitignore`. Nunca subirlas.
 - **Productos:**
