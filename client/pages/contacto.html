@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contacto · Bagualero Mates</title>
+    <meta name="description" content="Escribile a Bagualero Mates: Instagram, WhatsApp o el formulario de contacto.">
+    <link rel="icon" href="../img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap">
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body data-pagina="contacto">
+    <header id="encabezado"></header>
+
+    <main id="contenido" class="contenedor informacion">
+        <nav class="migas" aria-label="Estás en">
+            <a href="inicio.html">Inicio</a> / <span>Contacto</span>
+        </nav>
+        <h1>Contacto</h1>
+        <p class="compra__subtitulo">¿Tenés una consulta? Escribinos y te respondemos a la brevedad.</p>
+
+        <div class="contacto__fila">
+            <!-- Medios de contacto (HU-23) -->
+            <section class="tarjeta-formulario" aria-labelledby="titulo-medios">
+                <h2 id="titulo-medios">Medios de contacto</h2>
+                <ul class="contacto__medios">
+                    <li>
+                        <a href="https://www.instagram.com/bagualero.mates/" target="_blank" rel="noopener">
+                            <span data-icono="instagram" data-tamanio="24"></span> @bagualero.mates
+                        </a>
+                    </li>
+                    <!-- Se muestra cuando se carga el número en WHATSAPP (client/js/comun.js) -->
+                    <li id="contacto-whatsapp" hidden>
+                        <a href="#" target="_blank" rel="noopener">
+                            <span data-icono="mensaje" data-tamanio="24"></span> Escribinos por WhatsApp
+                        </a>
+                    </li>
+                    <li>
+                        <p><span data-icono="ubicacion" data-tamanio="24"></span> Mar del Plata, Buenos Aires</p>
+                    </li>
+                </ul>
+                <p class="panel-caja__ayuda">Envíos a domicilio en Mar del Plata, o retiro y punto de encuentro sin cargo.</p>
+            </section>
+
+            <!-- Formulario de contacto (HU-23) -->
+            <section class="tarjeta-formulario" aria-labelledby="titulo-formulario">
+                <h2 id="titulo-formulario">Mandanos un mensaje</h2>
+                <form id="form-contacto" novalidate>
+                    <div class="alerta alerta--error" role="alert" hidden></div>
+                    <div class="campos-dos">
+                        <div class="campo">
+                            <label for="nombre">Nombre <span class="requerido">*</span></label>
+                            <input id="nombre" name="nombre" maxlength="80" autocomplete="name" required>
+                        </div>
+                        <div class="campo">
+                            <label for="email">Correo electrónico <span class="requerido">*</span></label>
+                            <input id="email" name="email" type="email" maxlength="120" autocomplete="email" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="mensaje">Mensaje <span class="requerido">*</span></label>
+                        <textarea id="mensaje" name="mensaje" maxlength="2000" rows="6" required></textarea>
+                    </div>
+                    <button class="boton" type="submit">Enviar mensaje</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer id="pie"></footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/formularios.js"></script>
+    <script src="../js/contacto.js"></script>
+</body>
+</html>

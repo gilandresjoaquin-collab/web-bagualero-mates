@@ -23,6 +23,7 @@ require_once __DIR__ . '/endpoints/catalogo.php';
 require_once __DIR__ . '/endpoints/carrito.php';
 require_once __DIR__ . '/endpoints/pedidos.php';
 require_once __DIR__ . '/endpoints/usuarios.php';
+require_once __DIR__ . '/endpoints/contacto.php';
 require_once __DIR__ . '/endpoints/admin_panel.php';
 require_once __DIR__ . '/endpoints/admin_productos.php';
 require_once __DIR__ . '/endpoints/admin_categorias.php';
@@ -71,7 +72,11 @@ return [
     ['PUT',    '/usuarios/direcciones/{id}', 'direcciones_editar', 'cliente'],
     ['DELETE', '/usuarios/direcciones/{id}', 'direcciones_borrar', 'cliente'],
 
-    // Panel de administración (HU-16 a HU-22): todo /admin es solo para administradores
+    // Contacto (HU-23)
+    ['POST', '/contacto', 'contacto_enviar', 'publico'],
+
+    // Panel de administración (HU-16 a HU-23): todo /admin es solo para administradores
+    ['GET',    '/admin/mensajes',                               'admin_mensajes_listar',            'admin'],
     ['GET',    '/admin/dashboard',                              'admin_dashboard',                  'admin'],
     ['GET',    '/admin/productos',                              'admin_productos_listar',           'admin'],
     ['POST',   '/admin/productos',                              'admin_productos_crear',            'admin'],

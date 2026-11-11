@@ -13,6 +13,7 @@
                                                          16. Panel de administración
                                                          17. Mi cuenta
                                                          18. Inicio: categorías y destacados
+                                                         19. Nosotros, Contacto y mensajes
    ===================================================================== */
 
 /* ---------- 1. Variables de la marca ---------- */
@@ -2883,5 +2884,163 @@ textarea {
 
     .categoria-tarjeta {
         font-size: 1rem;
+    }
+}
+
+/* ---------- 19. Nosotros, Contacto y mensajes del panel ---------- */
+.informacion {
+    padding-bottom: 48px;
+}
+
+.texto-largo {
+    max-width: 70ch;
+}
+
+.informacion__bloque {
+    padding: 28px 0;
+    border-top: 1px solid var(--borde);
+    scroll-margin-top: 16px; /* para que los enlaces #envios, #pagos… no queden pegados arriba */
+}
+
+.informacion__bloque--primero {
+    padding-top: 8px;
+    border-top: 0;
+}
+
+.informacion__nota {
+    margin: 16px 0 0;
+    color: var(--gris);
+}
+
+.informacion__final {
+    text-align: center;
+}
+
+.informacion__final .botones-fila {
+    justify-content: center;
+}
+
+/* Tres opciones con ícono (propuesta, envíos, pagos) */
+.opciones-info {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.opciones-info li {
+    padding: 16px;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+}
+
+.opciones-info [data-icono] {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    background: var(--crema-claro);
+    color: var(--cuero);
+}
+
+.opciones-info strong {
+    display: block;
+    color: var(--marron);
+}
+
+/* Pasos numerados de "Cómo comprar" */
+.pasos-compra {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: paso;
+}
+
+.pasos-compra li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    counter-increment: paso;
+}
+
+.pasos-compra li::before {
+    content: counter(paso);
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--cuero);
+    color: #fff;
+    font-weight: 700;
+}
+
+.contacto__fila {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+}
+
+.contacto__medios {
+    display: grid;
+    gap: 4px;
+    margin: 0 0 12px;
+    padding: 0;
+    list-style: none;
+}
+
+.contacto__medios a,
+.contacto__medios p {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    margin: 0;
+    color: var(--marron);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.contacto__medios a:hover {
+    color: var(--cuero);
+}
+
+.contacto__medios [data-icono] {
+    color: var(--cuero);
+}
+
+/* Mensajes en el panel */
+.mensaje-admin__encabezado {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+}
+
+.mensaje-admin__texto {
+    margin: 0;
+    white-space: pre-line; /* respeta los saltos de línea del mensaje */
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+    .opciones-info {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 900px) {
+    .contacto__fila {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+        align-items: start;
     }
 }

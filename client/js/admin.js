@@ -15,6 +15,7 @@ const SECCIONES_ADMIN = [
     { seccion: 'categorias', texto: 'Categorías',       url: 'admin-categorias.html', icono: 'etiqueta' },
     { seccion: 'pedidos',    texto: 'Pedidos',          url: 'admin-pedidos.html',    icono: 'lista' },
     { seccion: 'usuarios',   texto: 'Usuarios',         url: 'admin-usuarios.html',   icono: 'usuarios' },
+    { seccion: 'mensajes',   texto: 'Mensajes',         url: 'admin-mensajes.html',   icono: 'mensaje' },
 ];
 
 /**
