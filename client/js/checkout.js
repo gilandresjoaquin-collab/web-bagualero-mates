@@ -39,11 +39,12 @@ async function iniciar() {
     pagos = respuestaPagos.data;
 
     if (carrito.items.length === 0) {
-        contenedor.innerHTML = `
-            <div class="compra__vacio">
-                <p>Tu carrito está vacío</p>
-                <a class="boton" href="catalogo.html">Ver el catálogo</a>
-            </div>`;
+        contenedor.innerHTML = pantallaVacia({
+            simbolo: 'carrito',
+            titulo: 'Tu carrito está vacío',
+            texto: 'Para finalizar una compra, primero agregá productos al carrito.',
+            botones: '<a class="boton" href="catalogo.html">Ver el catálogo</a>',
+        });
         return;
     }
 
@@ -65,7 +66,7 @@ function opcion(nombre, valor, titulo, detalle, marcada) {
 function dibujarFormulario() {
     const productos = carrito.items.map(item => `
         <li class="resumen__producto">
-            <span class="resumen__foto">${fotoProducto(item.imagen)}</span>
+            <span class="resumen__foto">${fotoProducto(item.imagen, '', item.categoria)}</span>
             <span>${escapar(item.nombre)} <small>x${item.cantidad}</small></span>
             <strong>${precio(item.subtotal)}</strong>
         </li>`).join('');

@@ -48,5 +48,5 @@ formContacto.addEventListener('submit', async evento => {
         return;
     }
     formContacto.elements.mensaje.value = '';
-    mostrarAlerta(formContacto, respuesta.data.mensaje, 'exito');
+    avisar(respuesta.data.mensaje);
 });

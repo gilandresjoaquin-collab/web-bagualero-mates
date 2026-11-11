@@ -55,10 +55,13 @@ async function mostrarPedidos() {
         return;
     }
     if (respuesta.data.length === 0) {
-        panel.innerHTML = `
-            <h2>Mis pedidos</h2>
-            <p>Todavía no hiciste ningún pedido.</p>
-            <a class="boton" href="catalogo.html">Ver el catálogo</a>`;
+        panel.innerHTML = pantallaVacia({
+            simbolo: 'caja',
+            titulo: 'Todavía no hiciste ningún pedido',
+            texto: 'Cuando compres algo, vas a poder seguir su estado desde acá.',
+            botones: '<a class="boton" href="catalogo.html">Ver el catálogo</a>',
+            simple: true,
+        });
         return;
     }
 
@@ -211,7 +214,7 @@ async function guardarPerfil(evento) {
         return;
     }
     Object.assign(usuario, respuesta.data);
-    mostrarAlerta(formulario, 'Datos actualizados correctamente', 'exito'); // HU-10
+    avisar('Datos actualizados correctamente'); // HU-10
 
     // El nombre nuevo también se ve en el saludo y en el encabezado
     document.getElementById('saludo').textContent = `Hola, ${usuario.nombre}`;
@@ -250,7 +253,7 @@ async function cambiarPassword(evento) {
         return;
     }
     formulario.reset();
-    mostrarAlerta(formulario, 'Tu contraseña se cambió correctamente', 'exito');
+    avisar('Tu contraseña se cambió correctamente');
 }
 
 /* ---------- Dirección de entrega (HU-10) ---------- */
@@ -325,6 +328,6 @@ async function mostrarDireccion() {
             return;
         }
         direccion = guardada.data[0]; // la próxima vez se edita esta misma
-        mostrarAlerta(formulario, 'Datos actualizados correctamente', 'exito'); // HU-10
+        avisar('Datos actualizados correctamente'); // HU-10
     });
 }

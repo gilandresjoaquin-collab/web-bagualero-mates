@@ -32,11 +32,12 @@ function dibujar(datos) {
         cantidad ? `${cantidad} ${cantidad === 1 ? 'producto' : 'productos'}` : '';
 
     if (datos.items.length === 0) {
-        contenedor.innerHTML = `
-            <div class="compra__vacio">
-                <p>Tu carrito está vacío</p>
-                <a class="boton" href="catalogo.html">Ver el catálogo</a>
-            </div>`;
+        contenedor.innerHTML = pantallaVacia({
+            simbolo: 'carrito',
+            titulo: 'Tu carrito está vacío', // HU-12
+            texto: 'Sumá tus mates, bombillas y termos desde el catálogo.',
+            botones: '<a class="boton" href="catalogo.html">Ver el catálogo</a>',
+        });
         return;
     }
 
@@ -94,7 +95,7 @@ function itemCarrito(item) {
 
     return `
         <li class="item-carrito${aviso ? ' item-carrito--problema' : ''}">
-            <a class="item-carrito__foto" href="${url}" tabindex="-1" aria-hidden="true">${fotoProducto(item.imagen, item.nombre)}</a>
+            <a class="item-carrito__foto" href="${url}" tabindex="-1" aria-hidden="true">${fotoProducto(item.imagen, item.nombre, item.categoria)}</a>
             <div class="item-carrito__datos">
                 <a class="item-carrito__nombre" href="${url}">${nombre}</a>
                 <p class="item-carrito__detalle">${escapar(item.categoria)} · ${precio(item.precio)} c/u</p>

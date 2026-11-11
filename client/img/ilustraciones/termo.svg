@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Termo con banda de cuero, manija y pico cebador -->
+  <ellipse cx="100" cy="184" rx="50" ry="6" fill="#3B2A1B" opacity=".12"/>
+  <!-- manija -->
+  <path d="M132 86c24 0 24 50 0 50" stroke="#B89A5B" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <!-- cuerpo -->
+  <rect x="68" y="58" width="64" height="122" rx="16" fill="#5A4330"/>
+  <rect x="78" y="70" width="7" height="98" rx="3.5" fill="#fff" opacity=".16"/>
+  <!-- banda de cuero con costura -->
+  <rect x="68" y="104" width="64" height="30" fill="#A0703F"/>
+  <path d="M70 109h60M70 129h60" stroke="#F0E7D6" stroke-width="1.6" stroke-dasharray="4 4" opacity=".65"/>
+  <!-- base -->
+  <rect x="72" y="172" width="56" height="8" rx="4" fill="#3B2A1B"/>
+  <!-- tapa -->
+  <rect x="64" y="38" width="72" height="26" rx="8" fill="#3B2A1B"/>
+  <!-- pico cebador -->
+  <path d="M136 45l20-4q4 0 4 4v5q0 4-4 4l-20 2z" fill="#B89A5B"/>
+  <!-- botón -->
+  <rect x="88" y="28" width="24" height="12" rx="4" fill="#B89A5B"/>
+</svg>

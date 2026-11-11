@@ -3,8 +3,12 @@
  * la tarjeta de un producto y el botón "Agregar al carrito".
  */
 
-/** HTML de la tarjeta de un producto del listado (HU-01). */
-function tarjetaProducto(producto) {
+/**
+ * HTML de la tarjeta de un producto del listado (HU-01).
+ * "orden" es su posición en la grilla: las tarjetas aparecen una tras otra.
+ * (Con productos.map(tarjetaProducto) la posición llega sola como segundo dato.)
+ */
+function tarjetaProducto(producto, orden = 0) {
     const url = `producto.html?id=${producto.id_producto}`;
     const nombre = escapar(producto.nombre);
     const hayStock = producto.stock > 0;
@@ -13,7 +17,7 @@ function tarjetaProducto(producto) {
     if (!hayStock) {
         etiqueta = '<span class="etiqueta etiqueta--gris">Sin stock</span>';
     } else if (producto.destacado) {
-        etiqueta = '<span class="etiqueta">Destacado</span>';
+        etiqueta = '<span class="etiqueta">★ Destacado</span>';
     }
 
     // Sin stock: no hay botón de compra, solo el aviso (HU-01)
@@ -22,9 +26,9 @@ function tarjetaProducto(producto) {
         : '<button class="boton boton--borde boton--bloque producto__boton" type="button" disabled>Sin stock</button>';
 
     return `
-        <article class="producto">
+        <article class="producto" style="--orden: ${orden % 12}">
             <a class="producto__foto" href="${url}" tabindex="-1" aria-hidden="true">
-                ${fotoProducto(producto.imagen, producto.nombre)}
+                ${fotoProducto(producto.imagen, producto.nombre, producto.categoria)}
                 ${etiqueta}
             </a>
             <div class="producto__info">

@@ -13,10 +13,10 @@ async function iniciar() {
 
     // Accesos directos a cada categoría
     if (categorias.ok) {
-        document.getElementById('categorias-inicio').innerHTML = categorias.data.map(categoria => `
+        document.getElementById('categorias-inicio').innerHTML = categorias.data.map((categoria, orden) => `
             <li>
-                <a class="categoria-tarjeta" href="catalogo.html?categoria=${categoria.id_categoria}">
-                    <span class="categoria-tarjeta__foto">${fotoProducto(null)}</span>
+                <a class="categoria-tarjeta" href="catalogo.html?categoria=${categoria.id_categoria}" style="--orden: ${orden}">
+                    <span class="categoria-tarjeta__foto"><img src="${ilustracion(categoria.nombre)}" alt="" loading="lazy"></span>
                     ${escapar(categoria.nombre)}
                 </a>
             </li>`).join('');

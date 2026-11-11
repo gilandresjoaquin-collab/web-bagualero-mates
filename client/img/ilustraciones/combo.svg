@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Combo: termo y mate juntos -->
+  <ellipse cx="100" cy="184" rx="70" ry="7" fill="#3B2A1B" opacity=".12"/>
+  <!-- termo (atrás, a la derecha) -->
+  <g transform="translate(62 26) scale(.78)">
+    <path d="M132 86c24 0 24 50 0 50" stroke="#B89A5B" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <rect x="68" y="58" width="64" height="122" rx="16" fill="#5A4330"/>
+    <rect x="78" y="70" width="7" height="98" rx="3.5" fill="#fff" opacity=".16"/>
+    <rect x="68" y="104" width="64" height="30" fill="#A0703F"/>
+    <path d="M70 109h60M70 129h60" stroke="#F0E7D6" stroke-width="1.6" stroke-dasharray="4 4" opacity=".65"/>
+    <rect x="72" y="172" width="56" height="8" rx="4" fill="#3B2A1B"/>
+    <rect x="64" y="38" width="72" height="26" rx="8" fill="#3B2A1B"/>
+    <path d="M136 45l20-4q4 0 4 4v5q0 4-4 4l-20 2z" fill="#B89A5B"/>
+    <rect x="88" y="28" width="24" height="12" rx="4" fill="#B89A5B"/>
+  </g>
+  <!-- mate (adelante, a la izquierda) -->
+  <g transform="translate(4 58) scale(.66)">
+    <path d="M56 116C56 86 76 70 100 70s44 16 44 46c0 36-19 60-44 60s-44-24-44-60z" fill="#A0703F"/>
+    <path d="M120 74c18 10 24 26 24 42 0 36-19 60-44 60 14-10 26-30 26-60 0-18-2-30-6-42z" fill="#3B2A1B" opacity=".18"/>
+    <path d="M60 126q40 16 80 0" stroke="#F0E7D6" stroke-width="2" stroke-dasharray="5 5" fill="none" opacity=".65"/>
+    <ellipse cx="100" cy="176" rx="24" ry="5" fill="#B89A5B"/>
+    <ellipse cx="100" cy="74" rx="36" ry="10" fill="#B89A5B"/>
+    <ellipse cx="100" cy="72" rx="28" ry="6.5" fill="#5A4330"/>
+    <ellipse cx="100" cy="73" rx="21" ry="4.2" fill="#7D8A4E"/>
+    <path d="M130 18L108 74" stroke="#A79F90" stroke-width="9" stroke-linecap="round"/>
+    <path d="M130 18L108 74" stroke="#DCD5C7" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+</svg>

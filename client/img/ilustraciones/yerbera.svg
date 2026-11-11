@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Yerbera de cuero con tapa y etiqueta con una hoja de yerba -->
+  <ellipse cx="100" cy="184" rx="54" ry="7" fill="#3B2A1B" opacity=".12"/>
+  <!-- cuerpo -->
+  <rect x="58" y="80" width="84" height="98" rx="14" fill="#A0703F"/>
+  <path d="M124 80h4a14 14 0 0 1 14 14v70a14 14 0 0 1-14 14h-4z" fill="#3B2A1B" opacity=".16"/>
+  <rect x="64" y="86" width="72" height="86" rx="10" fill="none" stroke="#F0E7D6" stroke-width="1.6" stroke-dasharray="5 5" opacity=".6"/>
+  <!-- etiqueta -->
+  <rect x="72" y="108" width="56" height="42" rx="6" fill="#F7F1E6"/>
+  <path d="M100 141c-12-4-14-18 0-24 14 6 12 20 0 24z" fill="#7D8A4E"/>
+  <path d="M100 139v-20" stroke="#F7F1E6" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- tapa -->
+  <rect x="54" y="62" width="92" height="22" rx="7" fill="#3B2A1B"/>
+  <ellipse cx="100" cy="60" rx="15" ry="6" fill="#B89A5B"/>
+</svg>

@@ -118,7 +118,7 @@ async function cargarProductos() {
     grilla.removeAttribute('aria-busy');
 
     if (!respuesta.ok) {
-        grilla.innerHTML = `<div class="catalogo__vacio"><p>${escapar(respuesta.error)}</p></div>`;
+        grilla.innerHTML = pantallaVacia({ simbolo: 'alerta', titulo: 'No se pudo cargar el catálogo', texto: respuesta.error });
         paginacion.innerHTML = '';
         return;
     }
@@ -170,17 +170,16 @@ function dibujarProductos(datos) {
     document.getElementById('cantidad').textContent = `${datos.total} ${datos.total === 1 ? 'producto' : 'productos'}`;
 
     if (datos.total === 0) {
-        let mensaje = 'No hay productos con esos filtros.';
+        let vacio = { simbolo: 'buscar', titulo: 'No hay productos con esos filtros', texto: 'Probá quitando alguno de los filtros.' };
         if (!hayFiltros()) {
-            mensaje = 'Todavía no hay productos cargados'; // HU-01
+            vacio = { simbolo: 'caja', titulo: 'Todavía no hay productos cargados', texto: 'Volvé pronto: estamos sumando productos.' }; // HU-01
         } else if (estado.buscar) {
-            mensaje = `No encontramos productos para «${estado.buscar}»`; // HU-03
+            vacio = { simbolo: 'buscar', titulo: `No encontramos productos para «${estado.buscar}»`, texto: 'Probá con otra palabra o revisá los filtros.' }; // HU-03
         }
-        grilla.innerHTML = `
-            <div class="catalogo__vacio">
-                <p>${escapar(mensaje)}</p>
-                ${hayFiltros() ? '<button class="boton boton--borde" type="button" data-limpiar>Limpiar filtros</button>' : ''}
-            </div>`;
+        if (hayFiltros()) {
+            vacio.botones = '<button class="boton boton--borde" type="button" data-limpiar>Limpiar filtros</button>';
+        }
+        grilla.innerHTML = pantallaVacia(vacio);
         return;
     }
 

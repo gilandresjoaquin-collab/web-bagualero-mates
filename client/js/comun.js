@@ -49,6 +49,8 @@ const ICONOS = {
     editar: '<path d="M4 20h4L19 9l-4-4L4 16z"/>',
     tienda: '<path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/>',
     mas: '<path d="M12 5v14M5 12h14"/>',
+    alerta: '<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
 };
 
 /** Devuelve el HTML de un ícono, por ejemplo icono('carrito', 24). */
@@ -198,9 +200,17 @@ async function mostrarSesion() {
 /** Muestra en el ícono del carrito la cantidad total de productos (si es 0, no se ve). */
 function actualizarContadorCarrito(cantidad) {
     const contador = document.querySelector('.carrito__contador');
+    const cambio = contador.textContent !== String(cantidad);
     contador.textContent = cantidad;
     contador.hidden = cantidad === 0;
     document.querySelector('.carrito').setAttribute('aria-label', `Carrito (${cantidad} productos)`);
+
+    // Si cambió, el número "salta" (se quita y se vuelve a poner la clase para repetir la animación)
+    if (cambio && cantidad > 0) {
+        contador.classList.remove('carrito__contador--pulso');
+        void contador.offsetWidth;
+        contador.classList.add('carrito__contador--pulso');
+    }
 }
 
 /** Resalta una opción del menú, por ejemplo marcarMenu('combos'). */
@@ -221,42 +231,103 @@ function precio(valor) {
     return '$' + Number(valor).toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 }
 
+// Ilustración de cada categoría (client/img/ilustraciones/), para los productos que todavía no tienen fotos
+const ILUSTRACIONES = {
+    mates: 'mate', bombillas: 'bombilla', termos: 'termo',
+    yerberas: 'yerbera', canastas: 'canasta', combos: 'combo',
+};
+
+/** Ruta de la ilustración de una categoría: ilustracion('Termos') → "../img/ilustraciones/termo.svg". */
+function ilustracion(categoria = '') {
+    const nombre = ILUSTRACIONES[String(categoria).toLowerCase()] || 'mate';
+    return `../img/ilustraciones/${nombre}.svg`;
+}
+
 /**
  * HTML de la foto de un producto. "ruta" es el nombre del archivo en server/uploads/.
- * Si el producto no tiene foto, muestra un recuadro con el logo.
+ * Si el producto no tiene foto, muestra la ilustración de su categoría.
  */
-function fotoProducto(ruta, descripcion = '') {
+function fotoProducto(ruta, descripcion = '', categoria = '') {
     if (!ruta) {
-        return '<span class="foto-vacia"><img src="../img/logo.png" alt=""></span>';
+        return `<span class="foto-vacia"><img src="${ilustracion(categoria)}" alt="" loading="lazy"></span>`;
     }
     return `<img class="foto" src="../../server/uploads/${encodeURI(ruta)}" alt="${escapar(descripcion)}" loading="lazy">`;
 }
 
 /**
- * Mensaje flotante abajo de la pantalla, que se va solo.
+ * Pantalla vacía con ícono, título, texto y botones. Por ejemplo:
+ *   pantallaVacia({ simbolo: 'carrito', titulo: 'Tu carrito está vacío',
+ *                   botones: '<a class="boton" href="catalogo.html">Ver el catálogo</a>' })
+ * El título y el texto se escapan; "botones" es HTML escrito en el código (nunca datos del usuario).
+ * Con simple: true no lleva fondo ni borde (para usarla dentro de otra tarjeta).
+ */
+function pantallaVacia({ simbolo = 'info', titulo, texto = '', botones = '', encabezado = 'h2', simple = false }) {
+    return `
+        <div class="vacio${simple ? ' vacio--simple' : ''}">
+            <span class="vacio__icono">${icono(simbolo, 34)}</span>
+            <${encabezado}>${escapar(titulo)}</${encabezado}>
+            ${texto ? `<p>${escapar(texto)}</p>` : ''}
+            ${botones ? `<div class="botones-fila">${botones}</div>` : ''}
+        </div>`;
+}
+
+/**
+ * Aviso flotante ("toast") que se va solo, con un ícono según el tipo:
  *   avisar('Agregado al carrito', { enlaces: [{ texto: 'Ver carrito', url: 'carrito.html' }] })
  *   avisar('No hay stock suficiente', { tipo: 'error' })
+ *   avisar('Para comprar, iniciá sesión', { tipo: 'info' })
  */
 function avisar(mensaje, { tipo = 'exito', enlaces = [] } = {}) {
     let caja = document.getElementById('aviso-flotante');
     if (!caja) {
         caja = document.createElement('div');
         caja.id = 'aviso-flotante';
-        caja.setAttribute('role', 'status');
         document.body.appendChild(caja);
     }
 
+    const simbolos = { exito: 'check', error: 'alerta', info: 'info' };
     const botones = enlaces.map(enlace => `<a href="${enlace.url}">${escapar(enlace.texto)}</a>`).join('');
+
+    // Los errores se anuncian enseguida en los lectores de pantalla; el resto, cuando se pueda
+    caja.setAttribute('role', tipo === 'error' ? 'alert' : 'status');
     caja.className = `aviso-flotante aviso-flotante--${tipo}`;
     caja.innerHTML = `
-        <p>${escapar(mensaje)}</p>
-        ${botones}
+        <span class="aviso-flotante__icono">${icono(simbolos[tipo] || 'info', 18)}</span>
+        <div class="aviso-flotante__texto">
+            <p>${escapar(mensaje)}</p>
+            ${botones ? `<p class="aviso-flotante__enlaces">${botones}</p>` : ''}
+        </div>
         <button type="button" class="aviso-flotante__cerrar" aria-label="Cerrar aviso">${icono('cerrar', 18)}</button>`;
+
+    // Se oculta y se vuelve a mostrar para que la animación de entrada se repita
+    caja.hidden = true;
+    void caja.offsetWidth;
     caja.hidden = false;
     caja.querySelector('.aviso-flotante__cerrar').addEventListener('click', () => { caja.hidden = true; });
 
     clearTimeout(caja.temporizador);
     caja.temporizador = setTimeout(() => { caja.hidden = true; }, 6000);
+}
+
+/** Las secciones con la clase "revelar" aparecen suavemente cuando llegan a la pantalla. */
+function activarRevelado() {
+    const elementos = document.querySelectorAll('.revelar');
+    const sinAnimaciones = matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window);
+    if (sinAnimaciones) {
+        elementos.forEach(elemento => elemento.classList.add('revelar--visible'));
+        return;
+    }
+
+    const observador = new IntersectionObserver(entradas => {
+        entradas.forEach(entrada => {
+            if (entrada.isIntersecting) {
+                entrada.target.classList.add('revelar--visible');
+                observador.unobserve(entrada.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -8% 0px' });
+
+    elementos.forEach(elemento => observador.observe(elemento));
 }
 
 /** Cierra la sesión en el servidor y vuelve al inicio (HU-09). */
@@ -372,6 +443,9 @@ window.addEventListener('pageshow', evento => {
     }
 });
 
+// Avisa al CSS que hay JavaScript: recién ahí se ocultan las secciones que aparecen con animación
+document.documentElement.classList.add('js');
+
 // El encabezado y el pie son de las páginas de la tienda (el panel tiene su propio menú, en admin.js)
 if (document.getElementById('encabezado')) {
     dibujarEncabezado();
@@ -382,6 +456,7 @@ if (document.getElementById('pie')) {
     dibujarPie();
 }
 dibujarIconos();
+activarRevelado();
 
 // "Cerrar sesión" funciona en cualquier página, de la tienda o del panel
 document.addEventListener('click', evento => {

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Canasta matera tejida, con un termo y un mate asomando -->
+  <ellipse cx="100" cy="184" rx="60" ry="7" fill="#3B2A1B" opacity=".12"/>
+  <!-- manija -->
+  <path d="M64 96c0-60 72-60 72 0" stroke="#3B2A1B" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <path d="M64 96c0-60 72-60 72 0" stroke="#F0E7D6" stroke-width="1.5" stroke-dasharray="4 5" fill="none" opacity=".45"/>
+  <!-- termo -->
+  <rect x="76" y="58" width="18" height="44" rx="5" fill="#5A4330"/>
+  <rect x="74" y="53" width="22" height="10" rx="3" fill="#B89A5B"/>
+  <!-- mate -->
+  <path d="M125 50l-6 30" stroke="#A79F90" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="117" cy="92" r="15" fill="#C38D57"/>
+  <ellipse cx="117" cy="80" rx="11" ry="4" fill="#B89A5B"/>
+  <!-- canasta -->
+  <path d="M50 98h100l-10 72q-40 10-80 0z" fill="#A0703F"/>
+  <g stroke="#3B2A1B" stroke-opacity=".22" stroke-width="2" fill="none">
+    <path d="M52.5 116h95M55 134h90M57.5 152h85"/>
+    <path d="M68 100l6 72M84 100l3 74M100 100v76M116 100l-3 74M132 100l-6 72"/>
+  </g>
+  <!-- borde con costura -->
+  <rect x="44" y="90" width="112" height="16" rx="8" fill="#5A4330"/>
+  <path d="M52 98h96" stroke="#F0E7D6" stroke-width="1.6" stroke-dasharray="4 4" opacity=".6"/>
+</svg>

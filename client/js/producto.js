@@ -26,12 +26,13 @@ function dibujarNoEncontrado(respuesta) {
     const noExiste = respuesta.estado === 404;
     document.title = (noExiste ? 'Producto no encontrado' : 'Error') + ' · Bagualero Mates';
     contenedor.removeAttribute('aria-busy');
-    contenedor.innerHTML = `
-        <div class="no-encontrado">
-            <h1>${noExiste ? 'Producto no encontrado' : 'No se pudo cargar el producto'}</h1>
-            <p>${noExiste ? 'El producto que buscás no existe o ya no está a la venta.' : escapar(respuesta.error)}</p>
-            <a class="boton" href="catalogo.html">Ver el catálogo</a>
-        </div>`;
+    contenedor.innerHTML = '<div class="seccion seccion--sin-arriba">' + pantallaVacia({
+        simbolo: noExiste ? 'buscar' : 'alerta',
+        titulo: noExiste ? 'Producto no encontrado' : 'No se pudo cargar el producto',
+        texto: noExiste ? 'El producto que buscás no existe o ya no está a la venta.' : respuesta.error,
+        botones: '<a class="boton" href="catalogo.html">Ver el catálogo</a>',
+        encabezado: 'h1',
+    }) + '</div>';
 }
 
 function dibujarProducto() {
@@ -51,7 +52,7 @@ function dibujarProducto() {
         </div>` : '';
 
     const stock = producto.stock > 0
-        ? `<p class="detalle__stock detalle__stock--hay">● En stock (${producto.stock} ${producto.stock === 1 ? 'disponible' : 'disponibles'})</p>`
+        ? `<p class="detalle__stock detalle__stock--hay">En stock (${producto.stock} ${producto.stock === 1 ? 'disponible' : 'disponibles'})</p>`
         : '<p class="detalle__stock detalle__stock--sin">Sin stock</p>';
 
     // Elegir la cantidad (nunca más que el stock) y agregar al carrito (HU-11)
@@ -83,12 +84,12 @@ function dibujarProducto() {
 
         <div class="detalle__fila">
             <div class="galeria">
-                <div class="galeria__principal" id="foto-principal">${fotoProducto(primera, producto.nombre)}</div>
+                <div class="galeria__principal" id="foto-principal">${fotoProducto(primera, producto.nombre, producto.categoria)}</div>
                 ${miniaturas}
             </div>
 
             <div class="detalle__info">
-                ${producto.destacado ? '<span class="etiqueta">Destacado</span>' : ''}
+                ${producto.destacado ? '<span class="etiqueta">★ Destacado</span>' : ''}
                 <h1>${nombre}</h1>
                 <p class="detalle__datos">SKU: ${escapar(producto.sku)} · Categoría: ${escapar(producto.categoria)}</p>
                 <p class="detalle__precio">${precio(producto.precio)}</p>
