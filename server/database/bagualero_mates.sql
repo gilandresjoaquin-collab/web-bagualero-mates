@@ -6,6 +6,9 @@
 --  Cómo usarlo: phpMyAdmin → Importar → seleccionar este archivo.
 -- =====================================================================
 
+-- Lee el archivo como UTF-8 para que los acentos no se rompan al importarlo por consola
+SET NAMES utf8mb4;
+
 DROP DATABASE IF EXISTS bagualero_mates;
 CREATE DATABASE bagualero_mates CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE bagualero_mates;
