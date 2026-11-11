@@ -50,6 +50,7 @@ Este es el listado inicial de rutas que va a proveer el backend. Puede ajustarse
 | Método | URL | Acción | Acceso | HU |
 |---|---|---|---|---|
 | `GET` | `/api/prueba` | Comprueba que la API funciona y que se conecta a la base de datos (no cuenta en el total de endpoints) | 🌐 | — |
+| `GET` | `/api/admin/prueba` | Comprueba el control de roles: responde solo a administradores (no cuenta en el total de endpoints) | 🔒 | HU-16 |
 
 ## 1. Autenticación y cuenta
 
@@ -177,9 +178,39 @@ Respuesta `409 Conflict`:
 { "ok": false, "error": "Ya existe una cuenta con ese correo" }
 ```
 
+### Login — `POST /api/auth/login`
+
+Petición:
+
+```json
+{ "email": "juan@correo.com", "password": "Mate2026" }
+```
+
+Respuesta `200 OK` (`GET /api/auth/me` devuelve los mismos datos):
+
+```json
+{
+  "ok": true,
+  "data": {
+    "id_usuario": 12,
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "email": "juan@correo.com",
+    "telefono": "2235550000",
+    "rol": "cliente"
+  }
+}
+```
+
+Respuesta `401 Unauthorized` (correo o contraseña incorrectos, sin aclarar cuál):
+
+```json
+{ "ok": false, "error": "Correo o contraseña incorrectos" }
+```
+
 ### Login de una cuenta suspendida — `POST /api/auth/login`
 
-Respuesta `403 Forbidden`:
+Solo se informa si la contraseña es correcta. Respuesta `403 Forbidden`:
 
 ```json
 { "ok": false, "error": "Tu cuenta está suspendida. Contactanos para más información" }

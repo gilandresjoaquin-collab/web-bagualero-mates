@@ -24,7 +24,8 @@ Proyecto escolar de 7.° año (E.E.S.T. N.° 2, materia "Proyecto e Implementaci
 client/   → frontend: pages/ (HTML), css/, js/, img/ (logo.png)
 server/   → backend:
   api/        → .htaccess + index.php (entrada única y manejo de errores), rutas.php (tabla de rutas), endpoints/ (una función por endpoint)
-  includes/   → respuestas.php (responder_ok, responder_error, leer_json), conexion.php (config, conexion), enrutador.php
+  includes/   → respuestas.php (responder_ok, responder_error, leer_json), conexion.php (config, conexion),
+                sesion.php (usuario_actual, verificar_acceso), validaciones.php (texto_obligatorio, validar_email…), enrutador.php
   config/     → config.example.php → copiar a config.php
   database/   → bagualero_mates.sql
   uploads/    → fotos de productos
@@ -34,8 +35,13 @@ docs/     → documentación del proyecto (leer antes de programar)
 **Cómo agregar un endpoint:**
 1. Escribir la función en `server/api/endpoints/<modulo>.php` (por ejemplo, `productos_detalle(int $id)`).
 2. Hacer que termine siempre con `responder_ok($datos, $codigo)` o `responder_error($mensaje, $codigo)`.
-3. Cargar el archivo y agregar la línea en `server/api/rutas.php`: `['GET', '/productos/{id}', 'productos_detalle']`.
-4. Usar `conexion()` para la base de datos y `leer_json()` para los datos enviados por `POST`, `PUT` o `PATCH`.
+3. Cargar el archivo y agregar la línea en `server/api/rutas.php`: `['GET', '/productos/{id}', 'productos_detalle', 'publico']`.
+   - La 4.ª columna es el acceso del contrato: `'publico'` (🌐), `'cliente'` (👤, cualquier usuario con sesión) o `'admin'` (🔒).
+   - El enrutador lo controla antes de llamar a la función: 401 sin sesión, 403 si no es admin. Todo `/admin/...` es siempre `'admin'`.
+4. Usar `conexion()` para la base de datos, `leer_json()` para los datos enviados por `POST`, `PUT` o `PATCH`, y `usuario_actual()` para saber quién está logueado.
+5. Validar con las funciones de `validaciones.php` (responden 400 con el mensaje si algo está mal).
+
+En la sesión solo se guarda `$_SESSION['id_usuario']`; el rol y el estado se leen de la base en cada petición.
 
 Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 

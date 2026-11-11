@@ -6,6 +6,8 @@
 
 require __DIR__ . '/../includes/respuestas.php';
 require __DIR__ . '/../includes/conexion.php';
+require __DIR__ . '/../includes/sesion.php';
+require __DIR__ . '/../includes/validaciones.php';
 require __DIR__ . '/../includes/enrutador.php';
 
 // Los avisos de PHP no se imprimen (romperían el JSON): se convierten en excepciones

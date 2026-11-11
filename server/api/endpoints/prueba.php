@@ -15,3 +15,14 @@ function prueba_conexion(): void
         'tablas'        => (int) $consulta->fetchColumn(),
     ]);
 }
+
+/**
+ * GET /api/admin/prueba — Comprueba el control de roles: solo responde a administradores.
+ */
+function prueba_admin(): void
+{
+    responder_ok([
+        'mensaje' => 'Tenés acceso de administrador',
+        'usuario' => usuario_actual()['nombre'],
+    ]);
+}

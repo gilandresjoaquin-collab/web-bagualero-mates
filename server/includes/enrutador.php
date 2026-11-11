@@ -3,7 +3,7 @@
  * Enrutador de la API: busca la ruta pedida en la tabla de rutas (api/rutas.php)
  * y ejecuta la función que la atiende.
  *
- * @param array  $rutas  Tabla de rutas: [método, patrón, función]
+ * @param array  $rutas  Tabla de rutas: [método, patrón, función, acceso]
  * @param string $metodo Método HTTP de la petición (GET, POST, PUT, PATCH o DELETE)
  * @param string $ruta   Ruta pedida, sin la carpeta del proyecto (por ejemplo, "productos/5")
  */
@@ -12,7 +12,12 @@ function despachar(array $rutas, string $metodo, string $ruta): never
     $ruta = '/' . trim($ruta, '/');
     $ruta_existe = false;
 
-    foreach ($rutas as [$metodo_ruta, $patron, $funcion]) {
+    foreach ($rutas as $fila) {
+        if (count($fila) !== 4) {
+            throw new InvalidArgumentException('Cada ruta de rutas.php necesita 4 datos: método, ruta, función y acceso');
+        }
+        [$metodo_ruta, $patron, $funcion, $acceso] = $fila;
+
         // Cada {parametro} del patrón acepta solo números: "/productos/{id}" coincide con "/productos/5"
         $expresion = '#^' . preg_replace('#\{\w+\}#', '(\d+)', $patron) . '$#';
 
@@ -22,6 +27,13 @@ function despachar(array $rutas, string $metodo, string $ruta): never
         $ruta_existe = true;
 
         if ($metodo_ruta === $metodo) {
+            // Seguridad extra: todo lo que empieza con /admin es solo para administradores,
+            // aunque en rutas.php se haya puesto otro acceso por error
+            if (str_starts_with($patron, '/admin')) {
+                $acceso = 'admin';
+            }
+            verificar_acceso($acceso); // responde 401 o 403 si no tiene permiso
+
             // Los números de la URL llegan a la función como parámetros: productos_detalle(5)
             $parametros = array_map('intval', array_slice($coincidencias, 1));
             $funcion(...$parametros);
