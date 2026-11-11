@@ -3026,6 +3026,11 @@ textarea {
     overflow-wrap: anywhere;
 }
 
+.mensaje-admin__fecha {
+    color: var(--gris);
+    font-size: 0.875rem;
+}
+
 .mensaje-admin__texto {
     margin: 0;
     white-space: pre-line; /* respeta los saltos de línea del mensaje */

@@ -26,7 +26,7 @@ async function iniciar() {
                     <header class="mensaje-admin__encabezado">
                         <strong>${escapar(mensaje.nombre)}</strong>
                         <a href="mailto:${escapar(mensaje.email)}">${escapar(mensaje.email)}</a>
-                        <span class="historial__fecha">${fecha(mensaje.fecha_envio, true)}</span>
+                        <span class="mensaje-admin__fecha">${fecha(mensaje.fecha_envio, true)}</span>
                     </header>
                     <p class="mensaje-admin__texto">${escapar(mensaje.mensaje)}</p>
                 </article>`).join('')}`;
