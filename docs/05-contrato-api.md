@@ -39,9 +39,17 @@ Este es el listado inicial de rutas que va a proveer el backend. Puede ajustarse
 | `401` | Sin sesión iniciada |
 | `403` | Sin permiso (por ejemplo, un cliente en una ruta de admin) |
 | `404` | Recurso no encontrado |
+| `405` | La ruta existe, pero no acepta ese método (por ejemplo, `POST` en una ruta que solo acepta `GET`) |
 | `409` | Conflicto (por ejemplo, correo ya registrado o stock insuficiente) |
+| `500` | Error interno del servidor (por ejemplo, la base de datos no responde) |
 
 ---
+
+## 0. Diagnóstico
+
+| Método | URL | Acción | Acceso | HU |
+|---|---|---|---|---|
+| `GET` | `/api/prueba` | Comprueba que la API funciona y que se conecta a la base de datos (no cuenta en el total de endpoints) | 🌐 | — |
 
 ## 1. Autenticación y cuenta
 

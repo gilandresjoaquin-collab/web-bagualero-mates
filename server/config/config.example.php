@@ -15,4 +15,8 @@ return [
     'db_user'    => 'root',
     'db_pass'    => '',          // En XAMPP la contraseña de root viene vacía por defecto
     'db_charset' => 'utf8mb4',
+
+    // true: los errores de la API muestran el detalle (útil mientras se programa).
+    // Poner en false cuando la web se publique.
+    'debug'      => true,
 ];

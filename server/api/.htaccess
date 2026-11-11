@@ -1,0 +1,9 @@
+# Todas las peticiones a la API pasan por index.php (el enrutador).
+# Así las URLs quedan como en el contrato: /api/productos, /api/productos/5, etc.
+# Ejemplo: server/api/productos/5  →  server/api/index.php?ruta=productos/5
+
+Options -Indexes
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?ruta=$1 [QSA,L]

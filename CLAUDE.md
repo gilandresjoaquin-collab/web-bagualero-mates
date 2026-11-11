@@ -22,9 +22,22 @@ Proyecto escolar de 7.° año (E.E.S.T. N.° 2, materia "Proyecto e Implementaci
 ## Estructura
 ```
 client/   → frontend: pages/ (HTML), css/, js/, img/ (logo.png)
-server/   → backend: api/ (endpoints), config/ (config.example.php → copiar a config.php), database/, uploads/ (fotos de productos)
+server/   → backend:
+  api/        → .htaccess + index.php (entrada única y manejo de errores), rutas.php (tabla de rutas), endpoints/ (una función por endpoint)
+  includes/   → respuestas.php (responder_ok, responder_error, leer_json), conexion.php (config, conexion), enrutador.php
+  config/     → config.example.php → copiar a config.php
+  database/   → bagualero_mates.sql
+  uploads/    → fotos de productos
 docs/     → documentación del proyecto (leer antes de programar)
 ```
+
+**Cómo agregar un endpoint:**
+1. Escribir la función en `server/api/endpoints/<modulo>.php` (por ejemplo, `productos_detalle(int $id)`).
+2. Hacer que termine siempre con `responder_ok($datos, $codigo)` o `responder_error($mensaje, $codigo)`.
+3. Cargar el archivo y agregar la línea en `server/api/rutas.php`: `['GET', '/productos/{id}', 'productos_detalle']`.
+4. Usar `conexion()` para la base de datos y `leer_json()` para los datos enviados por `POST`, `PUT` o `PATCH`.
+
+Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 
 ## Documentación de referencia (en /docs)
 - `02-historias-de-usuario.md`: las 24 historias (HU-01 a HU-24) con sus criterios de aceptación. Es lo que hay que cumplir.
