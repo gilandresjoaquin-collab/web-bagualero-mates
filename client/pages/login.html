@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Iniciar sesión o crear cuenta · Bagualero Mates</title>
+    <title>Iniciar sesión · Bagualero Mates</title>
     <link rel="icon" href="../img/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,10 +14,9 @@
     <header id="encabezado"></header>
 
     <main id="contenido" class="acceso">
-        <div class="contenedor acceso__grilla">
-
+        <div class="contenedor">
             <!-- Iniciar sesión (HU-08) -->
-            <section class="tarjeta-formulario" aria-labelledby="titulo-login">
+            <section class="tarjeta-formulario acceso__caja" aria-labelledby="titulo-login">
                 <h1 id="titulo-login">Iniciar sesión</h1>
                 <p class="tarjeta-formulario__intro">Ingresá para ver tu carrito y tus pedidos.</p>
 
@@ -39,53 +38,10 @@
                     <button class="boton boton--oscuro boton--bloque" type="submit">Ingresar</button>
                 </form>
 
-                <p class="tarjeta-formulario__pie">¿No tenés cuenta? <a href="#crear-cuenta">Creá una acá</a></p>
+                <p class="tarjeta-formulario__pie">
+                    ¿No tenés cuenta? <a id="enlace-registro" href="registro.html">Creá una</a>
+                </p>
             </section>
-
-            <!-- Crear cuenta (HU-07) -->
-            <section class="tarjeta-formulario" id="crear-cuenta" aria-labelledby="titulo-registro">
-                <h2 id="titulo-registro">Crear cuenta</h2>
-                <p class="tarjeta-formulario__intro">Registrate para comprar en pocos pasos.</p>
-
-                <form id="form-registro" novalidate>
-                    <div class="alerta alerta--error" role="alert" hidden></div>
-
-                    <div class="campos-dos">
-                        <div class="campo">
-                            <label for="registro-nombre">Nombre <span class="requerido">*</span></label>
-                            <input id="registro-nombre" name="nombre" autocomplete="given-name"
-                                   placeholder="Juan" maxlength="60" required>
-                        </div>
-                        <div class="campo">
-                            <label for="registro-apellido">Apellido <span class="requerido">*</span></label>
-                            <input id="registro-apellido" name="apellido" autocomplete="family-name"
-                                   placeholder="Pérez" maxlength="60" required>
-                        </div>
-                        <div class="campo">
-                            <label for="registro-email">Correo electrónico <span class="requerido">*</span></label>
-                            <input id="registro-email" name="email" type="email" autocomplete="email"
-                                   placeholder="juan@correo.com" maxlength="120" required>
-                        </div>
-                        <div class="campo">
-                            <label for="registro-telefono">Teléfono <span class="requerido">*</span></label>
-                            <input id="registro-telefono" name="telefono" type="tel" autocomplete="tel"
-                                   placeholder="223 555-0000" maxlength="30" required>
-                        </div>
-                        <div class="campo">
-                            <label for="registro-password">Contraseña <span class="requerido">*</span></label>
-                            <input id="registro-password" name="password" type="password" autocomplete="new-password"
-                                   placeholder="Mínimo 8 caracteres" required>
-                        </div>
-                        <div class="campo">
-                            <label for="registro-repetir">Repetir contraseña <span class="requerido">*</span></label>
-                            <input id="registro-repetir" name="repetir" type="password" autocomplete="new-password" required>
-                        </div>
-                    </div>
-
-                    <button class="boton boton--bloque" type="submit">Crear cuenta</button>
-                </form>
-            </section>
-
         </div>
     </main>
 

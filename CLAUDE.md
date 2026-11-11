@@ -26,7 +26,7 @@ client/   → frontend:
   pages/      → todas las páginas HTML, al mismo nivel (así las rutas relativas sirven igual en todas)
   css/        → estilos.css (variables de la marca, botones, formularios, encabezado, pie, páginas)
   js/         → api.js (api, usuarioActual), comun.js (encabezado con la sesión, pie, íconos, menús, escapar),
-                formularios.js (validar y mostrar errores), y un .js por página (login.js…)
+                formularios.js (validar y mostrar errores), y un .js por página (login.js, registro.js…)
   img/        → logo.png
 server/   → backend:
   api/        → .htaccess + index.php (entrada única y manejo de errores), rutas.php (tabla de rutas), endpoints/ (una función por endpoint)
@@ -65,6 +65,7 @@ Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 - `escapar(texto)` SIEMPRE que se meta en `innerHTML` un dato de la base o del usuario (o usar `textContent`).
 - Formularios con `novalidate`: `leerFormulario`, `limpiarErrores`, `mostrarErrores(form, { campo: 'mensaje' })`, `mostrarAlerta`, `enviando` y las reglas `errorEmail`, `errorTelefono`, `errorPassword`, `errorTexto`.
 - Para pedir login: enlazar a `enlaceLogin()` (o `login.html?volver=pagina.html`); después de entrar vuelve a esa página.
+  `login.html` y `registro.html` son páginas separadas y el enlace entre ellas conserva el `?volver=` (`paginaParaVolver()` en `comun.js`).
 
 ## Documentación de referencia (en /docs)
 - `02-historias-de-usuario.md`: las 24 historias (HU-01 a HU-24) con sus criterios de aceptación. Es lo que hay que cumplir.
@@ -123,6 +124,7 @@ Variables CSS sugeridas:
 - **Pago:** transferencia, efectivo o tarjeta. No hay pagos online reales: solo se registra el método elegido.
 - **Estados del pedido:** Pendiente → Confirmado → Enviado / Listo para retirar → Entregado (o Cancelado).
 - **Usuario admin inicial** (cargado en el `.sql`):
+  - Nombre: `Admin` (sin apellido; no usar nombres de personas)
   - Correo: `admin@bagualeromates.com`
   - Contraseña: `Bagualero2026`
 

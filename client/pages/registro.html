@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crear cuenta · Bagualero Mates</title>
+    <link rel="icon" href="../img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap">
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body data-pagina="registro">
+    <header id="encabezado"></header>
+
+    <main id="contenido" class="acceso">
+        <div class="contenedor">
+            <!-- Crear cuenta (HU-07) -->
+            <section class="tarjeta-formulario acceso__caja acceso__caja--ancha" aria-labelledby="titulo-registro">
+                <h1 id="titulo-registro">Crear cuenta</h1>
+                <p class="tarjeta-formulario__intro">Registrate para comprar en pocos pasos.</p>
+
+                <form id="form-registro" novalidate>
+                    <div class="alerta alerta--error" role="alert" hidden></div>
+
+                    <div class="campos-dos">
+                        <div class="campo">
+                            <label for="registro-nombre">Nombre <span class="requerido">*</span></label>
+                            <input id="registro-nombre" name="nombre" autocomplete="given-name"
+                                   placeholder="Juan" maxlength="60" required>
+                        </div>
+                        <div class="campo">
+                            <label for="registro-apellido">Apellido <span class="requerido">*</span></label>
+                            <input id="registro-apellido" name="apellido" autocomplete="family-name"
+                                   placeholder="Pérez" maxlength="60" required>
+                        </div>
+                        <div class="campo">
+                            <label for="registro-email">Correo electrónico <span class="requerido">*</span></label>
+                            <input id="registro-email" name="email" type="email" autocomplete="email"
+                                   placeholder="juan@correo.com" maxlength="120" required>
+                        </div>
+                        <div class="campo">
+                            <label for="registro-telefono">Teléfono <span class="requerido">*</span></label>
+                            <input id="registro-telefono" name="telefono" type="tel" autocomplete="tel"
+                                   placeholder="223 555-0000" maxlength="30" required>
+                        </div>
+                        <div class="campo">
+                            <label for="registro-password">Contraseña <span class="requerido">*</span></label>
+                            <input id="registro-password" name="password" type="password" autocomplete="new-password"
+                                   placeholder="Mínimo 8 caracteres" required>
+                        </div>
+                        <div class="campo">
+                            <label for="registro-repetir">Repetir contraseña <span class="requerido">*</span></label>
+                            <input id="registro-repetir" name="repetir" type="password" autocomplete="new-password" required>
+                        </div>
+                    </div>
+
+                    <button class="boton boton--bloque" type="submit">Crear cuenta</button>
+                </form>
+
+                <p class="tarjeta-formulario__pie">
+                    ¿Ya tenés cuenta? <a id="enlace-login" href="login.html">Iniciá sesión</a>
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <footer id="pie"></footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/formularios.js"></script>
+    <script src="../js/registro.js"></script>
+</body>
+</html>

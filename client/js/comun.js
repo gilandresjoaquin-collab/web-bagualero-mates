@@ -62,13 +62,28 @@ function paginaActual() {
     return (location.pathname.split('/').pop() || 'inicio.html') + location.search;
 }
 
+/** true si la página actual es la de iniciar sesión o la de crear cuenta. */
+function esPaginaDeAcceso(pagina = paginaActual()) {
+    return pagina.startsWith('login.html') || pagina.startsWith('registro.html');
+}
+
 /** Enlace al login que, después de entrar, vuelve a la página actual (HU-08). */
 function enlaceLogin() {
-    const pagina = paginaActual();
-    if (pagina.startsWith('login.html')) {
-        return pagina; // ya estamos en el login: se conserva su ?volver=
+    if (esPaginaDeAcceso()) {
+        return 'login.html' + location.search; // se conserva el ?volver= que ya traía
     }
-    return 'login.html?volver=' + encodeURIComponent(pagina);
+    return 'login.html?volver=' + encodeURIComponent(paginaActual());
+}
+
+/**
+ * Página a la que se vuelve después de iniciar sesión o crear la cuenta: la del ?volver=,
+ * o el inicio. Solo se aceptan páginas de este sitio, como "carrito.html" o
+ * "catalogo.html?categoria=1", para que nadie arme un enlace que lleve a otro sitio.
+ */
+function paginaParaVolver() {
+    const pagina = new URLSearchParams(location.search).get('volver') || '';
+    const valida = /^[\w-]+\.html([?#].*)?$/.test(pagina) && !esPaginaDeAcceso(pagina);
+    return valida ? pagina : 'inicio.html';
 }
 
 function dibujarEncabezado() {

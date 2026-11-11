@@ -231,7 +231,7 @@ INSERT INTO estados_pedido (nombre, orden) VALUES
 -- Usuario administrador inicial
 --   Correo: admin@bagualeromates.com · Contraseña: Bagualero2026  (cambiarla al primer ingreso)
 INSERT INTO usuarios (nombre, apellido, email, telefono, password_hash, rol) VALUES
- ('Luka', 'Arauz', 'admin@bagualeromates.com', '2230000000',
+ ('Admin', '', 'admin@bagualeromates.com', '2230000000',
   '$2y$12$fmZnnKol.5AB0VI2ifgfseFXIf0.EJHzcUWGZCEuJdTzvula1VrXq', 'administrador');
 
 -- Productos de ejemplo

@@ -832,10 +832,14 @@ textarea {
     padding-block: 24px 40px;
 }
 
-.acceso__grilla {
-    display: grid;
-    gap: 24px;
-    max-width: 980px;
+/* Tarjeta centrada: angosta para el login, más ancha para crear cuenta (dos campos por fila) */
+.acceso__caja {
+    max-width: 480px;
+    margin-inline: auto;
+}
+
+.acceso__caja--ancha {
+    max-width: 680px;
 }
 
 .tarjeta-formulario {
@@ -881,12 +885,5 @@ textarea {
 
     .tarjeta-formulario {
         padding: 32px 28px;
-    }
-}
-
-@media (min-width: 900px) {
-    .acceso__grilla {
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
     }
 }
