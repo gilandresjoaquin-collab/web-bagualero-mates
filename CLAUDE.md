@@ -27,7 +27,7 @@ client/   → frontend:
   css/        → estilos.css (variables de la marca, botones, formularios, encabezado, pie, páginas)
   js/         → api.js (api, usuarioActual), comun.js (encabezado con la sesión, pie, íconos, menús, escapar),
                 formularios.js (validar y mostrar errores), productos.js (tarjetaProducto, agregarAlCarrito),
-                y un .js por página (login.js, registro.js, catalogo.js, producto.js…)
+                y un .js por página (login.js, registro.js, catalogo.js, producto.js, carrito.js…)
   img/        → logo.png
 server/   → backend:
   api/        → .htaccess + index.php (entrada única y manejo de errores), rutas.php (tabla de rutas), endpoints/ (una función por endpoint)

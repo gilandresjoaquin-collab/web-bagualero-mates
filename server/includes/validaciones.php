@@ -34,6 +34,16 @@ function texto_obligatorio(array $datos, string $campo, string $nombre, int $max
     return $valor;
 }
 
+/** Devuelve un número entero mayor a 0 (un id, una cantidad…). Si no es válido, responde 400 con el mensaje. */
+function entero_positivo(array $datos, string $campo, string $mensaje): int
+{
+    $valor = filter_var($datos[$campo] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 1000000]]);
+    if (!is_int($valor)) {
+        responder_error($mensaje, 400);
+    }
+    return $valor;
+}
+
 function validar_email(string $email): void
 {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

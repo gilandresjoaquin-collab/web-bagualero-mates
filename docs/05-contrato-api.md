@@ -126,6 +126,25 @@ Respuesta `200 OK` (los parámetros inválidos se ignoran; si la página no exis
 | `DELETE` | `/api/carrito/{id_producto}` | Quitar un producto del carrito | 👤 | HU-12 |
 | `DELETE` | `/api/carrito` | Vaciar el carrito | 👤 | HU-12 |
 
+Todas las rutas del carrito responden con el carrito completo:
+
+```json
+{
+  "ok": true,
+  "data": {
+    "items": [
+      { "id_producto": 1, "nombre": "Mate Imperial Virola Combinada", "categoria": "Mates", "imagen": null,
+        "precio": 50000, "cantidad": 2, "stock": 4, "activo": true, "subtotal": 100000, "disponible": true }
+    ],
+    "cantidad_total": 2,
+    "total": 100000,
+    "hay_problemas": false
+  }
+}
+```
+
+`disponible` es `false` si el producto se dio de baja o si ya no alcanza el stock; en ese caso `hay_problemas` es `true`. Si se pide más que el stock, la respuesta es `409` con el mismo mensaje que al crear el pedido.
+
 ## 4. Pedidos (cliente)
 
 | Método | URL | Acción | Acceso | HU |

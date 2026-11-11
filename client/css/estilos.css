@@ -7,6 +7,7 @@
    2. Base                    6. Encabezado y menú       10. Catálogo y tarjetas de producto
    3. Utilidades              7. Pie                     11. Detalle de producto
    4. Botones                 8. Inicio                  12. Aviso flotante
+                                                         13. Carrito y finalizar compra
    ===================================================================== */
 
 /* ---------- 1. Variables de la marca ---------- */
@@ -1518,4 +1519,202 @@ textarea {
     color: inherit;
     cursor: pointer;
     transform: translateY(-50%);
+}
+
+/* ---------- 13. Carrito y finalizar compra ---------- */
+.compra {
+    padding-bottom: 48px;
+}
+
+.compra h1 {
+    margin-bottom: 0.1em;
+}
+
+.compra__subtitulo {
+    color: var(--gris);
+}
+
+.compra__fila {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+}
+
+.compra__vacio {
+    padding: 48px 16px;
+    background: var(--blanco);
+    border: 1px dashed var(--borde);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.compra__vacio p {
+    color: var(--marron);
+    font-size: 1.25rem;
+}
+
+.compra__seguir {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 8px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.lista-carrito {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Celular: [foto] nombre, precio, Quitar
+            [− 1 +]           subtotal */
+.item-carrito {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    grid-template-areas:
+        "foto datos datos"
+        "cantidad cantidad subtotal";
+    align-items: center;
+    gap: 8px 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.item-carrito:first-child {
+    padding-top: 0;
+}
+
+.item-carrito__foto {
+    grid-area: foto;
+    align-self: start;
+    display: block;
+    width: 72px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.item-carrito__datos {
+    grid-area: datos;
+}
+
+.item-carrito .cantidad {
+    grid-area: cantidad;
+    justify-self: start;
+}
+
+.item-carrito .cantidad input {
+    width: 44px;
+}
+
+.item-carrito__nombre {
+    color: var(--marron);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.item-carrito__nombre:hover {
+    color: var(--cuero);
+}
+
+.item-carrito__detalle {
+    margin: 2px 0 0;
+    color: var(--gris);
+    font-size: 0.875rem;
+}
+
+.item-carrito__aviso {
+    margin: 4px 0 0;
+    color: var(--error);
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.item-carrito__quitar {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--cuero);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.item-carrito__quitar:hover {
+    text-decoration: underline;
+}
+
+.item-carrito__subtotal {
+    grid-area: subtotal;
+    margin: 0;
+    color: var(--carbon);
+    font-family: var(--fuente-titulos);
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* Resumen de la compra (carrito y finalizar compra) */
+.resumen h2 {
+    font-size: 1.375rem;
+}
+
+.resumen dl {
+    margin: 0 0 16px;
+}
+
+.resumen dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+}
+
+.resumen dd {
+    margin: 0;
+    text-align: right;
+}
+
+.resumen .resumen__total {
+    margin-top: 8px;
+    padding-top: 14px;
+    border-top: 1px solid var(--borde);
+    color: var(--marron);
+    font-family: var(--fuente-titulos);
+    font-size: 1.375rem;
+    font-weight: 700;
+}
+
+.resumen__nota {
+    margin: 12px 0 0;
+    color: var(--gris);
+    font-size: 0.8125rem;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .item-carrito {
+        grid-template-columns: 96px minmax(0, 1fr) auto 110px;
+        grid-template-areas: "foto datos cantidad subtotal";
+        gap: 16px 20px;
+    }
+
+    .item-carrito__foto {
+        width: 96px;
+    }
+
+    .item-carrito .cantidad input {
+        width: 52px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .compra__fila {
+        grid-template-columns: minmax(0, 1fr) 360px;
+        align-items: start;
+    }
 }
