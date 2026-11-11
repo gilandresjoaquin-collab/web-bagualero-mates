@@ -12,6 +12,7 @@
                                                          15. Estados, tablas e interruptores
                                                          16. Panel de administración
                                                          17. Mi cuenta
+                                                         18. Inicio: categorías y destacados
    ===================================================================== */
 
 /* ---------- 1. Variables de la marca ---------- */
@@ -786,8 +787,8 @@ textarea {
 
 .beneficios__lista {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* minmax(0, …): las columnas pueden achicarse */
+    gap: 20px 12px;
     margin: 0 auto;
     padding-block: 24px;
     list-style: none;
@@ -2704,29 +2705,29 @@ textarea {
 }
 
 /* ---------- 17. Mi cuenta ---------- */
-.cuenta {
+.mi-cuenta {
     padding-bottom: 48px;
 }
 
-.cuenta h1 {
+.mi-cuenta h1 {
     margin-bottom: 0.1em;
 }
 
-.cuenta__fila {
+.mi-cuenta__fila {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 20px;
 }
 
 /* En el celular, las secciones son botones en fila; desde 900 px, una columna a la izquierda */
-.cuenta__menu {
+.mi-cuenta__menu {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-.cuenta__menu a,
-.cuenta__menu button {
+.mi-cuenta__menu a,
+.mi-cuenta__menu button {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
@@ -2740,27 +2741,27 @@ textarea {
     cursor: pointer;
 }
 
-.cuenta__menu a[aria-current="page"] {
+.mi-cuenta__menu a[aria-current="page"] {
     background: var(--marron);
     border-color: var(--marron);
     color: #fff;
 }
 
-.cuenta__panel h2 {
+.mi-cuenta__panel h2 {
     font-size: 1.5rem;
 }
 
-.cuenta__panel h3 {
+.mi-cuenta__panel h3 {
     margin-top: 24px;
 }
 
-.cuenta__panel form + h2 {
+.mi-cuenta__panel form + h2 {
     margin-top: 32px;
     padding-top: 24px;
     border-top: 1px solid var(--borde);
 }
 
-.cuenta__datos-pedido {
+.mi-cuenta__datos-pedido {
     margin-top: 16px;
 }
 
@@ -2776,12 +2777,12 @@ textarea {
 }
 
 @media (min-width: 900px) {
-    .cuenta__fila {
+    .mi-cuenta__fila {
         grid-template-columns: 240px minmax(0, 1fr);
         align-items: start;
     }
 
-    .cuenta__menu {
+    .mi-cuenta__menu {
         flex-direction: column;
         padding: 10px;
         background: var(--blanco);
@@ -2789,8 +2790,8 @@ textarea {
         border-radius: 12px;
     }
 
-    .cuenta__menu a,
-    .cuenta__menu button {
+    .mi-cuenta__menu a,
+    .mi-cuenta__menu button {
         width: 100%;
         border: 0;
         border-radius: var(--radio);
@@ -2800,4 +2801,87 @@ textarea {
 
 .confirmacion__botones {
     justify-content: center;
+}
+
+/* ---------- 18. Inicio: categorías, destacados, nuevos ingresos e Instagram ---------- */
+.seccion--sin-arriba {
+    padding-top: 0;
+}
+
+.seccion__titulo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-bottom: 16px;
+}
+
+.seccion__titulo h2 {
+    margin: 0;
+}
+
+.seccion__titulo a {
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* 3 categorías por fila en el celular, 6 en la computadora */
+.categorias-inicio {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.categoria-tarjeta {
+    display: grid;
+    gap: 8px;
+    padding: 8px 8px 12px;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    color: var(--marron);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.categoria-tarjeta:hover {
+    border-color: var(--cuero);
+    color: var(--cuero);
+}
+
+.categoria-tarjeta__foto {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.instagram {
+    text-align: center;
+}
+
+.instagram h2 {
+    margin-bottom: 0.25em;
+}
+
+.instagram .boton span {
+    display: inline-flex;
+}
+
+@media (min-width: 768px) {
+    .categorias-inicio {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .categoria-tarjeta {
+        font-size: 1rem;
+    }
 }

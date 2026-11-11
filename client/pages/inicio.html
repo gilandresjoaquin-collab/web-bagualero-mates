@@ -35,6 +35,21 @@
             </div>
         </section>
 
+        <!-- Accesos directos a cada categoría (HU-06): los completa inicio.js -->
+        <section class="contenedor seccion" aria-labelledby="titulo-categorias">
+            <h2 id="titulo-categorias">Categorías</h2>
+            <ul id="categorias-inicio" class="categorias-inicio"></ul>
+        </section>
+
+        <!-- Destacados (HU-06): se oculta si no hay ninguno -->
+        <section id="destacados" class="contenedor seccion seccion--sin-arriba" aria-labelledby="titulo-destacados" hidden>
+            <div class="seccion__titulo">
+                <h2 id="titulo-destacados">Destacados</h2>
+                <a href="catalogo.html">Ver todos →</a>
+            </div>
+            <div id="grilla-destacados" class="grilla-productos grilla-productos--4"></div>
+        </section>
+
         <section class="beneficios" aria-label="Beneficios">
             <ul class="contenedor beneficios__lista">
                 <li class="beneficio">
@@ -56,12 +71,30 @@
             </ul>
         </section>
 
-        <!-- Categorías, Destacados y Nuevos ingresos se agregan con el catálogo (HU-06) -->
+        <!-- Nuevos ingresos (HU-06): los últimos productos cargados -->
+        <section id="novedades" class="contenedor seccion" aria-labelledby="titulo-novedades" hidden>
+            <div class="seccion__titulo">
+                <h2 id="titulo-novedades">Nuevos ingresos</h2>
+                <a href="catalogo.html">Ver todos →</a>
+            </div>
+            <div id="grilla-novedades" class="grilla-productos grilla-productos--4"></div>
+        </section>
+
+        <section class="contenedor seccion instagram" aria-labelledby="titulo-instagram">
+            <p class="sobretitulo">Seguinos</p>
+            <h2 id="titulo-instagram">@bagualero.mates</h2>
+            <p>Novedades, ofertas y stock disponible todas las semanas.</p>
+            <a class="boton boton--oscuro" href="https://www.instagram.com/bagualero.mates/" target="_blank" rel="noopener">
+                <span data-icono="instagram"></span> Ir a Instagram
+            </a>
+        </section>
     </main>
 
     <footer id="pie"></footer>
 
     <script src="../js/api.js"></script>
     <script src="../js/comun.js"></script>
+    <script src="../js/productos.js"></script>
+    <script src="../js/inicio.js"></script>
 </body>
 </html>

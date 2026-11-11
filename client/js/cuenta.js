@@ -26,7 +26,7 @@ function mostrarSeccion() {
     const pedido = elegida.match(/^pedido-(\d+)$/);
     const seccion = pedido ? 'pedidos' : (['datos', 'direccion'].includes(elegida) ? elegida : 'pedidos');
 
-    document.querySelectorAll('.cuenta__menu a').forEach(enlace => {
+    document.querySelectorAll('.mi-cuenta__menu a').forEach(enlace => {
         if (enlace.dataset.seccion === seccion) {
             enlace.setAttribute('aria-current', 'page');
         } else {
@@ -111,7 +111,7 @@ async function mostrarPedido(id) {
         </ul>
         <p class="total-pedido">Total <strong>${precio(pedido.total)}</strong></p>
 
-        <dl class="datos-lista cuenta__datos-pedido">
+        <dl class="datos-lista mi-cuenta__datos-pedido">
             <div><dt>Entrega</dt><dd>${escapar(pedido.metodo_entrega)}</dd></div>
             ${pedido.direccion_entrega ? `<div><dt>Dirección</dt><dd>${escapar(pedido.direccion_entrega)}</dd></div>` : ''}
             <div><dt>Pago</dt><dd>${escapar(pedido.metodo_pago)}</dd></div>

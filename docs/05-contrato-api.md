@@ -77,8 +77,8 @@ Este es el listado inicial de rutas que va a proveer el backend. Puede ajustarse
 |---|---|---|---|---|
 | `GET` | `/api/productos` | Listar productos activos, paginados y con filtros (ver parámetros abajo) | 🌐 | HU-01 a HU-04 |
 | `GET` | `/api/productos/{id}` | Detalle de un producto, con imágenes y materiales | 🌐 | HU-05 |
-| `GET` | `/api/productos/destacados` | Productos marcados como destacados | 🌐 | HU-06 |
-| `GET` | `/api/productos/novedades` | Últimos productos cargados | 🌐 | HU-06 |
+| `GET` | `/api/productos/destacados` | Productos marcados como destacados (hasta 4) | 🌐 | HU-06 |
+| `GET` | `/api/productos/novedades` | Últimos productos cargados (hasta 4) | 🌐 | HU-06 |
 | `GET` | `/api/categorias` | Listar las categorías activas | 🌐 | HU-02 |
 | `GET` | `/api/materiales` | Listar los materiales (para los filtros) | 🌐 | HU-04 |
 

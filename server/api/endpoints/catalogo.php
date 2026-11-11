@@ -125,6 +125,33 @@ function productos_listar(): void
     ]);
 }
 
+/** Hasta 4 productos activos para el inicio. $condicion y $orden son fijos (los escribe el código, nunca el usuario). */
+function productos_para_inicio(string $condicion, string $orden): void
+{
+    $consulta = conexion()->prepare(
+        "SELECT p.id_producto, p.nombre, c.nombre AS categoria, p.precio, p.stock, p.destacado,
+                " . SQL_FOTO_PRINCIPAL . " AS imagen
+         FROM productos p JOIN categorias c ON c.id_categoria = p.id_categoria
+         WHERE p.activo = 1 AND $condicion
+         ORDER BY $orden
+         LIMIT 4"
+    );
+    $consulta->execute();
+    responder_ok(array_map('producto_para_lista', $consulta->fetchAll()));
+}
+
+/** GET /api/productos/destacados — Los que el administrador marcó como destacados (HU-06). */
+function productos_destacados(): void
+{
+    productos_para_inicio('p.destacado = 1', 'p.fecha_alta DESC, p.id_producto DESC');
+}
+
+/** GET /api/productos/novedades — Los últimos productos cargados (HU-06). */
+function productos_novedades(): void
+{
+    productos_para_inicio('1 = 1', 'p.fecha_alta DESC, p.id_producto DESC');
+}
+
 /** GET /api/productos/{id} — Detalle de un producto activo, con sus fotos y materiales (HU-05). */
 function productos_detalle(int $id): void
 {

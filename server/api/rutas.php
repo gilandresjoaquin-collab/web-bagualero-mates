@@ -41,6 +41,8 @@ return [
 
     // Catálogo (HU-01 a HU-05)
     ['GET',  '/productos',      'productos_listar',  'publico'],
+    ['GET',  '/productos/destacados', 'productos_destacados', 'publico'],
+    ['GET',  '/productos/novedades',  'productos_novedades',  'publico'],
     ['GET',  '/productos/{id}', 'productos_detalle', 'publico'],
     ['GET',  '/categorias',     'categorias_listar', 'publico'],
     ['GET',  '/materiales',     'materiales_listar', 'publico'],
