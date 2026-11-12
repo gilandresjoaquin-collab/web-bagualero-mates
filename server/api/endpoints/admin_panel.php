@@ -27,13 +27,15 @@ function admin_dashboard(): void
 
     // Productos activos con 3 unidades o menos
     $consulta = conexion()->prepare(
-        'SELECT p.id_producto, p.nombre, p.stock, ' . SQL_FOTO_PRINCIPAL . ' AS imagen
-         FROM productos p WHERE p.activo = 1 AND p.stock <= 3 ORDER BY p.stock, p.nombre'
+        'SELECT p.id_producto, p.nombre, c.nombre AS categoria, p.stock, ' . SQL_FOTO_PRINCIPAL . ' AS imagen
+         FROM productos p JOIN categorias c ON c.id_categoria = p.id_categoria
+         WHERE p.activo = 1 AND p.stock <= 3 ORDER BY p.stock, p.nombre'
     );
     $consulta->execute();
     $poco_stock = array_map(fn(array $fila): array => [
         'id_producto' => (int) $fila['id_producto'],
         'nombre'      => $fila['nombre'],
+        'categoria'   => $fila['categoria'],
         'stock'       => (int) $fila['stock'],
         'imagen'      => $fila['imagen'],
     ], $consulta->fetchAll());

@@ -89,7 +89,10 @@ async function cargar() {
         `${total} ${total === 1 ? 'producto' : 'productos'} · ${dadosDeBaja} ${dadosDeBaja === 1 ? 'dado' : 'dados'} de baja`;
 
     if (productos.length === 0) {
-        lista.innerHTML = '<p class="admin-vacio">No hay productos con esos filtros.</p>';
+        const hayFiltros = Object.values(filtros).some(valor => valor);
+        lista.innerHTML = hayFiltros
+            ? vacioAdmin('buscar', 'No hay productos con esos filtros', 'Probá con otra búsqueda, categoría o estado.')
+            : vacioAdmin('caja', 'Todavía no hay productos', 'Cargá el primero con «Nuevo producto».');
         return;
     }
 
@@ -104,12 +107,14 @@ async function cargar() {
             <tbody>
                 ${productos.map(producto => `
                     <tr${producto.activo ? '' : ' class="tabla__fila--apagada"'}>
-                        <td data-titulo="Producto">${productoMini(producto.imagen, producto.nombre)}</td>
-                        <td data-titulo="SKU">${escapar(producto.sku)}</td>
+                        <td data-titulo="Producto">${productoMini(producto.imagen, producto.nombre, producto.categoria)}</td>
+                        <td data-titulo="SKU"><code class="sku">${escapar(producto.sku)}</code></td>
                         <td data-titulo="Categoría">${escapar(producto.categoria)}</td>
                         <td data-titulo="Precio"><strong>${precio(producto.precio)}</strong></td>
-                        <td data-titulo="Stock"><span class="unidades${producto.stock === 0 ? ' unidades--cero' : ''}">${producto.stock}</span></td>
-                        <td data-titulo="Destacado">${producto.destacado ? '<span aria-label="Sí">★</span>' : '<span aria-label="No">—</span>'}</td>
+                        <td data-titulo="Stock"><span class="unidades${unidades(producto.stock)}">${producto.stock}</span></td>
+                        <td data-titulo="Destacado">${producto.destacado
+                            ? '<span class="destacado-si" aria-label="Sí">★</span>'
+                            : '<span class="destacado-no" aria-label="No">—</span>'}</td>
                         <td data-titulo="Activo">
                             <input class="interruptor" type="checkbox" role="switch" ${producto.activo ? 'checked' : ''}
                                    data-id="${producto.id_producto}" data-nombre="${escapar(producto.nombre)}"
@@ -123,6 +128,14 @@ async function cargar() {
                     </tr>`).join('')}
             </tbody>
         </table>`;
+}
+
+/** Color de la cantidad de stock: rojo sin stock, ámbar con 3 o menos. */
+function unidades(stock) {
+    if (stock === 0) {
+        return ' unidades--cero';
+    }
+    return stock <= 3 ? ' unidades--poco' : '';
 }
 
 /** Interruptor "Activo": da de baja (con confirmación, HU-18) o reactiva. */

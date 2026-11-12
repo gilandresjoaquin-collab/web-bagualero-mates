@@ -105,7 +105,7 @@ async function mostrarPedido(id) {
             ${pedido.items.map(item => `
                 <li class="item-pedido">
                     <a href="producto.html?id=${item.id_producto}" class="producto-mini">
-                        <span class="producto-mini__foto">${fotoProducto(item.imagen)}</span>
+                        <span class="producto-mini__foto">${fotoProducto(item.imagen, '', item.categoria)}</span>
                         <strong>${escapar(item.nombre)}</strong>
                     </a>
                     <span class="item-pedido__cantidad">${item.cantidad} × ${precio(item.precio_unitario)}</span>

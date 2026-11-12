@@ -33,9 +33,13 @@ async function entrarAlPanel() {
     if (usuario.rol !== 'administrador') {
         document.getElementById('contenido').innerHTML = `
             <div class="acceso-denegado">
-                <h1>Acceso denegado</h1>
-                <p>Esta sección es solo para administradores.</p>
-                <a class="boton" href="inicio.html">Volver a la tienda</a>
+                ${pantallaVacia({
+                    simbolo: 'alerta',
+                    titulo: 'Acceso denegado',
+                    texto: 'Esta sección es solo para administradores.',
+                    botones: '<a class="boton" href="inicio.html">Volver a la tienda</a>',
+                    encabezado: 'h1',
+                })}
             </div>`;
         return null;
     }
@@ -46,12 +50,15 @@ async function entrarAlPanel() {
 
 function dibujarMenuAdmin(usuario) {
     const actual = document.body.dataset.seccion;
-    const enlaces = SECCIONES_ADMIN.map(opcion => `
+    // Cada opción lleva su ícono en un cuadradito (como una placa de cuero)
+    const opcion = (contenido, simbolo) => `<span class="admin-menu__icono">${icono(simbolo, 19)}</span> ${contenido}`;
+    const enlaces = SECCIONES_ADMIN.map(seccion => `
         <li>
-            <a href="${opcion.url}" ${opcion.seccion === actual ? 'aria-current="page"' : ''}>
-                ${icono(opcion.icono, 20)} ${opcion.texto}
+            <a href="${seccion.url}" ${seccion.seccion === actual ? 'aria-current="page"' : ''}>
+                ${opcion(seccion.texto, seccion.icono)}
             </a>
         </li>`).join('');
+    const nombre = escapar(usuario.nombre);
 
     const menu = document.getElementById('admin-menu');
     menu.className = 'admin-menu';
@@ -63,15 +70,20 @@ function dibujarMenuAdmin(usuario) {
             </button>
             <a class="admin-menu__logo" href="admin.html">
                 <img src="../img/logo.png" alt="Bagualero Mates, panel de control" width="76" height="74">
+                <span class="admin-menu__titulo" aria-hidden="true">Panel de administración</span>
             </a>
-            <span class="admin-menu__usuario">${escapar(usuario.nombre)}</span>
+            <span class="admin-menu__usuario"><span class="avatar" aria-hidden="true">${inicial(usuario.nombre)}</span><span>${nombre}</span></span>
         </div>
         <ul class="admin-menu__lista" id="admin-menu-lista">
             ${enlaces}
             <li class="admin-menu__separador" aria-hidden="true"></li>
-            <li><a href="inicio.html">${icono('tienda', 20)} Ver tienda</a></li>
-            <li><button type="button" data-salir>${icono('salir', 20)} Cerrar sesión</button></li>
-        </ul>`;
+            <li><a href="inicio.html">${opcion('Ver tienda', 'tienda')}</a></li>
+            <li><button type="button" data-salir>${opcion('Cerrar sesión', 'salir')}</button></li>
+        </ul>
+        <div class="admin-menu__pie">
+            <span class="avatar" aria-hidden="true">${inicial(usuario.nombre)}</span>
+            <span><strong>${nombre}</strong><small>Administrador</small></span>
+        </div>`;
 
     // Celular: el menú se abre y se cierra con el botón
     const boton = menu.querySelector('.admin-menu__boton');
@@ -79,6 +91,7 @@ function dibujarMenuAdmin(usuario) {
         const abierto = menu.classList.toggle('admin-menu--abierto');
         boton.setAttribute('aria-expanded', abierto);
         boton.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+        boton.innerHTML = icono(abierto ? 'cerrar' : 'menu', 26);
     });
 }
 
@@ -92,6 +105,32 @@ function encabezadoAdmin(titulo, subtitulo = '', boton = '') {
             </div>
             ${boton}
         </div>`;
+}
+
+/**
+ * Encabezado de un bloque (una .panel-caja): ícono, título y, si hace falta, una ayuda y un enlace.
+ *   encabezadoBloque('caja', 'Productos', { id: 'titulo-productos', ayuda: '…', enlace: '<a href="…">Ver todos →</a>' })
+ */
+function encabezadoBloque(simbolo, titulo, { id = '', ayuda = '', enlace = '' } = {}) {
+    return `
+        <div class="panel-caja__encabezado">
+            <span class="panel-caja__icono">${icono(simbolo, 20)}</span>
+            <div>
+                <h2${id ? ` id="${id}"` : ''}>${escapar(titulo)}</h2>
+                ${ayuda ? `<p>${ayuda}</p>` : ''}
+            </div>
+            ${enlace}
+        </div>`;
+}
+
+/** Primera letra de un nombre, para el círculo con la inicial. */
+function inicial(nombre) {
+    return escapar(String(nombre).trim().charAt(0).toUpperCase() || '?');
+}
+
+/** Lista vacía dentro de un bloque del panel: ícono y texto. */
+function vacioAdmin(simbolo, titulo, texto = '') {
+    return pantallaVacia({ simbolo, titulo, texto, encabezado: 'h3', simple: true });
 }
 
 /** Tabla de pedidos (panel de control y página de pedidos). */
@@ -115,7 +154,7 @@ function tablaPedidos(pedidos) {
         </table>`;
 }
 
-/** Foto chica con el nombre al lado (listas del panel). */
-function productoMini(imagen, nombre) {
-    return `<span class="producto-mini"><span class="producto-mini__foto">${fotoProducto(imagen)}</span><strong>${escapar(nombre)}</strong></span>`;
+/** Foto chica (o la ilustración de la categoría) con el nombre al lado (listas del panel). */
+function productoMini(imagen, nombre, categoria = '') {
+    return `<span class="producto-mini"><span class="producto-mini__foto">${fotoProducto(imagen, '', categoria)}</span><strong>${escapar(nombre)}</strong></span>`;
 }

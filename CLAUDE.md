@@ -28,7 +28,7 @@ client/   → frontend:
   js/         → api.js (api, usuarioActual), comun.js (encabezado con la sesión, pie, íconos, menús, escapar),
                 formularios.js (validar y mostrar errores), productos.js (tarjetaProducto, agregarAlCarrito),
                 y un .js por página (inicio.js, login.js, registro.js, catalogo.js, producto.js, carrito.js, checkout.js, cuenta.js)
-                Panel: admin.js (entrarAlPanel, menú lateral, tablaPedidos) y admin-*.js para cada página admin-*.html
+                Panel: admin.js (entrarAlPanel, menú lateral, encabezadoBloque, tablaPedidos) y admin-*.js para cada página admin-*.html
   img/        → logo.png e ilustraciones/ (un SVG por categoría y portada.svg, mientras no haya fotos reales)
   .htaccess   → las páginas HTML se consultan siempre con el servidor (para que se vea el ?v= nuevo)
 herramientas/ → subir-version.php y subir-version.bat (versión de los CSS y JS, ver "Cómo armar una página")
@@ -85,6 +85,9 @@ Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 - No usan el encabezado ni el pie de la tienda: tienen `<body class="admin" data-seccion="…">`, `<nav id="admin-menu">` y `<main id="contenido" class="admin-contenido">`.
 - El .js de cada página empieza con `if (!await entrarAlPanel()) return;` (sin sesión → login; cliente → "Acceso denegado").
 - Las tablas llevan `data-titulo` en cada celda: en el celular cada fila se ve como tarjeta. Para sí/no usar `<input class="interruptor" type="checkbox" role="switch">`.
+- Cada bloque es una `.panel-caja` que empieza con `encabezadoBloque('caja', 'Título', { id, ayuda, enlace })` (ícono, título y ayuda).
+  Listas vacías: `vacioAdmin('lista', 'Título', 'texto')`. Estados y roles: `etiquetaEstado('Pendiente')` (etiqueta de color).
+  Producto con su foto o ilustración: `productoMini(imagen, nombre, categoria)`.
 - Antes de dar de baja un producto, cancelar un pedido o suspender una cuenta se pide confirmación con `confirm()`.
 - Las fotos se guardan en `server/uploads/` con un nombre generado; el `.htaccess` de esa carpeta impide ejecutar código.
 

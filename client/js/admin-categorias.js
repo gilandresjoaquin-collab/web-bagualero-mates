@@ -17,7 +17,7 @@ async function iniciar() {
 
         <div class="admin-columnas admin-columnas--categorias">
             <section class="panel-caja" aria-labelledby="titulo-formulario">
-                <h2 id="titulo-formulario">Nueva categoría</h2>
+                ${encabezadoBloque('etiqueta', 'Nueva categoría', { id: 'titulo-formulario', ayuda: 'Para editar una, tocá el lápiz en la lista.' })}
                 <form id="form-categoria" novalidate>
                     <div class="alerta alerta--error" role="alert" hidden></div>
                     <div class="campo">
@@ -71,7 +71,9 @@ async function cargar() {
             <tbody>
                 ${categorias.map(categoria => `
                     <tr${categoria.activa ? '' : ' class="tabla__fila--apagada"'}>
-                        <td data-titulo="Nombre"><strong>${escapar(categoria.nombre)}</strong></td>
+                        <td data-titulo="Nombre">
+                            <span class="categoria-mini"><img src="${ilustracion(categoria.nombre)}" alt="" width="40" height="40"><strong>${escapar(categoria.nombre)}</strong></span>
+                        </td>
                         <td data-titulo="Descripción">${escapar(categoria.descripcion || '—')}</td>
                         <td data-titulo="Productos activos">${categoria.productos_activos} de ${categoria.productos}</td>
                         <td data-titulo="Activa">

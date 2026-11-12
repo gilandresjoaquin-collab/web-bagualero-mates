@@ -68,19 +68,15 @@ function dibujarFormulario(categorias, materiales) {
         </div>
 
         <form id="form-producto" class="admin-columnas admin-columnas--formulario" novalidate>
-            <section class="panel-caja" aria-labelledby="titulo-datos">
+            <div class="admin-columnas__principal">
                 <div class="alerta alerta--error" role="alert" hidden></div>
-                <h2 id="titulo-datos">Datos del producto</h2>
 
-                <div class="campo">
-                    <label for="nombre">Nombre <span class="requerido">*</span></label>
-                    <input id="nombre" name="nombre" maxlength="120" required>
-                </div>
-                <div class="campo">
-                    <label for="descripcion">Descripción</label>
-                    <textarea id="descripcion" name="descripcion" maxlength="2000" rows="4"></textarea>
-                </div>
-                <div class="campos-dos">
+                <section class="panel-caja" aria-labelledby="titulo-informacion">
+                    ${encabezadoBloque('etiqueta', 'Información básica', { id: 'titulo-informacion', ayuda: 'Lo que ve el cliente en la tienda.' })}
+                    <div class="campo">
+                        <label for="nombre">Nombre <span class="requerido">*</span></label>
+                        <input id="nombre" name="nombre" maxlength="120" required>
+                    </div>
                     <div class="campo">
                         <label for="categoria">Categoría <span class="requerido">*</span></label>
                         <select id="categoria" name="id_categoria" required>
@@ -89,34 +85,48 @@ function dibujarFormulario(categorias, materiales) {
                         </select>
                     </div>
                     <div class="campo">
-                        <label for="medidas">Medidas</label>
-                        <input id="medidas" name="medidas" maxlength="80" placeholder="9 cm alto x 8 cm diámetro">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" name="descripcion" maxlength="2000" rows="4"></textarea>
                     </div>
-                    <div class="campo">
-                        <label for="precio">Precio ($) <span class="requerido">*</span></label>
-                        <input id="precio" name="precio" type="number" min="0.01" step="0.01" inputmode="decimal" required>
-                    </div>
-                    <div class="campo">
-                        <label for="stock">Stock <span class="requerido">*</span></label>
-                        <input id="stock" name="stock" type="number" min="0" step="1" inputmode="numeric" required>
+                </section>
+
+                <section class="panel-caja" aria-labelledby="titulo-precio">
+                    ${encabezadoBloque('precio', 'Precio y stock', { id: 'titulo-precio', ayuda: 'El stock se descuenta solo con cada pedido.' })}
+                    <div class="campos-dos">
+                        <div class="campo">
+                            <label for="precio">Precio ($) <span class="requerido">*</span></label>
+                            <input id="precio" name="precio" type="number" min="0.01" step="0.01" inputmode="decimal" required>
+                        </div>
+                        <div class="campo">
+                            <label for="stock">Stock <span class="requerido">*</span></label>
+                            <input id="stock" name="stock" type="number" min="0" step="1" inputmode="numeric" required>
+                        </div>
                     </div>
                     <div class="campo">
                         <label for="sku">SKU</label>
                         <input id="sku" name="sku" maxlength="30" placeholder="Si lo dejás vacío, se genera solo">
                     </div>
-                </div>
-                <fieldset class="materiales-admin">
-                    <legend>Materiales</legend>
-                    <div class="materiales-admin__opciones">${opcionesMaterial}</div>
-                </fieldset>
-            </section>
+                </section>
 
-            <div class="admin-columnas__lateral">
+                <section class="panel-caja" aria-labelledby="titulo-detalles">
+                    ${encabezadoBloque('caja', 'Detalles', { id: 'titulo-detalles', ayuda: 'Medidas y materiales, para la ficha del producto.' })}
+                    <div class="campo">
+                        <label for="medidas">Medidas</label>
+                        <input id="medidas" name="medidas" maxlength="80" placeholder="9 cm alto x 8 cm diámetro">
+                    </div>
+                    <fieldset class="materiales-admin">
+                        <legend>Materiales</legend>
+                        <div class="materiales-admin__opciones">${opcionesMaterial}</div>
+                    </fieldset>
+                </section>
+            </div>
+
+            <div class="admin-columnas__lateral admin-columnas__lateral--guardar">
                 <section class="panel-caja" aria-labelledby="titulo-fotos">
-                    <h2 id="titulo-fotos">Fotos</h2>
+                    ${encabezadoBloque('foto', 'Fotos', { id: 'titulo-fotos', ayuda: 'La principal es la que se ve en el catálogo.' })}
                     <label class="subir-fotos">
                         <input type="file" id="fotos" accept="image/jpeg,image/png,image/webp" multiple>
-                        ${icono('caja', 22)}
+                        <span class="subir-fotos__icono">${icono('subir', 22)}</span>
                         <strong>Arrastrá las fotos o tocá para elegirlas</strong>
                         <small>JPG, PNG o WEBP · hasta 2 MB cada una</small>
                     </label>
@@ -124,13 +134,13 @@ function dibujarFormulario(categorias, materiales) {
                 </section>
 
                 <section class="panel-caja" aria-labelledby="titulo-visibilidad">
-                    <h2 id="titulo-visibilidad">Visibilidad</h2>
+                    ${encabezadoBloque('ojo', 'Visibilidad', { id: 'titulo-visibilidad' })}
                     <label class="fila-interruptor">
-                        Producto activo (se ve en la tienda)
+                        <span>Producto activo <small>Se ve en la tienda y se puede comprar</small></span>
                         <input class="interruptor" type="checkbox" role="switch" name="activo" ${datos.activo ? 'checked' : ''}>
                     </label>
                     <label class="fila-interruptor">
-                        Mostrar en Destacados
+                        <span>Destacado <small>Aparece en Destacados, en el inicio</small></span>
                         <input class="interruptor" type="checkbox" role="switch" name="destacado" ${datos.destacado ? 'checked' : ''}>
                     </label>
                     <button class="boton boton--bloque" type="submit">Guardar producto</button>

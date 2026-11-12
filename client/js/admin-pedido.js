@@ -34,7 +34,7 @@ function dibujar(pedido) {
 
     const productos = pedido.items.map(item => `
         <li class="item-pedido">
-            ${productoMini(item.imagen, item.nombre)}
+            ${productoMini(item.imagen, item.nombre, item.categoria)}
             <span class="item-pedido__cantidad">${item.cantidad} × ${precio(item.precio_unitario)}</span>
             <strong>${precio(item.subtotal)}</strong>
         </li>`).join('');
@@ -79,23 +79,26 @@ function dibujar(pedido) {
         <div class="admin-columnas admin-columnas--formulario">
             <div class="admin-columnas__principal">
                 <section class="panel-caja" aria-labelledby="titulo-productos">
-                    <h2 id="titulo-productos">Productos</h2>
+                    ${encabezadoBloque('caja', 'Productos', {
+                        id: 'titulo-productos',
+                        ayuda: `${pedido.items.length} ${pedido.items.length === 1 ? 'producto' : 'productos'}, con el precio del momento de la compra`,
+                    })}
                     <ul class="lista-pedido">${productos}</ul>
                     <p class="total-pedido">Total <strong>${precio(pedido.total)}</strong></p>
                 </section>
                 <section class="panel-caja" aria-labelledby="titulo-historial">
-                    <h2 id="titulo-historial">Historial de estados</h2>
+                    ${encabezadoBloque('reloj', 'Historial de estados', { id: 'titulo-historial' })}
                     <ol class="historial">${historial}</ol>
                 </section>
             </div>
 
             <div class="admin-columnas__lateral">
                 <section class="panel-caja" aria-labelledby="titulo-cambiar">
-                    <h2 id="titulo-cambiar">Estado</h2>
+                    ${encabezadoBloque('etiqueta', 'Estado', { id: 'titulo-cambiar', ayuda: `Ahora: ${etiquetaEstado(pedido.estado)}` })}
                     ${cambiarEstado}
                 </section>
                 <section class="panel-caja" aria-labelledby="titulo-cliente">
-                    <h2 id="titulo-cliente">Cliente</h2>
+                    ${encabezadoBloque('usuario', 'Cliente', { id: 'titulo-cliente' })}
                     <dl class="datos-lista">
                         <div><dt>Nombre</dt><dd>${escapar(pedido.cliente)}</dd></div>
                         <div><dt>Correo</dt><dd><a href="mailto:${escapar(pedido.email)}">${escapar(pedido.email)}</a></dd></div>
@@ -104,7 +107,7 @@ function dibujar(pedido) {
                     </dl>
                 </section>
                 <section class="panel-caja" aria-labelledby="titulo-entrega">
-                    <h2 id="titulo-entrega">Entrega y pago</h2>
+                    ${encabezadoBloque('envio', 'Entrega y pago', { id: 'titulo-entrega' })}
                     <dl class="datos-lista">
                         <div><dt>Entrega</dt><dd>${escapar(pedido.metodo_entrega)}</dd></div>
                         ${pedido.direccion_entrega ? `<div><dt>Dirección</dt><dd>${escapar(pedido.direccion_entrega)}</dd></div>` : ''}

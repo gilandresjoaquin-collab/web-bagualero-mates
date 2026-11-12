@@ -35,8 +35,10 @@ function pedido_completo(int $id_pedido, ?int $id_usuario = null): ?array
 
     // Productos, con el precio al momento de la compra
     $consulta = conexion()->prepare(
-        'SELECT d.id_producto, p.nombre, d.cantidad, d.precio_unitario, ' . SQL_FOTO_PRINCIPAL . ' AS imagen
-         FROM detalle_pedido d JOIN productos p ON p.id_producto = d.id_producto
+        'SELECT d.id_producto, p.nombre, c.nombre AS categoria, d.cantidad, d.precio_unitario, ' . SQL_FOTO_PRINCIPAL . ' AS imagen
+         FROM detalle_pedido d
+         JOIN productos p ON p.id_producto = d.id_producto
+         JOIN categorias c ON c.id_categoria = p.id_categoria
          WHERE d.id_pedido = ? ORDER BY p.nombre'
     );
     $consulta->execute([$id_pedido]);
@@ -48,6 +50,7 @@ function pedido_completo(int $id_pedido, ?int $id_usuario = null): ?array
         $items[] = [
             'id_producto'     => (int) $fila['id_producto'],
             'nombre'          => $fila['nombre'],
+            'categoria'       => $fila['categoria'],
             'imagen'          => $fila['imagen'],
             'cantidad'        => (int) $fila['cantidad'],
             'precio_unitario' => (float) $fila['precio_unitario'],

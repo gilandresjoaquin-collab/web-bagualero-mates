@@ -1,5 +1,6 @@
 /**
  * Panel: lista de pedidos, con filtros por estado y por fecha (HU-20).
+ * admin-pedidos.html?estado=pendiente abre la lista ya filtrada (lo usa el panel de control).
  */
 
 iniciar();
@@ -39,10 +40,21 @@ async function iniciar() {
         </section>`;
 
     const formulario = document.getElementById('form-filtros');
+
+    // Estado pedido en la dirección, por su nombre: ?estado=pendiente
+    const estadoInicial = new URLSearchParams(location.search).get('estado');
+    const elegido = estados.find(estado => estado.nombre.toLowerCase() === String(estadoInicial).toLowerCase());
+    if (elegido) {
+        formulario.elements.estado.value = elegido.id_estado;
+    }
+
     formulario.addEventListener('change', () => cargar(formulario));
     formulario.addEventListener('submit', evento => evento.preventDefault());
     // "Limpiar": el formulario se vacía y después se recarga la lista
-    formulario.addEventListener('reset', () => setTimeout(() => cargar(formulario)));
+    formulario.addEventListener('reset', () => setTimeout(() => {
+        formulario.elements.estado.value = ''; // por si había venido elegido desde la dirección
+        cargar(formulario);
+    }));
 
     cargar(formulario);
 }
@@ -63,9 +75,11 @@ async function cargar(formulario) {
     }
 
     const pedidos = respuesta.data;
+    const hayFiltros = parametros.toString() !== '';
     document.getElementById('resumen-pedidos').textContent =
-        `${pedidos.length} ${pedidos.length === 1 ? 'pedido' : 'pedidos'}${parametros.toString() ? ' con estos filtros' : ''}`;
+        `${pedidos.length} ${pedidos.length === 1 ? 'pedido' : 'pedidos'}${hayFiltros ? ' con estos filtros' : ''}`;
     lista.innerHTML = pedidos.length
         ? tablaPedidos(pedidos)
-        : '<p class="admin-vacio">No hay pedidos con estos filtros.</p>';
+        : vacioAdmin('lista', hayFiltros ? 'No hay pedidos con estos filtros' : 'Todavía no hay pedidos',
+            hayFiltros ? 'Probá con otro estado u otras fechas.' : 'Cuando un cliente compre, el pedido aparece acá.');
 }

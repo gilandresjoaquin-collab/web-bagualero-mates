@@ -50,7 +50,7 @@ async function cargar(buscar) {
         return;
     }
     if (respuesta.data.length === 0) {
-        lista.innerHTML = '<p class="admin-vacio">No hay usuarios que coincidan con la búsqueda.</p>';
+        lista.innerHTML = vacioAdmin('buscar', 'No hay usuarios con esa búsqueda', 'Probá con otro nombre o correo.');
         return;
     }
 
@@ -72,10 +72,12 @@ async function cargar(buscar) {
                            </button>`;
                     return `
                         <tr${suspendido ? ' class="tabla__fila--apagada"' : ''}>
-                            <td data-titulo="Nombre"><strong>${nombre}</strong></td>
+                            <td data-titulo="Nombre">
+                                <span class="usuario-mini"><span class="avatar" aria-hidden="true">${inicial(usuario.nombre)}</span><strong>${nombre}</strong></span>
+                            </td>
                             <td data-titulo="Correo">${escapar(usuario.email)}</td>
                             <td data-titulo="Teléfono">${escapar(usuario.telefono)}</td>
-                            <td data-titulo="Rol">${usuario.rol === 'administrador' ? 'Administrador' : 'Cliente'}</td>
+                            <td data-titulo="Rol">${etiquetaEstado(usuario.rol === 'administrador' ? 'Administrador' : 'Cliente')}</td>
                             <td data-titulo="Registro">${fecha(usuario.fecha_registro)}</td>
                             <td data-titulo="Estado">${etiquetaEstado(suspendido ? 'Suspendido' : 'Activo')}</td>
                             <td data-titulo="">${accion}</td>
