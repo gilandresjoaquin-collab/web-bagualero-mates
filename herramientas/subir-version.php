@@ -2,7 +2,7 @@
 /**
  * Sube la versión de los CSS, los JS y el favicon en todas las páginas (client/pages/*.html).
  *
- * Cada página carga sus archivos con un número de versión: estilos.css?v=3, comun.js?v=3, favicon.svg?v=3…
+ * Cada página carga sus archivos con un número de versión: estilos.css?v=3, comun.js?v=3, favicon-32.png?v=3…
  * Cuando cambia uno de esos archivos, se sube la versión y el navegador descarga los nuevos
  * en lugar de usar los que tenía guardados.
  *
