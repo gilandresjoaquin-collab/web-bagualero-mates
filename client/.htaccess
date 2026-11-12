@@ -1,0 +1,7 @@
+# Las páginas HTML se consultan siempre con el servidor (si no cambiaron, responde 304
+# y no se vuelven a descargar). Así el navegador ve enseguida el ?v= nuevo de los CSS y JS.
+<IfModule mod_headers.c>
+    <FilesMatch "\.html$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+</IfModule>

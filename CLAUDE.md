@@ -29,7 +29,9 @@ client/   → frontend:
                 formularios.js (validar y mostrar errores), productos.js (tarjetaProducto, agregarAlCarrito),
                 y un .js por página (inicio.js, login.js, registro.js, catalogo.js, producto.js, carrito.js, checkout.js, cuenta.js)
                 Panel: admin.js (entrarAlPanel, menú lateral, tablaPedidos) y admin-*.js para cada página admin-*.html
-  img/        → logo.png
+  img/        → logo.png e ilustraciones/ (un SVG por categoría y portada.svg, mientras no haya fotos reales)
+  .htaccess   → las páginas HTML se consultan siempre con el servidor (para que se vea el ?v= nuevo)
+herramientas/ → subir-version.php y subir-version.bat (versión de los CSS y JS, ver "Cómo armar una página")
 server/   → backend:
   api/        → .htaccess + index.php (entrada única y manejo de errores), rutas.php (tabla de rutas), endpoints/ (una función por endpoint)
   includes/   → respuestas.php (responder_ok, responder_error, leer_json), conexion.php (config, conexion),
@@ -56,6 +58,10 @@ Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 **Cómo armar una página:**
 1. Copiar la estructura de `client/pages/inicio.html`: el `<head>` (Lora + `estilos.css`), `<body data-pagina="...">`, `<header id="encabezado">`, `<main id="contenido">` y `<footer id="pie">`.
 2. Al final del `<body>`, en este orden: `api.js`, `comun.js`, `formularios.js` (si tiene formularios) y el `.js` de la página.
+   - Los CSS y JS se cargan con la versión: `estilos.css?v=2`, `comun.js?v=2`… (la misma en todas las páginas).
+   - **Cada vez que se cambia un CSS o un JS, subir la versión** antes del commit: doble clic en `herramientas\subir-version.bat`
+     o `C:\xampp\php\php.exe herramientas\subir-version.php`. Cambia el `?v=` en todas las páginas (y se lo agrega a las nuevas).
+     Así el navegador descarga los archivos nuevos sin tener que limpiar la caché.
 3. `data-pagina` resalta la opción del menú: `inicio`, `catalogo`, `combos`, `nosotros` o `contacto`.
 4. Usar las clases que ya existen: `contenedor`, `seccion`, `sobretitulo`, `boton` (`boton--borde`, `boton--oscuro`, `boton--claro`, `boton--bloque`), `campo`, `campos-dos`, `alerta--error`, `alerta--exito`.
 5. Íconos: `<span data-icono="carrito"></span>` en el HTML o `icono('carrito')` en JS (ver `ICONOS` en `comun.js`).
@@ -68,8 +74,9 @@ Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 - Formularios con `novalidate`: `leerFormulario`, `limpiarErrores`, `mostrarErrores(form, { campo: 'mensaje' })`, `mostrarAlerta`, `enviando` y las reglas `errorEmail`, `errorTelefono`, `errorPassword`, `errorTexto`.
 - Para pedir login: enlazar a `enlaceLogin()` (o `login.html?volver=pagina.html`); después de entrar vuelve a esa página.
   `login.html` y `registro.html` son páginas separadas y el enlace entre ellas conserva el `?volver=` (`paginaParaVolver()` en `comun.js`).
-- Productos: `precio(50000)` → "$50.000", `fotoProducto(ruta, nombre)` (foto o recuadro con el logo), `tarjetaProducto(p)` y `agregarAlCarrito(id, cantidad)`.
+- Productos: `precio(50000)` → "$50.000", `fotoProducto(ruta, nombre, categoria)` (foto o ilustración de la categoría), `tarjetaProducto(p)` y `agregarAlCarrito(id, cantidad)`.
 - Mensajes cortos: `avisar('Agregado al carrito', { tipo: 'exito' | 'error' | 'info', enlaces: [{ texto, url }] })`.
+- Listas vacías: `pantallaVacia({ simbolo: 'carrito', titulo, texto, botones })` (ícono, texto y botón).
 - Carrito del encabezado: `actualizarContadorCarrito(cantidad)`. Menú: `marcarMenu('combos')`.
 - Los grupos de opciones (`type="radio"`) se marcan uno por uno: `.value = ''` no funciona en los navegadores.
 - Páginas privadas (carrito, checkout): si `await usuarioActual()` es `null`, `location.replace(enlaceLogin())`.
