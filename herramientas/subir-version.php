@@ -1,9 +1,9 @@
 <?php
 /**
- * Sube la versión de los CSS y JS en todas las páginas (client/pages/*.html).
+ * Sube la versión de los CSS, los JS y el favicon en todas las páginas (client/pages/*.html).
  *
- * Cada página carga sus archivos con un número de versión: estilos.css?v=3, comun.js?v=3…
- * Cuando cambia un CSS o un JS, se sube la versión y el navegador descarga los archivos nuevos
+ * Cada página carga sus archivos con un número de versión: estilos.css?v=3, comun.js?v=3, favicon.svg?v=3…
+ * Cuando cambia uno de esos archivos, se sube la versión y el navegador descarga los nuevos
  * en lugar de usar los que tenía guardados.
  *
  * Uso (desde la carpeta del proyecto):
@@ -11,7 +11,7 @@
  *   C:\xampp\php\php.exe herramientas\subir-version.php 10    → pone la versión 10
  * O doble clic en herramientas\subir-version.bat
  *
- * También agrega el ?v= a los CSS y JS que todavía no lo tengan (por ejemplo, en una página nueva).
+ * También agrega el ?v= a los que todavía no lo tengan (por ejemplo, en una página nueva).
  */
 
 // Solo se usa desde la consola: desde el navegador no hace nada
@@ -22,13 +22,13 @@ if (PHP_SAPI !== 'cli') {
 
 $paginas = glob(__DIR__ . '/../client/pages/*.html');
 
-// Archivos propios que cargan las páginas: ../css/*.css y ../js/*.js (con o sin ?v=)
-$patron = '#((?:href|src)="\.\./(?:css|js)/[^"?\#]+\.(?:css|js))(?:\?v=\d+)?"#';
+// Archivos propios que cargan las páginas (con o sin ?v=): ../css/*.css, ../js/*.js y ../img/favicon*
+$patron = '#((?:href|src)="\.\./(?:css/[^"?\#]+\.css|js/[^"?\#]+\.js|img/favicon[^"?\#]*\.(?:svg|png)))(?:\?v=\d+)?"#';
 
 // Versión actual: la más alta que haya en las páginas
 $actual = 1;
 foreach ($paginas as $pagina) {
-    preg_match_all('#\.(?:css|js)\?v=(\d+)"#', file_get_contents($pagina), $versiones);
+    preg_match_all('#\.(?:css|js|svg|png)\?v=(\d+)"#', file_get_contents($pagina), $versiones);
     foreach ($versiones[1] as $version) {
         $actual = max($actual, (int) $version);
     }
@@ -49,4 +49,4 @@ foreach ($paginas as $pagina) {
     }
 }
 
-echo "Versión $actual → $nueva: " . count($paginas) . " páginas, $archivos archivos CSS y JS.\n";
+echo "Versión $actual → $nueva: " . count($paginas) . " páginas, $archivos archivos (CSS, JS y favicon).\n";

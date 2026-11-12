@@ -29,7 +29,8 @@ client/   → frontend:
                 formularios.js (validar y mostrar errores), productos.js (tarjetaProducto, agregarAlCarrito),
                 y un .js por página (inicio.js, login.js, registro.js, catalogo.js, producto.js, carrito.js, checkout.js, cuenta.js)
                 Panel: admin.js (entrarAlPanel, menú lateral, encabezadoBloque, tablaPedidos) y admin-*.js para cada página admin-*.html
-  img/        → logo.png e ilustraciones/ (un SVG por categoría y portada.svg, mientras no haya fotos reales)
+  img/        → logo.png, favicon.svg (+ favicon-32.png y favicon-180.png para celulares)
+                e ilustraciones/ (un SVG por categoría y portada.svg, mientras no haya fotos reales)
   .htaccess   → las páginas HTML se consultan siempre con el servidor (para que se vea el ?v= nuevo)
 herramientas/ → subir-version.php y subir-version.bat (versión de los CSS y JS, ver "Cómo armar una página")
 server/   → backend:
@@ -58,8 +59,9 @@ Prueba rápida: `GET server/api/prueba` tiene que responder `"ok": true`.
 **Cómo armar una página:**
 1. Copiar la estructura de `client/pages/inicio.html`: el `<head>` (Lora + `estilos.css`), `<body data-pagina="...">`, `<header id="encabezado">`, `<main id="contenido">` y `<footer id="pie">`.
 2. Al final del `<body>`, en este orden: `api.js`, `comun.js`, `formularios.js` (si tiene formularios) y el `.js` de la página.
-   - Los CSS y JS se cargan con la versión: `estilos.css?v=2`, `comun.js?v=2`… (la misma en todas las páginas).
-   - **Cada vez que se cambia un CSS o un JS, subir la versión** antes del commit: doble clic en `herramientas\subir-version.bat`
+   - Los CSS, los JS y el favicon se cargan con la versión: `estilos.css?v=4`, `comun.js?v=4`… (la misma en todas las páginas).
+     El `<head>` lleva las tres líneas del favicon (`favicon-32.png`, `favicon.svg` y `apple-touch-icon` con `favicon-180.png`).
+   - **Cada vez que se cambia un CSS, un JS o el favicon, subir la versión** antes del commit: doble clic en `herramientas\subir-version.bat`
      o `C:\xampp\php\php.exe herramientas\subir-version.php`. Cambia el `?v=` en todas las páginas (y se lo agrega a las nuevas).
      Así el navegador descarga los archivos nuevos sin tener que limpiar la caché.
 3. `data-pagina` resalta la opción del menú: `inicio`, `catalogo`, `combos`, `nosotros` o `contacto`.
